@@ -1,9 +1,9 @@
 package top.mores.ufresh.DAO;
 
+import org.springframework.stereotype.Repository;
 import top.mores.ufresh.POJO.User;
 
-import java.util.List;
-
+@Repository
 public interface UserDao {
-    List<User> getUserList();
+    User getUserPassword(String userName);
 }

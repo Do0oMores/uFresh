@@ -5,7 +5,7 @@
 <!--namespace绑定了一个对应的Dao/Mapper接口-->
 <mapper namespace="top.mores.ufresh.DAO.UserDao">
     <!--    select查询-->
-    <select id="getUserList" resultType="top.mores.ufresh.POJO.User">
-        select * from ufresh.user
+    <select id="getUserPassword" resultType="top.mores.ufresh.POJO.User">
+        select password from user where user_name = #{userName}
     </select>
 </mapper>
