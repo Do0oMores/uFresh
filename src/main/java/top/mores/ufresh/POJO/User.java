@@ -1,5 +1,7 @@
 package top.mores.ufresh.POJO;
 
+import java.time.LocalDateTime;
+
 public class User {
     private int user_id;
     private String user_name;
@@ -7,6 +9,15 @@ public class User {
     private Boolean enabled;
     private Boolean admin_enabled;
     private String address;
+    private LocalDateTime register_time;
+
+    public LocalDateTime getRegister_time() {
+        return register_time;
+    }
+
+    public void setRegister_time(LocalDateTime register_time) {
+        this.register_time = register_time;
+    }
 
     public int getUser_id() {
         return user_id;
@@ -65,6 +76,7 @@ public class User {
                 ", enabled=" + enabled +
                 ", admin_enabled=" + admin_enabled +
                 ", address='" + address + '\'' +
+                ", register_time=" + register_time +
                 '}';
     }
 }

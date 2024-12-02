@@ -6,6 +6,8 @@ import top.mores.ufresh.DAO.MybatisUtils;
 import top.mores.ufresh.DAO.UserDao;
 import top.mores.ufresh.POJO.User;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,8 +27,11 @@ public class UserRegisterService {
             SqlSession sqlSession = MybatisUtils.getSqlSession();
             UserDao userDao = sqlSession.getMapper(UserDao.class);
             User user = new User();
+            String registerTime = "";
+            LocalDateTime localDateTime = LocalDateTime.parse(registerTime, DateTimeFormatter.ISO_DATE_TIME);
             user.setUser_name(userName);
             user.setPassword(password);
+            user.setRegister_time(localDateTime);
             if (userDao.addUser(user) == 1) {
                 sqlSession.close();
                 response.put(200, "注册成功");
