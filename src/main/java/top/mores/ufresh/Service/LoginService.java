@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class UserLoginService {
+public class LoginService {
 
     /**
      * 登录验证

@@ -19,8 +19,8 @@
     </select>
 
     <insert id="addUser">
-        insert into user (user_name, password, register_time)
-        values (#{userName}, #{password}, #{registerTime})
+        insert into user (user_name, password, register_time, phone)
+        values (#{user_name}, #{password}, #{register_time}, #{phone})
     </insert>
 
     <select id="checkUser" resultType="java.lang.String">

@@ -10,6 +10,15 @@ public class User {
     private Boolean admin_enabled;
     private String address;
     private LocalDateTime register_time;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public LocalDateTime getRegister_time() {
         return register_time;
@@ -77,6 +86,7 @@ public class User {
                 ", admin_enabled=" + admin_enabled +
                 ", address='" + address + '\'' +
                 ", register_time=" + register_time +
+                ", phone='" + phone + '\'' +
                 '}';
     }
 }
