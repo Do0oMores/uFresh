@@ -2,19 +2,29 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--namespace绑定了一个对应的Dao/Mapper接口-->
 <mapper namespace="top.mores.ufresh.DAO.UserDao">
 
-    <select id="getUserPassword" resultType="top.mores.ufresh.POJO.User">
+    <resultMap id="userResultMap" type="top.mores.ufresh.POJO.User">
+        <id column="user_id" property="user_id"/>
+        <result column="user_name" property="user_name"/>
+        <result column="password" property="password"/>
+        <result column="enabled" property="enabled"/>
+        <result column="admin_enabled" property="admin_enabled"/>
+        <result column="address" property="address"/>
+        <result column="register_time" property="register_time"/>
+    </resultMap>
+
+    <select id="getUserPassword" resultType="java.lang.String">
         select password from user where user_name = #{userName}
     </select>
 
     <insert id="addUser">
-        insert into user values (user_name,password,register_time),
-        ( #{userName},#{password},#{registerTime})
+        insert into user (user_name, password, register_time)
+        values (#{userName}, #{password}, #{registerTime})
     </insert>
 
-    <select id="checkUser" resultMap="top.mores.ufresh.POJO.User">
+    <select id="checkUser" resultType="java.lang.String">
         select user_name from user where user_name = #{userName}
     </select>
+
 </mapper>
