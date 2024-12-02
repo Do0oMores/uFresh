@@ -4,7 +4,6 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--namespace绑定了一个对应的Dao/Mapper接口-->
 <mapper namespace="top.mores.ufresh.DAO.OrdersDao">
-    <!--    select查询-->
     <select id="getUserList" resultType="top.mores.ufresh.POJO.Orders">
         select * from ufresh.user
     </select>

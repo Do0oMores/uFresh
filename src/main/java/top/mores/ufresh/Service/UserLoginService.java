@@ -12,6 +12,13 @@ import java.util.Map;
 @Service
 public class UserLoginService {
 
+    /**
+     * 登录验证
+     *
+     * @param username 用户名
+     * @param password 密码
+     * @return Map验证结果
+     */
     public Map<Integer, String> loginVerify(String username, String password) {
         Map<Integer, String> response = new HashMap<>();
         SqlSession sqlSession = MybatisUtils.getSqlSession();
@@ -19,10 +26,12 @@ public class UserLoginService {
         User userData = userDao.getUserPassword(username);
         if (userData == null) {
             response.put(404, "未找到您的账号，请先注册！");
+            sqlSession.close();
             return response;
         } else {
             String passwordData = userData.getPassword();
             if (password.equals(passwordData)) {
+                sqlSession.close();
                 response.put(200, "OK");
             }
         }
