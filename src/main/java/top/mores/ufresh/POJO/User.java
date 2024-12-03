@@ -11,6 +11,15 @@ public class User {
     private String address;
     private LocalDateTime register_time;
     private String phone;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPhone() {
         return phone;
@@ -87,6 +96,7 @@ public class User {
                 ", address='" + address + '\'' +
                 ", register_time=" + register_time +
                 ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

@@ -24,5 +24,6 @@
         <mapper resource="top/mores/ufresh/Mappers/CartMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/CartItemsMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/AfterSalesMapper.xml"></mapper>
+        <mapper resource="top/mores/ufresh/Mappers/MailVerifyMapper.xml"></mapper>
     </mappers>
 </configuration>
