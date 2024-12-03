@@ -67,6 +67,11 @@
             <artifactId>mybatis</artifactId>
             <version>3.5.14</version>
         </dependency>
+        <!--邮箱依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
