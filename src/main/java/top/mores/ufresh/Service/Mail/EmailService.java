@@ -2,23 +2,21 @@ package top.mores.ufresh.Service.Mail;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import top.mores.ufresh.DAO.MailVerifyDao;
-import top.mores.ufresh.DAO.MybatisUtils;
 
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
-    private static final long EXPIRATION_TIME = 5 * 60 * 1000;
+    private static final long EXPIRATION_TIME = 5 * 60 * 1000;  // 验证码有效时间（5分钟）
+    private List<Map<String, Object>> verificationCodes = new ArrayList<>();  // 用于存储验证码
 
     /**
      * 发送邮件
@@ -51,7 +49,7 @@ public class EmailService {
     /**
      * 生成随机的6位数验证码
      *
-     * @return 生成的验证码并保存到Map
+     * @return 生成的验证码
      */
     public String randomMailCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -62,70 +60,60 @@ public class EmailService {
             int number = random.nextInt(characters.length());
             sb.append(characters.charAt(number));
         }
-        saveCurrentTime(System.currentTimeMillis(), sb.toString());
-        return sb.toString();
+
+        String code = sb.toString();
+        saveCurrentCode(code);
+        return code;
     }
 
     /**
-     * 验证码验证
+     * 保存验证码到内存中的列表
+     *
+     * @param code 验证码
+     */
+    private void saveCurrentCode(String code) {
+        Map<String, Object> codeData = new HashMap<>();
+        codeData.put("code", code);
+        codeData.put("timestamp", System.currentTimeMillis());
+        verificationCodes.add(codeData);
+    }
+
+    /**
+     * 验证验证码
      *
      * @param code 传入验证码进行验证
      * @return 验证结果
      */
     public boolean verifyCode(String code) {
-        Long time = getSaveTime(code);
-        if (time == null) {
-            return false;
+        // 查找验证码并验证
+        Map<String, Object> codeData = findCodeData(code);
+        if (codeData == null) {
+            return false;  // 未找到验证码
         }
+
+        long time = (long) codeData.get("timestamp");
         if (System.currentTimeMillis() - time > EXPIRATION_TIME) {
-            setCodeNull(code);
-            return false;
+            verificationCodes.remove(codeData);  // 清除过期的验证码
+            return false;  // 验证码已过期
         }
+
+        // 验证成功，删除已使用的验证码
+        verificationCodes.remove(codeData);
         return true;
     }
 
     /**
-     * 保存验证码和其生成时间
+     * 查找验证码对应的数据
      *
-     * @param time 时间
      * @param code 验证码
+     * @return 验证码数据，或者null
      */
-    public void saveCurrentTime(Long time, String code) {
-        SqlSession session = MybatisUtils.getSqlSession();
-        MailVerifyDao mailVerifyDao = session.getMapper(MailVerifyDao.class);
-        if (mailVerifyDao.saveTime(time, code) == 1) {
-            session.commit();
-        } else {
-            session.rollback();
-            System.out.println(code + "时间更新失败");
+    private Map<String, Object> findCodeData(String code) {
+        for (Map<String, Object> data : verificationCodes) {
+            if (data.get("code").equals(code)) {
+                return data;
+            }
         }
-    }
-
-    /**
-     * 获取验证码生成时间
-     *
-     * @param code 验证码
-     * @return 生成时的时间戳
-     */
-    public Long getSaveTime(String code) {
-        SqlSession session = MybatisUtils.getSqlSession();
-        MailVerifyDao mailVerifyDao = session.getMapper(MailVerifyDao.class);
-        return mailVerifyDao.getTime(code);
-    }
-
-    /**
-     * 设置验证码为空
-     *
-     * @param code 验证码
-     */
-    public void setCodeNull(String code) {
-        SqlSession session = MybatisUtils.getSqlSession();
-        MailVerifyDao mailVerifyDao = session.getMapper(MailVerifyDao.class);
-        if (mailVerifyDao.setNull(code) == 1) {
-            session.commit();
-        } else {
-            session.rollback();
-            System.out.println(code + "清空失败");
-        }
+        return null;
     }
 }
