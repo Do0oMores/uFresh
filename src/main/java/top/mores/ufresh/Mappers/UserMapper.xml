@@ -34,6 +34,6 @@
     </select>
 
     <select id="returnUserData" resultMap="userResultMap">
-        select user_name,password,address,email,phone from user where user_id = #{userID}
+        select user_name,password,address,email,phone,register_time from user where user_id = #{userID}
     </select>
 </mapper>

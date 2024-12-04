@@ -11,6 +11,7 @@ public class User {
     private Boolean enabled;
     private Boolean admin_enabled;
     private String address;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime register_time;
     private String phone;
     private String email;
