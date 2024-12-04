@@ -1,14 +1,17 @@
 package top.mores.ufresh.Service.Mail;
 
+import jakarta.annotation.Resource;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class EmailService {
@@ -16,7 +19,9 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
     private static final long EXPIRATION_TIME = 5 * 60 * 1000;  // 验证码有效时间（5分钟）
-    private List<Map<String, Object>> verificationCodes = new ArrayList<>();  // 用于存储验证码
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
+    private static final String VERIFICATION_CODE_KEY_PREFIX = "verification:code:";
 
     /**
      * 发送邮件
@@ -37,11 +42,10 @@ public class EmailService {
             helper.setText(content, true);
 
             mailSender.send(mimeMessage);
-            System.out.println("邮件发送成功");
+            System.out.println("邮件发送成功："+to);
             return true;
         } catch (MailException | MessagingException e) {
             System.out.println(e.getMessage());
-            e.printStackTrace();
             return false;
         }
     }
@@ -67,15 +71,13 @@ public class EmailService {
     }
 
     /**
-     * 保存验证码到内存中的列表
+     * 保存验证码到 Redis
      *
      * @param code 验证码
      */
     private void saveCurrentCode(String code) {
-        Map<String, Object> codeData = new HashMap<>();
-        codeData.put("code", code);
-        codeData.put("timestamp", System.currentTimeMillis());
-        verificationCodes.add(codeData);
+        String redisKey = VERIFICATION_CODE_KEY_PREFIX + code;
+        redisTemplate.opsForValue().set(redisKey, code, EXPIRATION_TIME, TimeUnit.MILLISECONDS);  // 设置验证码过期时间
     }
 
     /**
@@ -85,35 +87,15 @@ public class EmailService {
      * @return 验证结果
      */
     public boolean verifyCode(String code) {
-        // 查找验证码并验证
-        Map<String, Object> codeData = findCodeData(code);
-        if (codeData == null) {
+        String redisKey = VERIFICATION_CODE_KEY_PREFIX + code;
+        // 获取 Redis 中的验证码
+        String storedCode = redisTemplate.opsForValue().get(redisKey);
+
+        if (storedCode == null) {
             return false;  // 未找到验证码
         }
-
-        long time = (long) codeData.get("timestamp");
-        if (System.currentTimeMillis() - time > EXPIRATION_TIME) {
-            verificationCodes.remove(codeData);  // 清除过期的验证码
-            return false;  // 验证码已过期
-        }
-
         // 验证成功，删除已使用的验证码
-        verificationCodes.remove(codeData);
+        redisTemplate.delete(redisKey);
         return true;
-    }
-
-    /**
-     * 查找验证码对应的数据
-     *
-     * @param code 验证码
-     * @return 验证码数据，或者null
-     */
-    private Map<String, Object> findCodeData(String code) {
-        for (Map<String, Object> data : verificationCodes) {
-            if (data.get("code").equals(code)) {
-                return data;
-            }
-        }
-        return null;
     }
 }

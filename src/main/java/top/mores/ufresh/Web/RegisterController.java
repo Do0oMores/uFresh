@@ -1,5 +1,6 @@
 package top.mores.ufresh.Web;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,8 +31,7 @@ public class RegisterController {
         Map<Integer, String> responseData = registerService.addUser(
                 user.getUser_name(),
                 user.getPassword(),
-                user.getPhone());
-
+                user.getEmail());
         return ResponseEntity.ok(responseData);
     }
 
@@ -44,7 +44,6 @@ public class RegisterController {
     @PostMapping("/mail")
     @ResponseBody
     public ResponseEntity<?> mail(@RequestBody Mail mail) {
-        System.out.println(mail.getEmail());
         Map<Integer, String> responseData = registerService.mail(mail.getEmail());
         return ResponseEntity.ok(responseData);
     }
@@ -58,7 +57,7 @@ public class RegisterController {
     @PostMapping("/verify")
     @ResponseBody
     public ResponseEntity<?> verify(@RequestBody Mail mail) {
-        Map<Integer, String> responseData = registerService.verifyCode(mail.getEmail(), mail.getCode());
+        Map<Integer, String> responseData = registerService.verifyCode(mail.getCode());
         return ResponseEntity.ok(responseData);
     }
 }

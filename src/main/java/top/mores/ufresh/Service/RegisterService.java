@@ -1,7 +1,9 @@
 package top.mores.ufresh.Service;
 
+import jakarta.annotation.Resource;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import top.mores.ufresh.DAO.MybatisUtils;
 import top.mores.ufresh.DAO.UserDao;
@@ -11,22 +13,25 @@ import top.mores.ufresh.Service.Mail.EmailService;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class RegisterService {
 
     @Autowired
     private EmailService emailService;
+    @Resource
+    private RedisTemplate<String, Long> redisTemplate;
 
     /**
-     * 注册增加用户
+     * 增加用户
      *
-     * @param userName 注册的用户名
-     * @param password 注册的密码
-     * @param phone    注册手机号
-     * @return 注册结果
+     * @param userName 用户名
+     * @param password 密码
+     * @param email    邮箱
+     * @return 添加结果
      */
-    public Map<Integer, String> addUser(String userName, String password, String phone) {
+    public Map<Integer, String> addUser(String userName, String password, String email) {
         Map<Integer, String> response = new HashMap<>();
 
         if (checkUser(userName)) { // 检查用户名是否已存在
@@ -39,7 +44,7 @@ public class RegisterService {
             user.setUser_name(userName);
             user.setPassword(password);
             user.setRegister_time(currentTime);// 设置注册时间为当前时间
-            user.setPhone(phone);
+            user.setEmail(email);
 
             if (userDao.addUser(user) == 1) {
                 //提交事务
@@ -76,31 +81,46 @@ public class RegisterService {
      */
     public Map<Integer, String> mail(String mail) {
         Map<Integer, String> response = new HashMap<>();
+
+        // 使用 Redis 判断请求频繁问题
+        String redisKey = "mail:request:" + mail; // Redis 键，避免与其他数据冲突
+        Long lastRequestTime = redisTemplate.opsForValue().get(redisKey); // 获取 Redis 中的上次请求时间戳
+
+        long now = System.currentTimeMillis();
+
+        // 如果 Redis 中存在时间戳且请求间隔小于 60 秒，则返回请求频繁提示
+        if (lastRequestTime != null && now - lastRequestTime < 60000) {
+            response.put(500, "请求太频繁");
+            return response;
+        }
+
+        // 更新 Redis 中的请求时间戳，设置过期时间为 60 秒
+        redisTemplate.opsForValue().set(redisKey, now, 60, TimeUnit.SECONDS);
+
         try {
+            // 生成验证码并发送邮件
             String verificationCode = emailService.randomMailCode();
             String content = "<h1>您的激活验证码是：" + verificationCode + "，五分钟内有效" + "</h1>";
             boolean isSent = emailService.sendEmail(mail, "【优鲜】账号激活", content);
+
             if (isSent) {
                 response.put(200, "验证码已发送");
             } else {
                 response.put(500, "发送验证码失败，请稍后再试");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             response.put(500, "发生错误：" + e.getMessage());
         }
         return response;
     }
 
-
     /**
-     * 验证码处理
+     * 返回验证码验证结果
      *
-     * @param mail 验证的邮箱
-     * @param code 验证码
+     * @param code 传入验证码
      * @return 验证结果
      */
-    public Map<Integer, String> verifyCode(String mail, String code) {
+    public Map<Integer, String> verifyCode(String code) {
         Map<Integer, String> response = new HashMap<>();
         if (emailService.verifyCode(code)) {
             response.put(200, "验证成功");
