@@ -10,4 +10,8 @@ public interface UserDao {
     String checkUser(String userName);
 
     int addUser(User user);
+
+    User returnUserData(Integer id);
+
+    Integer getUserID(String userName);
 }

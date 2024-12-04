@@ -28,7 +28,7 @@ public class LoginController {
     public ResponseEntity<?> login(@RequestBody User user) {
         String username = user.getUser_name();
         String password = user.getPassword();
-        Map<Integer, String> response = loginService.loginVerify(username, password);
+        Map<String, Object> response = loginService.loginVerify(username, password);
         return ResponseEntity.ok(response);
     }
 }

@@ -1,5 +1,7 @@
 package top.mores.ufresh.POJO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 
 public class User {

@@ -18,19 +18,28 @@ public class LoginService {
      * @param password 密码
      * @return Map验证结果
      */
-    public Map<Integer, String> loginVerify(String username, String password) {
-        Map<Integer, String> responseData = new HashMap<>();
+    public Map<String, Object> loginVerify(String username, String password) {
+        Map<String, Object> responseData = new HashMap<>();
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
-        String userData = userDao.getUserPassword(username);
-        if (userData == null) {
-            responseData.put(404, "未找到您的账号，请先注册！");
+        String userPassword = userDao.getUserPassword(username);
+        Integer userID = userDao.getUserID(username);
+
+        if (userPassword == null) {
+            responseData.put("code", 404);
+            responseData.put("msg", "未找到您的账号，请先注册！");
             sqlSession.close();
             return responseData;
         } else {
-            if (password.equals(userData)) {
+            if (password.equals(userPassword)) {
                 sqlSession.close();
-                responseData.put(200, "登录成功");
+                responseData.put("code", 200);
+                responseData.put("msg", "登录成功");
+                responseData.put("userID", userID);
+            } else {
+                sqlSession.close();
+                responseData.put("code", 401);
+                responseData.put("msg", "密码错误");
             }
         }
         return responseData;

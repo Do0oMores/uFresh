@@ -12,6 +12,8 @@
         <result column="admin_enabled" property="admin_enabled"/>
         <result column="address" property="address"/>
         <result column="register_time" property="register_time"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
     </resultMap>
 
     <select id="getUserPassword" resultType="java.lang.String">
@@ -27,4 +29,11 @@
         select user_name from user where user_name = #{userName}
     </select>
 
+    <select id="getUserID" resultType="java.lang.Integer">
+        select user_id from user where user_name = #{userName}
+    </select>
+
+    <select id="returnUserData" resultMap="userResultMap">
+        select user_name,password,address,email,phone from user where user_id = #{userID}
+    </select>
 </mapper>
