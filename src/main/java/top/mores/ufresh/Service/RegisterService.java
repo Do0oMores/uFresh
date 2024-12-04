@@ -100,8 +100,8 @@ public class RegisterService {
         try {
             // 生成验证码并发送邮件
             String verificationCode = emailService.randomMailCode();
-            String content = "<h1>您的激活验证码是：" + verificationCode + "，五分钟内有效" + "</h1>";
-            boolean isSent = emailService.sendEmail(mail, "【优鲜】账号激活", content);
+            String content = "<h1>您的验证码是：" + verificationCode + "，五分钟内有效" + "</h1>";
+            boolean isSent = emailService.sendEmail(mail, "【优鲜uFresh】", content);
 
             if (isSent) {
                 response.put(200, "验证码已发送");

@@ -14,4 +14,6 @@ public interface UserDao {
     User returnUserData(Integer id);
 
     Integer getUserID(String userName);
+
+    int saveUserData(String user_name, String password, String email, Integer user_id);
 }

@@ -36,4 +36,10 @@
     <select id="returnUserData" resultMap="userResultMap">
         select user_name,password,address,email,phone,register_time from user where user_id = #{userID}
     </select>
+
+    <update id="saveUserData">
+        UPDATE user
+        SET user_name = #{user_name}, email = #{email}, password = #{password}
+        WHERE user_id = #{user_id}
+    </update>
 </mapper>

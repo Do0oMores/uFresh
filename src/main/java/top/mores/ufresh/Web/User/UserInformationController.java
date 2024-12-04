@@ -16,10 +16,34 @@ public class UserInformationController {
     @Autowired
     private UserInformationService userInformationService;
 
+    /**
+     * 同步获取用户信息
+     *
+     * @param user 用户ID
+     * @return 用户信息
+     */
     @PostMapping("/fetch-information")
     @ResponseBody
     public ResponseEntity<?> fetchInformation(@RequestBody User user) {
         Map<String, Object> response = userInformationService.getUserInformation(user.getUser_id());
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 保存用户信息
+     *
+     * @param user 用户
+     * @return 保存结果
+     */
+    @PostMapping("/saveuser")
+    @ResponseBody
+    public ResponseEntity<?> saveUser(@RequestBody User user) {
+        Map<Integer, String> response = userInformationService.saveUserInformation(
+                user.getUser_name(),
+                user.getPassword(),
+                user.getEmail(),
+                user.getUser_id()
+        );
         return ResponseEntity.ok(response);
     }
 }
