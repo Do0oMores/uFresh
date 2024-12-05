@@ -25,7 +25,6 @@ public class UserInformationService {
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         User userData = userDao.returnUserData(userID);
 
-        // 判断用户数据是否为空
         if (userData != null) {
             response.put("code", 200);
             response.put("msg", "成功获取用户信息");
@@ -35,17 +34,17 @@ public class UserInformationService {
             response.put("msg", "用户信息未找到");
         }
 
-        // 关闭SqlSession
         sqlSession.close();
         return response;
     }
 
     /**
      * 保存用户信息
+     *
      * @param userName 用户名
      * @param password 密码
-     * @param email 邮箱
-     * @param userID 使用用户ID查询更新数据
+     * @param email    邮箱
+     * @param userID   使用用户ID查询更新数据
      * @return 用户信息保存更新结果
      */
     public Map<Integer, String> saveUserInformation(String userName, String password, String email, Integer userID) {
@@ -67,5 +66,24 @@ public class UserInformationService {
         }
 
         return response;
+    }
+
+    /**
+     * 将头像url保存到数据库
+     *
+     * @param userID    用户ID
+     * @param avatarUrl 头像URL
+     * @return 保存结果
+     */
+    public boolean saveAvatarUrl(Integer userID, String avatarUrl) {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        if (userDao.saveUserAvatar(avatarUrl, userID) == 1) {
+            sqlSession.commit();
+            return true;
+        } else {
+            sqlSession.rollback();
+            return false;
+        }
     }
 }

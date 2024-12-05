@@ -42,4 +42,8 @@
         SET user_name = #{user_name}, email = #{email}, password = #{password}
         WHERE user_id = #{user_id}
     </update>
+
+    <update id="saveUserAvatar">
+        update user set avatar_url= #{avatar_url} where user_id = #{user_id}
+    </update>
 </mapper>

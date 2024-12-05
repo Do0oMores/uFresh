@@ -16,4 +16,6 @@ public interface UserDao {
     Integer getUserID(String userName);
 
     int saveUserData(String user_name, String password, String email, Integer user_id);
+
+    int saveUserAvatar(String avatar_url,Integer user_id);
 }
