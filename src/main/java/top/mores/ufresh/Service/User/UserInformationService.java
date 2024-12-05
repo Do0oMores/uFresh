@@ -86,4 +86,29 @@ public class UserInformationService {
             return false;
         }
     }
+
+    /**
+     * 保存配送信息
+     *
+     * @param address 地址
+     * @param phone   电话
+     * @param userID  保存该用户ID的信息
+     * @return 保存操作执行结果
+     */
+    public Map<Integer, String> saveShippingInformation(String address, String phone, Integer userID) {
+        Map<Integer, String> response = new HashMap<>();
+        try (SqlSession sqlSession = MybatisUtils.getSqlSession()) {
+            UserDao userDao = sqlSession.getMapper(UserDao.class);
+            if (userDao.saveShipping(address, phone, userID) == 1) {
+                sqlSession.commit();
+                response.put(200, "配送信息已保存");
+            } else {
+                sqlSession.rollback();
+                response.put(500, "配送信息保存失败");
+            }
+        } catch (Exception e) {
+            response.put(401, "保存操作出现异常" + e.getMessage());
+        }
+        return response;
+    }
 }

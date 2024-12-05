@@ -34,7 +34,7 @@
     </select>
 
     <select id="returnUserData" resultMap="userResultMap">
-        select user_name,password,address,email,phone,register_time from user where user_id = #{userID}
+        select user_name,password,address,email,phone,register_time,address,phone from user where user_id = #{userID}
     </select>
 
     <update id="saveUserData">
@@ -45,5 +45,9 @@
 
     <update id="saveUserAvatar">
         update user set avatar_url= #{avatar_url} where user_id = #{user_id}
+    </update>
+    
+    <update id="saveShipping">
+        update user set address=#{address},phone=#{phone} where user_id=#{user_id}
     </update>
 </mapper>

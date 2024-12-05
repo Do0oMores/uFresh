@@ -35,13 +35,24 @@ public class UserInformationController {
      * @param user 用户
      * @return 保存结果
      */
-    @PostMapping("/saveuser")
+    @PostMapping("/save-user")
     @ResponseBody
     public ResponseEntity<?> saveUser(@RequestBody User user) {
         Map<Integer, String> response = userInformationService.saveUserInformation(
                 user.getUser_name(),
                 user.getPassword(),
                 user.getEmail(),
+                user.getUser_id()
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/save-shipping")
+    @ResponseBody
+    public ResponseEntity<?> saveShipping(@RequestBody User user) {
+        Map<Integer, String> response = userInformationService.saveShippingInformation(
+                user.getAddress(),
+                user.getPhone(),
                 user.getUser_id()
         );
         return ResponseEntity.ok(response);
