@@ -4,6 +4,7 @@ import jakarta.annotation.Resource;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,6 +23,8 @@ public class EmailService {
     @Resource
     private RedisTemplate<String, String> redisTemplate;
     private static final String VERIFICATION_CODE_KEY_PREFIX = "verification:code:";
+    @Value("${spring.mail.username}")
+    private String fromEmail;
 
     /**
      * 发送邮件
@@ -36,7 +39,7 @@ public class EmailService {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
-            helper.setFrom("ufresh_job@163.com");
+            helper.setFrom(fromEmail);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(content, true);
