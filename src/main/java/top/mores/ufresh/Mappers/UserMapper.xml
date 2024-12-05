@@ -54,4 +54,8 @@
     <select id="checkRole" resultType="java.lang.Integer">
         select admin_enabled from user where user_name = #{user_name}
     </select>
+
+    <select id="fetchUsers" resultMap="userResultMap">
+        select user_id,user_name,password,address,email,phone,register_time,address,phone from user
+    </select>
 </mapper>

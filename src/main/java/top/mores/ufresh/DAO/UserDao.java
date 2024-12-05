@@ -3,6 +3,8 @@ package top.mores.ufresh.DAO;
 import org.springframework.stereotype.Repository;
 import top.mores.ufresh.POJO.User;
 
+import java.util.List;
+
 @Repository
 public interface UserDao {
     String getUserPassword(String userName);
@@ -22,4 +24,6 @@ public interface UserDao {
     int saveShipping(String address,String phone,Integer user_id);
 
     int checkRole(String user_name);
+
+    List<User> fetchUsers();
 }
