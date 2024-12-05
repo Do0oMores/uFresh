@@ -47,6 +47,12 @@ public class UserInformationController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 保存配送信息
+     *
+     * @param user 用户信息
+     * @return 配送信息保存结果
+     */
     @PostMapping("/save-shipping")
     @ResponseBody
     public ResponseEntity<?> saveShipping(@RequestBody User user) {

@@ -36,6 +36,7 @@ public class LoginService {
                 responseData.put("code", 200);
                 responseData.put("msg", "登录成功");
                 responseData.put("userID", userID);
+                responseData.put("role", checkAdmin(username));
             } else {
                 sqlSession.close();
                 responseData.put("code", 401);
@@ -43,5 +44,23 @@ public class LoginService {
             }
         }
         return responseData;
+    }
+
+    /**
+     * 查询用户角色
+     *
+     * @param username 用户名
+     * @return 用户角色
+     */
+    public String checkAdmin(String username) {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        UserDao userDao = sqlSession.getMapper(UserDao.class);
+        int enabled = userDao.checkRole(username);
+        sqlSession.close();
+        if (enabled == 1) {
+            return "admin";
+        } else {
+            return "user";
+        }
     }
 }

@@ -20,4 +20,6 @@ public interface UserDao {
     int saveUserAvatar(String avatar_url,Integer user_id);
 
     int saveShipping(String address,String phone,Integer user_id);
+
+    int checkRole(String user_name);
 }

@@ -50,4 +50,8 @@
     <update id="saveShipping">
         update user set address=#{address},phone=#{phone} where user_id=#{user_id}
     </update>
+
+    <select id="checkRole" resultType="java.lang.Integer">
+        select admin_enabled from user where user_name = #{user_name}
+    </select>
 </mapper>

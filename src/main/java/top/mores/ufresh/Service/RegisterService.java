@@ -34,7 +34,7 @@ public class RegisterService {
     public Map<Integer, String> addUser(String userName, String password, String email) {
         Map<Integer, String> response = new HashMap<>();
 
-        if (checkUser(userName)) { // 检查用户名是否已存在
+        if (checkUser(userName)) {
             SqlSession sqlSession = MybatisUtils.getSqlSession();
             UserDao userDao = sqlSession.getMapper(UserDao.class);
 
@@ -82,23 +82,19 @@ public class RegisterService {
     public Map<Integer, String> mail(String mail) {
         Map<Integer, String> response = new HashMap<>();
 
-        // 使用 Redis 判断请求频繁问题
-        String redisKey = "mail:request:" + mail; // Redis 键，避免与其他数据冲突
-        Long lastRequestTime = redisTemplate.opsForValue().get(redisKey); // 获取 Redis 中的上次请求时间戳
+        String redisKey = "mail:request:" + mail;
+        Long lastRequestTime = redisTemplate.opsForValue().get(redisKey);
 
         long now = System.currentTimeMillis();
 
-        // 如果 Redis 中存在时间戳且请求间隔小于 60 秒，则返回请求频繁提示
         if (lastRequestTime != null && now - lastRequestTime < 60000) {
             response.put(500, "请求太频繁");
             return response;
         }
 
-        // 更新 Redis 中的请求时间戳，设置过期时间为 60 秒
         redisTemplate.opsForValue().set(redisKey, now, 60, TimeUnit.SECONDS);
 
         try {
-            // 生成验证码并发送邮件
             String verificationCode = emailService.randomMailCode();
             String content = "<h1>您的验证码是：" + verificationCode + "，五分钟内有效" + "</h1>";
             boolean isSent = emailService.sendEmail(mail, "【优鲜uFresh】", content);
