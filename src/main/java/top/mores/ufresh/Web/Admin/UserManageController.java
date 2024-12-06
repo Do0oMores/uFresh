@@ -11,7 +11,6 @@ import top.mores.ufresh.POJO.User;
 import top.mores.ufresh.Service.Admin.UserManageService;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserManageController {
@@ -27,7 +26,7 @@ public class UserManageController {
     @PostMapping("/fetch-users")
     @ResponseBody
     public ResponseEntity<?> fetchUsers() {
-        Map<String, Object> response = userManageService.getUsers();
+        APIResponse<List<User>> response = userManageService.getUsers();
         return ResponseEntity.ok(response);
     }
 

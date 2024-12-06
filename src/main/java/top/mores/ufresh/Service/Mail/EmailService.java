@@ -45,7 +45,7 @@ public class EmailService {
             helper.setText(content, true);
 
             mailSender.send(mimeMessage);
-            System.out.println("邮件发送成功："+to);
+            System.out.println("邮件发送成功：" + to);
             return true;
         } catch (MailException | MessagingException e) {
             System.out.println(e.getMessage());

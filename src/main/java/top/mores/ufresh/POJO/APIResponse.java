@@ -16,6 +16,11 @@ public class APIResponse<T> {
         this.message = message;
     }
 
+    public APIResponse(int code, T data) {
+        this.code = code;
+        this.data = data;
+    }
+
     public int getCode() {
         return code;
     }

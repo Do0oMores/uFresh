@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Mail;
 import top.mores.ufresh.POJO.User;
 import top.mores.ufresh.Service.RegisterService;
@@ -27,7 +28,7 @@ public class RegisterController {
     @PostMapping("/register")
     @ResponseBody
     public ResponseEntity<?> register(@RequestBody User user) {
-        Map<Integer, String> responseData = registerService.addUser(
+        APIResponse<Void> responseData = registerService.addUser(
                 user.getUser_name(),
                 user.getPassword(),
                 user.getEmail());
@@ -43,7 +44,7 @@ public class RegisterController {
     @PostMapping("/mail")
     @ResponseBody
     public ResponseEntity<?> mail(@RequestBody Mail mail) {
-        Map<Integer, String> responseData = registerService.mail(mail.getEmail());
+        APIResponse<Void> responseData = registerService.mail(mail.getEmail());
         return ResponseEntity.ok(responseData);
     }
 
@@ -56,7 +57,7 @@ public class RegisterController {
     @PostMapping("/verify")
     @ResponseBody
     public ResponseEntity<?> verify(@RequestBody Mail mail) {
-        Map<Integer, String> responseData = registerService.verifyCode(mail.getCode());
+        APIResponse<Void> responseData = registerService.verifyCode(mail.getCode());
         return ResponseEntity.ok(responseData);
     }
 }

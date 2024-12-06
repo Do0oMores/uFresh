@@ -6,10 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.User;
 import top.mores.ufresh.Service.User.UserInformationService;
-
-import java.util.Map;
 
 @Controller
 public class UserInformationController {
@@ -25,7 +24,7 @@ public class UserInformationController {
     @PostMapping("/fetch-information")
     @ResponseBody
     public ResponseEntity<?> fetchInformation(@RequestBody User user) {
-        Map<String, Object> response = userInformationService.getUserInformation(user.getUser_id());
+        APIResponse<User> response = userInformationService.getUserInformation(user.getUser_id());
         return ResponseEntity.ok(response);
     }
 
@@ -38,7 +37,7 @@ public class UserInformationController {
     @PostMapping("/save-user")
     @ResponseBody
     public ResponseEntity<?> saveUser(@RequestBody User user) {
-        Map<Integer, String> response = userInformationService.saveUserInformation(
+        APIResponse<Void> response = userInformationService.saveUserInformation(
                 user.getUser_name(),
                 user.getPassword(),
                 user.getEmail(),
@@ -56,7 +55,7 @@ public class UserInformationController {
     @PostMapping("/save-shipping")
     @ResponseBody
     public ResponseEntity<?> saveShipping(@RequestBody User user) {
-        Map<Integer, String> response = userInformationService.saveShippingInformation(
+        APIResponse<Void> response = userInformationService.saveShippingInformation(
                 user.getAddress(),
                 user.getPhone(),
                 user.getUser_id()

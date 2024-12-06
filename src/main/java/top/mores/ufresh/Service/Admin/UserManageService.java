@@ -7,9 +7,7 @@ import top.mores.ufresh.DAO.UserDao;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.User;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserManageService {
@@ -19,20 +17,15 @@ public class UserManageService {
      *
      * @return 全部用户信息
      */
-    public Map<String, Object> getUsers() {
-        Map<String, Object> response = new HashMap<>();
+    public APIResponse<List<User>> getUsers() {
         SqlSession session = MybatisUtils.getSqlSession();
         UserDao userDao = session.getMapper(UserDao.class);
         try {
             List<User> usersData = userDao.fetchUsers();
-            response.put("code", 200);
-            response.put("Data", usersData);
+            return new APIResponse<>(200, usersData);
         } catch (Exception e) {
-            response.put("code", 500);
-            response.put("msg", "拉取用户信息失败：" + e.getMessage());
+            return new APIResponse<>(500, "拉取用户数据失败" + e.getMessage());
         }
-        session.close();
-        return response;
     }
 
     /**
@@ -42,7 +35,6 @@ public class UserManageService {
      * @return 查找结果
      */
     public APIResponse<List<User>> selectUserData(String username) {
-
         try (SqlSession session = MybatisUtils.getSqlSession()) {
             UserDao userDao = session.getMapper(UserDao.class);
             List<User> userData = userDao.selectUser(username);
