@@ -46,7 +46,7 @@
     <update id="saveUserAvatar">
         update user set avatar_url= #{avatar_url} where user_id = #{user_id}
     </update>
-    
+
     <update id="saveShipping">
         update user set address=#{address},phone=#{phone} where user_id=#{user_id}
     </update>
@@ -56,6 +56,24 @@
     </select>
 
     <select id="fetchUsers" resultMap="userResultMap">
-        select user_id,user_name,password,address,email,phone,register_time,address,phone from user
+        select user_id,user_name,password,address,email,phone,register_time,admin_enabled from user
     </select>
+
+    <select id="selectUser" resultMap="userResultMap">
+        select user_id, user_name, password, address, email, phone, register_time, admin_enabled
+        from user
+        where user_name like CONCAT('%', #{username}, '%')
+        and #{username} is not null and #{username} != ''
+    </select>
+
+    <update id="saveEditUserData">
+        update user
+        <set>
+            <if test="user_name != null">user_name = #{user_name},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="admin_enabled != null">admin_enabled = #{admin_enabled},</if>
+        </set>
+        where user_id = #{user_id}
+    </update>
 </mapper>
