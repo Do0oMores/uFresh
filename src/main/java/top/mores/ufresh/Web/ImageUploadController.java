@@ -56,9 +56,8 @@ public class ImageUploadController {
                 response.put("msg", "上传保存失败");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             response.put("code", 500);
-            response.put("msg", "上传失败");
+            response.put("msg", "上传失败："+e.getMessage());
         }
         return ResponseEntity.ok(response);
     }
