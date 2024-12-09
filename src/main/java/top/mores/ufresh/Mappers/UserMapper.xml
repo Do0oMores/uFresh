@@ -14,6 +14,7 @@
         <result column="register_time" property="register_time"/>
         <result column="email" property="email"/>
         <result column="phone" property="phone"/>
+        <result column="avatar_url" property="avatar_url"/>
     </resultMap>
 
     <select id="getUserPassword" resultType="java.lang.String">
@@ -34,7 +35,7 @@
     </select>
 
     <select id="returnUserData" resultMap="userResultMap">
-        select user_name,password,address,email,phone,register_time,address,phone from user where user_id = #{userID}
+        select user_name,password,address,email,phone,register_time,address,phone,avatar_url from user where user_id = #{userID}
     </select>
 
     <update id="saveUserData">
