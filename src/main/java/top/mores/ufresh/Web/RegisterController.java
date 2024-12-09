@@ -11,8 +11,6 @@ import top.mores.ufresh.POJO.Mail;
 import top.mores.ufresh.POJO.User;
 import top.mores.ufresh.Service.RegisterService;
 
-import java.util.Map;
-
 @RestController
 public class RegisterController {
 
