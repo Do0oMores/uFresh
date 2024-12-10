@@ -30,4 +30,6 @@ public interface UserDao {
     List<User> selectUser(String username);
 
     int saveEditUserData(String user_name, String email, String phone, boolean admin_enabled, Integer user_id);
+
+    String syncAvatar(Integer user_id);
 }

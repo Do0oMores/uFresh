@@ -30,6 +30,13 @@ public class ImageUploadService {
     private static final Logger log = LoggerFactory.getLogger(ImageUploadService.class);
     private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(".jpg", ".jpeg", ".png");
 
+    /**
+     * 上传图片
+     *
+     * @param file    图片文件
+     * @param user_id 上传的用户id
+     * @return 图片URL
+     */
     @Transactional
     public APIResponse<String> uploadImage(MultipartFile file, Integer user_id) {
         try {

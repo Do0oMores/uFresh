@@ -77,4 +77,8 @@
         </set>
         where user_id = #{user_id}
     </update>
+
+    <select id="syncAvatar">
+        select avatar_url from user where user_id = #{user_id}
+    </select>
 </mapper>
