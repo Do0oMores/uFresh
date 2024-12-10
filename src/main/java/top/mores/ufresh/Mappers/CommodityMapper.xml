@@ -2,9 +2,24 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--namespace绑定了一个对应的Dao/Mapper接口-->
 <mapper namespace="top.mores.ufresh.DAO.CommodityDao">
-    <select id="getUserList" resultType="top.mores.ufresh.POJO.Commodity">
-        select * from ufresh.user
+
+    <resultMap id="commodityResultMap" type="top.mores.ufresh.POJO.Commodity">
+        <id column="commodity_id" property="commodity_id"/>
+        <result column="commodity_name" property="commodity_name"/>
+        <result column="type" property="type"/>
+        <result column="price" property="price"/>
+        <result column="inventory" property="inventory"/>
+    </resultMap>
+
+    <select id="getCommodityByName" resultMap="commodityResultMap">
+        select * from commodity where commodity_name = #{commodity_name}
     </select>
+
+    <insert id="addCommodity" parameterType="top.mores.ufresh.POJO.Commodity" useGeneratedKeys="true" keyProperty="commodity_id">
+        INSERT INTO commodity
+        (commodity_name, type, price, inventory, description, image, support, mfd, exp)
+        VALUES
+        (#{commodity_name}, #{type}, #{price}, #{inventory}, #{description}, #{image}, #{support}, #{mfd}, #{exp});
+    </insert>
 </mapper>

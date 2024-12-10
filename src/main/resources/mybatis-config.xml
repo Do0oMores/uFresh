@@ -20,7 +20,6 @@
         <mapper resource="top/mores/ufresh/Mappers/OrdersMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/OrderItemsMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/CommodityMapper.xml"></mapper>
-        <mapper resource="top/mores/ufresh/Mappers/CommodityInformationMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/CartMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/CartItemsMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/AfterSalesMapper.xml"></mapper>

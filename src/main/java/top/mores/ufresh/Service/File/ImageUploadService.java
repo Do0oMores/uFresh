@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import top.mores.ufresh.POJO.APIResponse;
+import top.mores.ufresh.POJO.Commodity;
+import top.mores.ufresh.Service.Admin.CommodityService;
 import top.mores.ufresh.Service.User.UserInformationService;
 
 import java.io.File;
-import java.nio.file.Files;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -27,6 +29,8 @@ public class ImageUploadService {
     private String uploadPath;
     @Autowired
     private UserInformationService service;
+    @Autowired
+    private CommodityService commodityService;
     private static final Logger log = LoggerFactory.getLogger(ImageUploadService.class);
     private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(".jpg", ".jpeg", ".png");
 
@@ -40,54 +44,103 @@ public class ImageUploadService {
     @Transactional
     public APIResponse<String> uploadImage(MultipartFile file, Integer user_id) {
         try {
-            if (file == null || file.isEmpty()) {
-                return new APIResponse<>(500, "上传失败：文件为空");
-            }
+            String imageUrl = saveFile(file, uploadPath, "/uploads");
 
-            String fileName = file.getOriginalFilename();
-            if (fileName == null || fileName.isEmpty()) {
-                return new APIResponse<>(500, "上传失败：文件名无效");
-            }
-
-            String fileType = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf(".")) : "";
-            if (!ALLOWED_EXTENSIONS.contains(fileType.toLowerCase())) {
-                return new APIResponse<>(500, "上传失败：不支持的文件类型");
-            }
-
-            if (!fileName.matches("^[a-zA-Z0-9._-]+$")) {
-                return new APIResponse<>(500, "上传失败：文件名包含非法字符");
-            }
-
-            String datePath = new SimpleDateFormat("/yyyy/MM/dd").format(new Date());
-            String localDir = uploadPath + "/uploads" + datePath + "/";
-            File uploadDirFile = new File(localDir);
-            if (!uploadDirFile.exists() && !uploadDirFile.mkdirs()) {
-                return new APIResponse<>(500, "上传失败：无法创建目录");
-            }
-
-            String uuidFileName = UUID.randomUUID().toString().replace("-", "");
-            String realFileName = uuidFileName + fileType;
-
-            Path normalizedPath = Paths.get(localDir, realFileName).normalize();
-            if (!normalizedPath.startsWith(uploadPath)) {
-                return new APIResponse<>(500, "上传失败：非法文件路径");
-            }
-
-            File dest = normalizedPath.toFile();
-            file.transferTo(dest);
-
-            String avatarUrl = "uploads" + datePath + "/" + realFileName;
-
-            if (service.saveAvatarUrl(user_id, avatarUrl)) {
-                log.info("用户 [{}] 成功上传文件 [{}]，路径 [{}]", user_id, fileName, normalizedPath);
-                return new APIResponse<>(200, "上传成功", avatarUrl);
+            if (service.saveAvatarUrl(user_id, imageUrl)) {
+                log.info("用户 [{}] 成功上传文件，路径 [{}]", user_id, imageUrl);
+                return new APIResponse<>(200, "上传成功", imageUrl);
             } else {
-                Files.deleteIfExists(normalizedPath);
                 return new APIResponse<>(500, "上传保存失败");
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
+            log.warn("文件上传失败：{}", e.getMessage());
+            return new APIResponse<>(400, "上传失败：" + e.getMessage());
+        } catch (IOException | SecurityException e) {
             log.error("文件上传失败", e);
             return new APIResponse<>(500, "上传失败：" + e.getMessage());
+        } catch (Exception e) {
+            log.error("未知错误", e);
+            return new APIResponse<>(500, "上传失败：未知错误");
         }
+    }
+
+
+    @Transactional
+    public APIResponse<String> addCommodityWithImage(MultipartFile file,
+                                                     Commodity commodity) {
+        try {
+            String commodityName= commodity.getCommodity_name();
+            if (commodityService.getCommodityByName(commodityName) != null) {
+                return new APIResponse<>(400, "新增失败：商品名已存在");
+            }
+
+            String imageUrl = saveFile(file, uploadPath, "/uploads");
+            commodity.setImage(imageUrl);
+
+            if (commodityService.addCommodity(commodity)) {
+                log.info("商品 [{}] 成功新增，图片路径 [{}]", commodityName, imageUrl);
+                return new APIResponse<>(200, "新增成功", imageUrl);
+            } else {
+                return new APIResponse<>(500, "新增失败：数据库保存失败");
+            }
+        } catch (IllegalArgumentException e) {
+            log.warn("新增商品失败：{}", e.getMessage());
+            return new APIResponse<>(400, "新增失败：" + e.getMessage());
+        } catch (IOException | SecurityException e) {
+            log.error("新增商品失败", e);
+            return new APIResponse<>(500, "新增失败：" + e.getMessage());
+        } catch (Exception e) {
+            log.error("未知错误", e);
+            return new APIResponse<>(500, "新增失败：未知错误");
+        }
+    }
+
+    /**
+     * 文件校验保存
+     *
+     * @param file     文件
+     * @param basePath 基础路径
+     * @param subPath  相对路径
+     * @return 保存的路径
+     * @throws IOException 抛出异常
+     */
+    private String saveFile(MultipartFile file, String basePath, String subPath) throws IOException {
+        if (file == null || file.isEmpty()) {
+            throw new IllegalArgumentException("文件为空");
+        }
+
+        String fileName = file.getOriginalFilename();
+        if (fileName == null || fileName.isEmpty()) {
+            throw new IllegalArgumentException("文件名无效");
+        }
+
+        String fileType = fileName.contains(".") ? fileName.substring(fileName.lastIndexOf(".")) : "";
+        if (!ALLOWED_EXTENSIONS.contains(fileType.toLowerCase())) {
+            throw new IllegalArgumentException("不支持的文件类型");
+        }
+
+        if (!fileName.matches("^[a-zA-Z0-9._-]+$")) {
+            throw new IllegalArgumentException("文件名包含非法字符");
+        }
+
+        String datePath = new SimpleDateFormat("/yyyy/MM/dd").format(new Date());
+        String localDir = basePath + subPath + datePath + "/";
+        File uploadDirFile = new File(localDir);
+        if (!uploadDirFile.exists() && !uploadDirFile.mkdirs()) {
+            throw new IOException("无法创建目录");
+        }
+
+        String uuidFileName = UUID.randomUUID().toString().replace("-", "");
+        String realFileName = uuidFileName + fileType;
+
+        Path normalizedPath = Paths.get(localDir, realFileName).normalize();
+        if (!normalizedPath.startsWith(uploadPath)) {
+            throw new SecurityException("非法文件路径");
+        }
+
+        File dest = normalizedPath.toFile();
+        file.transferTo(dest);
+
+        return subPath + datePath + "/" + realFileName;
     }
 }
