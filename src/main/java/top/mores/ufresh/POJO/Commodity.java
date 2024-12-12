@@ -13,6 +13,15 @@ public class Commodity {
     private String support;
     private LocalDate mfd;
     private LocalDate exp;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public LocalDate getMfd() {
         return mfd;
@@ -107,6 +116,7 @@ public class Commodity {
                 ", support='" + support + '\'' +
                 ", mfd=" + mfd +
                 ", exp=" + exp +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

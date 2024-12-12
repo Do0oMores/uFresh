@@ -63,10 +63,15 @@ public class CommodityController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 获取全部商品信息
+     *
+     * @return 全部商品信息
+     */
     @PostMapping("/fetch-commodities")
     @ResponseBody
-    public ResponseEntity<?> fetchCommodity(){
-        APIResponse<List<Commodity>> response=commodityService.getAllCommodity();
+    public ResponseEntity<?> fetchCommodity() {
+        APIResponse<List<Commodity>> response = commodityService.getAllCommodity();
         return ResponseEntity.ok(response);
     }
 }

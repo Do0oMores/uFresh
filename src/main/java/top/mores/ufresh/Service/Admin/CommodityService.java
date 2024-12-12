@@ -44,15 +44,19 @@ public class CommodityService {
         }
     }
 
+    /**
+     * 获取所有商品
+     *
+     * @return 所有商品
+     */
     public APIResponse<List<Commodity>> getAllCommodity() {
         SqlSession session = MybatisUtils.getSqlSession();
         CommodityDao commodityDao = session.getMapper(CommodityDao.class);
-        try{
-            List<Commodity> commodities=commodityDao.fetchCommodity();
-            return new APIResponse<>(200,commodities);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new APIResponse<>(500,"发生错误："+e.getMessage());
+        try {
+            List<Commodity> commodities = commodityDao.fetchCommodity();
+            return new APIResponse<>(200, commodities);
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生错误：" + e.getMessage());
         }
     }
 }

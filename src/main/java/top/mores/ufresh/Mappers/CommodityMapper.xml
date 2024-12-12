@@ -24,6 +24,6 @@
     </insert>
 
     <select id="fetchCommodity" resultMap="commodityResultMap">
-        select commodity_id,commodity_name,type,price,inventory,description,support,mfd,exp from commodity
+        select commodity_id,commodity_name,type,price,inventory,description,support,mfd,exp,status from commodity
     </select>
 </mapper>

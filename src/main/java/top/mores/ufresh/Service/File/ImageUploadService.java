@@ -44,7 +44,7 @@ public class ImageUploadService {
     @Transactional
     public APIResponse<String> uploadImage(MultipartFile file, Integer user_id) {
         try {
-            String imageUrl = saveFile(file, uploadPath, "/uploads");
+            String imageUrl = saveFile(file, uploadPath);
 
             if (service.saveAvatarUrl(user_id, imageUrl)) {
                 log.info("用户 [{}] 成功上传文件，路径 [{}]", user_id, imageUrl);
@@ -80,7 +80,7 @@ public class ImageUploadService {
                 return new APIResponse<>(400, "新增失败：商品名已存在");
             }
 
-            String imageUrl = saveFile(file, uploadPath, "/uploads");
+            String imageUrl = saveFile(file, uploadPath);
             commodity.setImage(imageUrl);
 
             if (commodityService.addCommodity(commodity)) {
@@ -106,11 +106,10 @@ public class ImageUploadService {
      *
      * @param file     文件
      * @param basePath 基础路径
-     * @param subPath  相对路径
      * @return 保存的路径
      * @throws IOException 抛出异常
      */
-    private String saveFile(MultipartFile file, String basePath, String subPath) throws IOException {
+    private String saveFile(MultipartFile file, String basePath) throws IOException {
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("文件为空");
         }
@@ -130,7 +129,7 @@ public class ImageUploadService {
         }
 
         String datePath = new SimpleDateFormat("/yyyy/MM/dd").format(new Date());
-        String localDir = basePath + subPath + datePath + "/";
+        String localDir = basePath + "/uploads" + datePath + "/";
         File uploadDirFile = new File(localDir);
         if (!uploadDirFile.exists() && !uploadDirFile.mkdirs()) {
             throw new IOException("无法创建目录");
@@ -147,6 +146,6 @@ public class ImageUploadService {
         File dest = normalizedPath.toFile();
         file.transferTo(dest);
 
-        return subPath + datePath + "/" + realFileName;
+        return "/uploads" + datePath + "/" + realFileName;
     }
 }

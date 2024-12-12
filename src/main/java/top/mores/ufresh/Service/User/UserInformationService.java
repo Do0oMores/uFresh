@@ -37,7 +37,10 @@ public class UserInformationService {
      * @param userID   使用用户ID查询更新数据
      * @return 用户信息保存更新结果
      */
-    public APIResponse<Void> saveUserInformation(String userName, String password, String email, Integer userID) {
+    public APIResponse<Void> saveUserInformation(String userName,
+                                                 String password,
+                                                 String email,
+                                                 Integer userID) {
         try (SqlSession sqlSession = MybatisUtils.getSqlSession()) {
             UserDao userDao = sqlSession.getMapper(UserDao.class);
             int result = userDao.saveUserData(userName, password, email, userID);
@@ -80,7 +83,9 @@ public class UserInformationService {
      * @param userID  保存该用户ID的信息
      * @return 保存操作执行结果
      */
-    public APIResponse<Void> saveShippingInformation(String address, String phone, Integer userID) {
+    public APIResponse<Void> saveShippingInformation(String address,
+                                                     String phone,
+                                                     Integer userID) {
         try (SqlSession sqlSession = MybatisUtils.getSqlSession()) {
             UserDao userDao = sqlSession.getMapper(UserDao.class);
             if (userDao.saveShipping(address, phone, userID) == 1) {
