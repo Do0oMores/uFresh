@@ -39,7 +39,7 @@ public class UserManageService {
             UserDao userDao = session.getMapper(UserDao.class);
             List<User> userData = userDao.selectUser(username);
             if (!userData.isEmpty()) {
-                return new APIResponse<>(200, "查询成功：共找到 " + userData.size() + " 条数据", userData);
+                return new APIResponse<>(200, "共找到 " + userData.size() + " 条数据", userData);
             } else {
                 return new APIResponse<>(404, "没有查询到使用类似用户名的用户", null);
             }
