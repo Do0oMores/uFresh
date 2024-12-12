@@ -19,6 +19,20 @@ public class CommodityController {
     @Autowired
     private ImageUploadService imageUploadService;
 
+    /**
+     * 添加商品请求
+     *
+     * @param file          商品图片文件
+     * @param commodityName 商品名
+     * @param type          商品类型
+     * @param price         商品价格
+     * @param inventory     商品库存
+     * @param description   商品介绍
+     * @param support       商品供应商
+     * @param mfg           商品生产日期
+     * @param exp           商品过期时间
+     * @return 添加结果
+     */
     @PostMapping("addCommodityData")
     @ResponseBody
     public ResponseEntity<?> addCommodity(@RequestParam("file") MultipartFile file,

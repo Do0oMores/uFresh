@@ -64,12 +64,18 @@ public class ImageUploadService {
         }
     }
 
-
+    /**
+     * 添加商品（包含商品图片）
+     *
+     * @param file      商品图片文件
+     * @param commodity 商品
+     * @return 商品图片URL
+     */
     @Transactional
     public APIResponse<String> addCommodityWithImage(MultipartFile file,
                                                      Commodity commodity) {
         try {
-            String commodityName= commodity.getCommodity_name();
+            String commodityName = commodity.getCommodity_name();
             if (commodityService.getCommodityByName(commodityName) != null) {
                 return new APIResponse<>(400, "新增失败：商品名已存在");
             }
