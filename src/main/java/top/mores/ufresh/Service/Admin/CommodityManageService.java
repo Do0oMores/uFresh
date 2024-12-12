@@ -10,7 +10,7 @@ import top.mores.ufresh.POJO.Commodity;
 import java.util.List;
 
 @Service
-public class CommodityService {
+public class CommodityManageService {
 
     /**
      * 通过商品名获取商品

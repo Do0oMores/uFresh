@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Commodity;
-import top.mores.ufresh.Service.Admin.CommodityService;
+import top.mores.ufresh.Service.Admin.CommodityManageService;
 import top.mores.ufresh.Service.File.ImageUploadService;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-public class CommodityController {
+public class CommodityManageController {
     @Autowired
     private ImageUploadService imageUploadService;
     @Autowired
-    private CommodityService commodityService;
+    private CommodityManageService commodityService;
 
     /**
      * 添加商品请求

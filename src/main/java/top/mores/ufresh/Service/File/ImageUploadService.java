@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Commodity;
-import top.mores.ufresh.Service.Admin.CommodityService;
+import top.mores.ufresh.Service.Admin.CommodityManageService;
 import top.mores.ufresh.Service.User.UserInformationService;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class ImageUploadService {
     @Autowired
     private UserInformationService service;
     @Autowired
-    private CommodityService commodityService;
+    private CommodityManageService commodityService;
     private static final Logger log = LoggerFactory.getLogger(ImageUploadService.class);
     private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(".jpg", ".jpeg", ".png");
 

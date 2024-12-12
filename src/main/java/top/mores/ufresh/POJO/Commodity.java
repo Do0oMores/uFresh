@@ -14,6 +14,15 @@ public class Commodity {
     private LocalDate mfd;
     private LocalDate exp;
     private String status;
+    private String tag;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 
     public String getStatus() {
         return status;
@@ -117,6 +126,7 @@ public class Commodity {
                 ", mfd=" + mfd +
                 ", exp=" + exp +
                 ", status='" + status + '\'' +
+                ", tag='" + tag + '\'' +
                 '}';
     }
 }

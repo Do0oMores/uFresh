@@ -26,4 +26,8 @@
     <select id="fetchCommodity" resultMap="commodityResultMap">
         select commodity_id,commodity_name,type,price,inventory,description,support,mfd,exp,status from commodity
     </select>
+
+    <select id="fetchUserIndexCommodity" resultMap="commodityResultMap">
+        select commodity_name,price,image,tag from commodity where status=#{status}
+    </select>
 </mapper>

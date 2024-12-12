@@ -10,4 +10,6 @@ public interface CommodityDao {
     int addCommodity(Commodity commodity);
 
     List<Commodity> fetchCommodity();
+
+    List<Commodity> fetchUserIndexCommodity(String status);
 }
