@@ -22,4 +22,8 @@
         VALUES
         (#{commodity_name}, #{type}, #{price}, #{inventory}, #{description}, #{image}, #{support}, #{mfd}, #{exp});
     </insert>
+
+    <select id="fetchCommodity" resultMap="commodityResultMap">
+        select commodity_id,commodity_name,type,price,inventory,description,support,mfd,exp from commodity
+    </select>
 </mapper>

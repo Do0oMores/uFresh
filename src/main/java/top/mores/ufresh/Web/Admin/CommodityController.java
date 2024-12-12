@@ -10,14 +10,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Commodity;
+import top.mores.ufresh.Service.Admin.CommodityService;
 import top.mores.ufresh.Service.File.ImageUploadService;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class CommodityController {
     @Autowired
     private ImageUploadService imageUploadService;
+    @Autowired
+    private CommodityService commodityService;
 
     /**
      * 添加商品请求
@@ -56,6 +60,13 @@ public class CommodityController {
 
         APIResponse<String> response = imageUploadService.addCommodityWithImage(file,
                 commodity);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/fetch-commodities")
+    @ResponseBody
+    public ResponseEntity<?> fetchCommodity(){
+        APIResponse<List<Commodity>> response=commodityService.getAllCommodity();
         return ResponseEntity.ok(response);
     }
 }

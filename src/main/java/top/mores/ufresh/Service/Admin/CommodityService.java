@@ -4,7 +4,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import top.mores.ufresh.DAO.CommodityDao;
 import top.mores.ufresh.DAO.MybatisUtils;
+import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Commodity;
+
+import java.util.List;
 
 @Service
 public class CommodityService {
@@ -38,6 +41,18 @@ public class CommodityService {
                 session.rollback();
                 return false;
             }
+        }
+    }
+
+    public APIResponse<List<Commodity>> getAllCommodity() {
+        SqlSession session = MybatisUtils.getSqlSession();
+        CommodityDao commodityDao = session.getMapper(CommodityDao.class);
+        try{
+            List<Commodity> commodities=commodityDao.fetchCommodity();
+            return new APIResponse<>(200,commodities);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new APIResponse<>(500,"发生错误："+e.getMessage());
         }
     }
 }
