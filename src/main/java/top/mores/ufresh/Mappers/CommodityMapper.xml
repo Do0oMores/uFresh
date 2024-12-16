@@ -28,6 +28,6 @@
     </select>
 
     <select id="fetchUserIndexCommodity" resultMap="commodityResultMap">
-        select commodity_name,price,image,tag from commodity where status=#{status}
+        select commodity_name,price,image,tag,commodity_id from commodity where status=#{status}
     </select>
 </mapper>
