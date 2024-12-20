@@ -10,6 +10,12 @@
         <result column="type" property="type"/>
         <result column="price" property="price"/>
         <result column="inventory" property="inventory"/>
+        <result column="image" property="image"/>
+        <result column="support" property="support"/>
+        <result column="mfd" property="mfd"/>
+        <result column="exp" property="exp"/>
+        <result column="status" property="status"/>
+        <result column="tag" property="tag"/>
     </resultMap>
 
     <select id="getCommodityByName" resultMap="commodityResultMap">
@@ -24,10 +30,34 @@
     </insert>
 
     <select id="fetchCommodity" resultMap="commodityResultMap">
-        select commodity_id,commodity_name,type,price,inventory,description,support,mfd,exp,status from commodity
+        select commodity_id,commodity_name,type,price,inventory,description,support,mfd,exp,status,tag from commodity
     </select>
 
     <select id="fetchUserIndexCommodity" resultMap="commodityResultMap">
         select commodity_name,price,image,tag,commodity_id from commodity where status=#{status}
+    </select>
+
+    <select id="selectCommodity" resultMap="commodityResultMap">
+        select commodity_name, type, price, inventory, description, image, support, mfd, exp, status, tag
+        from commodity
+        <where>
+            <trim prefixOverrides="and">
+                <if test="commodity_name != null and commodity_name != ''">
+                    commodity_name like CONCAT('%', #{commodity_name}, '%')
+                </if>
+                <if test="support != null and support != ''">
+                    and support = #{support}
+                </if>
+                <if test="type != null and type != ''">
+                    and type = #{type}
+                </if>
+                <if test="mfd != null">
+                    and mfd = #{mfd}
+                </if>
+                <if test="exp != null">
+                    and exp = #{exp}
+                </if>
+            </trim>
+        </where>
     </select>
 </mapper>

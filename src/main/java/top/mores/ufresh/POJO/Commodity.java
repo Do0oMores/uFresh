@@ -1,5 +1,7 @@
 package top.mores.ufresh.POJO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 
 public class Commodity {
@@ -11,7 +13,9 @@ public class Commodity {
     private String description;
     private String image;
     private String support;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate mfd;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate exp;
     private String status;
     private String tag;

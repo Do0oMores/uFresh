@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -72,6 +73,19 @@ public class CommodityManageController {
     @ResponseBody
     public ResponseEntity<?> fetchCommodity() {
         APIResponse<List<Commodity>> response = commodityService.getAllCommodity();
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 查询商品
+     *
+     * @param commodity 传入的商品信息
+     * @return 查询结果
+     */
+    @PostMapping("/select-commodities")
+    @ResponseBody
+    public ResponseEntity<?> selectCommodity(@RequestBody Commodity commodity) {
+        APIResponse<List<Commodity>> response = commodityService.selectCommodities(commodity);
         return ResponseEntity.ok(response);
     }
 }

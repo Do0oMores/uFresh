@@ -1,5 +1,6 @@
 package top.mores.ufresh.Service.Admin;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import top.mores.ufresh.DAO.CommodityDao;
@@ -57,6 +58,32 @@ public class CommodityManageService {
             return new APIResponse<>(200, commodities);
         } catch (Exception e) {
             return new APIResponse<>(500, "发生错误：" + e.getMessage());
+        }
+    }
+
+    /**
+     * 根据商品名、商品类型、生产日期、过期时间、生产商查询商品
+     *
+     * @param commodity 传入的商品信息
+     * @return 查询结果
+     */
+    public APIResponse<List<Commodity>> selectCommodities(Commodity commodity) {
+        if (commodity == null) {
+            return new APIResponse<>(400, "查询条件不能为空");
+        }
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            CommodityDao commodityDao = session.getMapper(CommodityDao.class);
+            List<Commodity> commodities = commodityDao.selectCommodity(commodity);
+
+            if (!commodities.isEmpty()) {
+                return new APIResponse<>(200, "共找到 " + commodities.size() + " 条数据", commodities);
+            } else {
+                return new APIResponse<>(404, "无结果");
+            }
+        } catch (PersistenceException e) {
+            return new APIResponse<>(500, "数据库查询错误：" + e.getMessage());
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生未知错误：" + e.getMessage());
         }
     }
 }
