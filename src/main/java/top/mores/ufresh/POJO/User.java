@@ -2,7 +2,7 @@ package top.mores.ufresh.POJO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class User {
     private int user_id;
@@ -11,8 +11,8 @@ public class User {
     private Boolean enabled;
     private Boolean admin_enabled;
     private String address;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime register_time;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate register_time;
     private String phone;
     private String email;
     private String avatar_url;
@@ -33,11 +33,11 @@ public class User {
         this.phone = phone;
     }
 
-    public LocalDateTime getRegister_time() {
+    public LocalDate getRegister_time() {
         return register_time;
     }
 
-    public void setRegister_time(LocalDateTime register_time) {
+    public void setRegister_time(LocalDate register_time) {
         this.register_time = register_time;
     }
 

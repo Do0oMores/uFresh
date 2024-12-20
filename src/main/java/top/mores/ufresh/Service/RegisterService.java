@@ -11,7 +11,7 @@ import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.User;
 import top.mores.ufresh.Service.Mail.EmailService;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -36,7 +36,7 @@ public class RegisterService {
                 UserDao userDao = sqlSession.getMapper(UserDao.class);
 
                 User user = new User();
-                LocalDateTime currentTime = LocalDateTime.now();
+                LocalDate currentTime = LocalDate.now();
                 user.setUser_name(userName);
                 user.setPassword(password);
                 user.setRegister_time(currentTime);// 设置注册时间为当前时间
