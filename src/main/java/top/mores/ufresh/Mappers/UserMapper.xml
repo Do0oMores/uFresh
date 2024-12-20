@@ -63,8 +63,20 @@
     <select id="selectUser" resultMap="userResultMap">
         select user_id, user_name, password, address, email, phone, register_time, admin_enabled
         from user
-        where user_name like CONCAT('%', #{username}, '%')
-        and #{username} is not null and #{username} != ''
+        <where>
+            <if test="user_name!=null and user_name!=''">
+                user_name like CONCAT('%', #{user_name}, '%')
+            </if>
+            <if test="email!=null and email!=''">
+                and email = #{email}
+            </if>
+            <if test="phone!=null and phone!=''">
+                and phone = #{phone}
+            </if>
+            <if test="register_time!=null">
+                and register_time = #{register_time}
+            </if>
+        </where>
     </select>
 
     <update id="saveEditUserData">

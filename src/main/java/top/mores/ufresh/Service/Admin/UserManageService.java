@@ -29,19 +29,18 @@ public class UserManageService {
     }
 
     /**
-     * 根据用户名模糊查找用户
-     *
-     * @param username 用户名
-     * @return 查找结果
+     * 传入用户的用户名，邮箱，电话，注册时间进行查询
+     * @param user 传入的用户数据对象
+     * @return 查询结果
      */
-    public APIResponse<List<User>> selectUserData(String username) {
+    public APIResponse<List<User>> selectUserData(User user) {
         try (SqlSession session = MybatisUtils.getSqlSession()) {
             UserDao userDao = session.getMapper(UserDao.class);
-            List<User> userData = userDao.selectUser(username);
+            List<User> userData = userDao.selectUser(user);
             if (!userData.isEmpty()) {
                 return new APIResponse<>(200, "共找到 " + userData.size() + " 条数据", userData);
             } else {
-                return new APIResponse<>(404, "没有查询到使用类似用户名的用户", null);
+                return new APIResponse<>(404, "无结果", null);
             }
         } catch (Exception e) {
             return new APIResponse<>(500, "查询失败：" + e.getMessage(), null);

@@ -39,7 +39,7 @@ public class UserManageController {
     @PostMapping("/select-user")
     @ResponseBody
     public ResponseEntity<?> selectUser(@RequestBody User user) {
-        APIResponse<List<User>> response = userManageService.selectUserData(user.getUser_name());
+        APIResponse<List<User>> response = userManageService.selectUserData(user);
         return ResponseEntity.ok(response);
     }
 

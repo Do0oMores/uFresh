@@ -27,7 +27,7 @@ public interface UserDao {
 
     List<User> fetchUsers();
 
-    List<User> selectUser(String username);
+    List<User> selectUser(User user);
 
     int saveEditUserData(String user_name, String email, String phone, boolean admin_enabled, Integer user_id);
 

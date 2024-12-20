@@ -55,8 +55,10 @@ public class LoginService {
     public String checkAdmin(String username) {
         SqlSession sqlSession = MybatisUtils.getSqlSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
+        //查询数据库中用户角色
         int enabled = userDao.checkRole(username);
         sqlSession.close();
+        //返回用户角色：管理员或用户
         if (enabled == 1) {
             return "admin";
         } else {
