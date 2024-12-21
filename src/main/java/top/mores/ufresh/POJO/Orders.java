@@ -1,11 +1,25 @@
 package top.mores.ufresh.POJO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
+
 public class Orders {
     private int order_id;
     private int user_id;
     private double total_price;
     private String status;
-    private long created_time;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime created_time;
+    private String user_name;
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
 
     public int getOrder_id() {
         return order_id;
@@ -39,11 +53,11 @@ public class Orders {
         this.status = status;
     }
 
-    public long getCreated_time() {
+    public LocalDateTime getCreated_time() {
         return created_time;
     }
 
-    public void setCreated_time(long created_time) {
+    public void setCreated_time(LocalDateTime created_time) {
         this.created_time = created_time;
     }
 

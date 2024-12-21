@@ -2,9 +2,30 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--namespace绑定了一个对应的Dao/Mapper接口-->
 <mapper namespace="top.mores.ufresh.DAO.OrdersDao">
-    <select id="getUserList" resultType="top.mores.ufresh.POJO.Orders">
-        select * from ufresh.user
+
+    <resultMap id="orderResultMap" type="top.mores.ufresh.POJO.Orders">
+        <id column="order_id" property="order_id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="total_price" property="total_price"/>
+        <result column="status" property="status"/>
+        <result column="created_time" property="created_time"/>
+        <result column="username" property="username"/>
+    </resultMap>
+
+    <select id="getOrdersList" resultMap="orderResultMap">
+        SELECT
+        o.order_id,
+        o.user_id,
+        o.total_price,
+        o.status,
+        o.created_time,
+        u.user_name AS user_name
+        FROM
+        orders o
+        JOIN
+        user u
+        ON
+        o.user_id = u.user_id
     </select>
 </mapper>
