@@ -6,7 +6,6 @@ public class Orders {
     private double total_price;
     private String status;
     private long created_time;
-    private long updated_time;
 
     public int getOrder_id() {
         return order_id;
@@ -48,14 +47,6 @@ public class Orders {
         this.created_time = created_time;
     }
 
-    public long getUpdated_time() {
-        return updated_time;
-    }
-
-    public void setUpdated_time(long updated_time) {
-        this.updated_time = updated_time;
-    }
-
     @Override
     public String toString() {
         return "Orders{" +
@@ -64,7 +55,6 @@ public class Orders {
                 ", total_price=" + total_price +
                 ", status='" + status + '\'' +
                 ", created_time=" + created_time +
-                ", updated_time=" + updated_time +
                 '}';
     }
 }
