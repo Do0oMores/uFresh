@@ -59,7 +59,7 @@ public class EmailService {
      * @return 生成的验证码
      */
     public String randomMailCode() {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         Random random = new Random();
         StringBuilder sb = new StringBuilder();
 
