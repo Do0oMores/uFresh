@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Orders;
@@ -25,6 +26,13 @@ public class OrderManageController {
     @ResponseBody
     public ResponseEntity<?> getOrders() {
         APIResponse<List<Orders>> response = orderManageService.getOrders();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/select_orders")
+    @ResponseBody
+    public ResponseEntity<?> selectOrders(@RequestBody Orders orders) {
+        APIResponse<List<Orders>> response = orderManageService.getOrdersByConditions(orders);
         return ResponseEntity.ok(response);
     }
 }

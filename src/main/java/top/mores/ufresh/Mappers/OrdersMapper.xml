@@ -28,4 +28,29 @@
         ON
         o.user_id = u.user_id
     </select>
+
+    <select id="getOrdersByConditions" resultMap="orderResultMap">
+        SELECT
+        o.order_id,
+        u.user_name AS user_name,
+        o.status,
+        o.created_time
+        FROM
+        orders o
+        JOIN
+        user u
+        ON
+        o.user_id = u.user_id
+        <where>
+            <if test="order_id != null and order_id!=''">
+                o.order_id = #{order_id}
+            </if>
+            <if test="user_name != null and user_name!=''">
+                AND u.user_name LIKE CONCAT('%', #{user_name}, '%')
+            </if>
+            <if test="status != null and status!=''">
+                AND o.status = #{status}
+            </if>
+        </where>
+    </select>
 </mapper>

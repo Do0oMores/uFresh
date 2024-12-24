@@ -69,6 +69,7 @@ public class Orders {
                 ", total_price=" + total_price +
                 ", status='" + status + '\'' +
                 ", created_time=" + created_time +
+                ", user_name='" + user_name + '\'' +
                 '}';
     }
 }

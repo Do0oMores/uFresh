@@ -7,4 +7,6 @@ import java.util.List;
 public interface OrdersDao {
 
     List<Orders> getOrdersList();
+
+    List<Orders> getOrdersByConditions(Orders orders);
 }

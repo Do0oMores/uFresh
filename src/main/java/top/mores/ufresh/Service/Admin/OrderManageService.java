@@ -26,4 +26,18 @@ public class OrderManageService {
             return new APIResponse<>(500, "拉取信息出错：" + e.getMessage());
         }
     }
+
+    public APIResponse<List<Orders>> getOrdersByConditions(Orders orders) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            OrdersDao ordersDao = session.getMapper(OrdersDao.class);
+            List<Orders> ordersList = ordersDao.getOrdersByConditions(orders);
+            if (!ordersList.isEmpty()) {
+                return new APIResponse<>(200,"共查询到："+ordersList.size()+" 条数据",ordersList);
+            }else {
+                return new APIResponse<>(404,"没有查询到有关的订单");
+            }
+        }catch (Exception e) {
+            return new APIResponse<>(500,"查询出现错误："+e.getMessage());
+        }
+    }
 }
