@@ -29,6 +29,12 @@ public class OrderManageController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 根据条件查询订单信息
+     *
+     * @param orders 传入的查询条件：订单号、用户名、订单状态
+     * @return 订单查询结果
+     */
     @PostMapping("/select_orders")
     @ResponseBody
     public ResponseEntity<?> selectOrders(@RequestBody Orders orders) {

@@ -12,13 +12,18 @@ import java.util.List;
 @Service
 public class AfterSalesManageService {
 
-    public APIResponse<List<After_sales>> getAfterSales(){
-        try(SqlSession session= MybatisUtils.getSqlSession()){
+    /**
+     * 获取全部售后订单信息
+     *
+     * @return 全部售后订单信息
+     */
+    public APIResponse<List<After_sales>> getAfterSales() {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
             AfterSalesDao afterSalesDao = session.getMapper(AfterSalesDao.class);
-            List<After_sales> afterSales=afterSalesDao.getAfterSalesList();
-            return new APIResponse<>(200,afterSales);
-        }catch(Exception e){
-            return new APIResponse<>(500,"发生错误："+e.getMessage());
+            List<After_sales> afterSales = afterSalesDao.getAfterSalesList();
+            return new APIResponse<>(200, afterSales);
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生错误：" + e.getMessage());
         }
     }
 }

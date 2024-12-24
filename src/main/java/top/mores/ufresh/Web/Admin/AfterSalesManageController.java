@@ -16,10 +16,15 @@ public class AfterSalesManageController {
     @Autowired
     private AfterSalesManageService afterSalesManageService;
 
+    /**
+     * 获取全部售后订单接口
+     *
+     * @return 全部售后订单
+     */
     @PostMapping("/fetch-aftersales")
     @ResponseBody
-    public ResponseEntity<?> fetchAfterSales(){
-        APIResponse<List<After_sales>> response=afterSalesManageService.getAfterSales();
+    public ResponseEntity<?> fetchAfterSales() {
+        APIResponse<List<After_sales>> response = afterSalesManageService.getAfterSales();
         return ResponseEntity.ok(response);
     }
 }

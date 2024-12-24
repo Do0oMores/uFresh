@@ -30,6 +30,7 @@ public class UserManageService {
 
     /**
      * 传入用户的用户名，邮箱，电话，注册时间进行查询
+     *
      * @param user 传入的用户数据对象
      * @return 查询结果
      */
