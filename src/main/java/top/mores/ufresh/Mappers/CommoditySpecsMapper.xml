@@ -3,7 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.mores.ufresh.DAO.CommoditySpecsDao">
-    <select id="getUserList" resultType="top.mores.ufresh.POJO.Commodity_specs">
-        select * from ufresh.user
+
+    <resultMap id="CommoditySpecsResultMap" type="top.mores.ufresh.POJO.Commodity_specs">
+        <id column="id" property="id"/>
+        <result column="commodity_id" property="commodity_id"/>
+        <result column="spec_name" property="spec_name"/>
+        <result column="spec_value" property="spec_value"/>
+    </resultMap>
+
+    <select id="getSpecByCommodityID" resultMap="CommoditySpecsResultMap">
+        select spec_name,spec_value from commodity_specs where commodity_id = #{commodityID}
     </select>
 </mapper>

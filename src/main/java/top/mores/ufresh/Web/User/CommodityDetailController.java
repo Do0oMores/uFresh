@@ -6,7 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Commodity;
+import top.mores.ufresh.POJO.Commodity_specs;
 import top.mores.ufresh.Service.User.CommodityDetailService;
+
+import java.util.List;
 
 @Controller
 public class CommodityDetailController {
@@ -23,6 +26,19 @@ public class CommodityDetailController {
     @ResponseBody
     public ResponseEntity<?> getCommodityDetail(@RequestBody Commodity commodity) {
         APIResponse<Commodity> response = commodityDetailService.getCommodityDetail(commodity.getCommodity_id());
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 拉取商品规格
+     *
+     * @param commodity 传入商品ID
+     * @return 商品规格
+     */
+    @PostMapping("fetch-commodity-spec")
+    @ResponseBody
+    public ResponseEntity<?> getCommoditySpec(@RequestBody Commodity commodity) {
+        APIResponse<List<Commodity_specs>> response = commodityDetailService.getCommoditySpecs(commodity.getCommodity_id());
         return ResponseEntity.ok(response);
     }
 }
