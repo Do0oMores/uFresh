@@ -14,4 +14,6 @@ public interface CommodityDao {
     List<Commodity> fetchUserIndexCommodity(String status);
 
     List<Commodity> selectCommodity(Commodity commodity);
+
+    Commodity getCommodityByID(int id);
 }

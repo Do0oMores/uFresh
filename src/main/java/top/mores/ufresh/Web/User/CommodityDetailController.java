@@ -1,7 +1,28 @@
 package top.mores.ufresh.Web.User;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import top.mores.ufresh.POJO.APIResponse;
+import top.mores.ufresh.POJO.Commodity;
+import top.mores.ufresh.Service.User.CommodityDetailService;
 
 @Controller
 public class CommodityDetailController {
+    @Autowired
+    private CommodityDetailService commodityDetailService;
+
+    /**
+     * 拉取商品详情信息
+     *
+     * @param commodity 传入商品ID
+     * @return 商品详情信息
+     */
+    @PostMapping("/fetch-commodity-detail")
+    @ResponseBody
+    public ResponseEntity<?> getCommodityDetail(@RequestBody Commodity commodity) {
+        APIResponse<Commodity> response = commodityDetailService.getCommodityDetail(commodity.getCommodity_id());
+        return ResponseEntity.ok(response);
+    }
 }

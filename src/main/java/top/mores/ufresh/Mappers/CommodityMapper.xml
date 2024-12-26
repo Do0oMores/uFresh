@@ -60,4 +60,8 @@
             </trim>
         </where>
     </select>
+    
+    <select id="getCommodityByID" resultMap="commodityResultMap">
+        select commodity_name,type,price,description,image,tag from commodity where commodity_id = #{id}
+    </select>
 </mapper>
