@@ -8,6 +8,7 @@ import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Cart_items;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class ShopCartService {
@@ -67,6 +68,16 @@ public class ShopCartService {
         } else {
             session.rollback();
             return new APIResponse<>(500, failureMessage);
+        }
+    }
+
+    public APIResponse<List<Cart_items>> getUserCart(int user_id) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            CartItemsDao cartItemsDao = session.getMapper(CartItemsDao.class);
+            List<Cart_items> cart_items = cartItemsDao.getUserCart(user_id);
+            return new APIResponse<>(200, cart_items);
+        }catch (Exception e) {
+            return new APIResponse<>(500, "发生意料之外的错误："+e.getMessage());
         }
     }
 }

@@ -28,4 +28,28 @@
         set amount = amount + #{amount}
         where user_id = #{user_id} and commodity_id = #{commodity_id} and spec_id = #{spec_id}
     </update>
+
+    <select id="getUserCart">
+        SELECT
+        c.user_id,
+        c.commodity_id,
+        co.commodity_name AS name,
+        co.image AS image,
+        co.price AS price,
+        co.tag AS tag,
+        c.spec_id,
+        cs.spec_name AS spec_name,
+        cs.spec_value AS spec_value,
+        c.amount,
+        c.added_price,
+        c.added_time
+        FROM
+        cart_items c
+        LEFT JOIN
+        commodity co ON c.commodity_id = co.commodity_id
+        LEFT JOIN
+        commodity_specs cs ON c.spec_id = cs.id
+        WHERE
+        c.user_id = #{user_id}
+    </select>
 </mapper>
