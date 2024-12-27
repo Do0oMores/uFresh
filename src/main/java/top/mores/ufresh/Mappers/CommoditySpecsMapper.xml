@@ -12,6 +12,6 @@
     </resultMap>
 
     <select id="getSpecByCommodityID" resultMap="CommoditySpecsResultMap">
-        select spec_name,spec_value from commodity_specs where commodity_id = #{commodityID}
+        select id,spec_name,spec_value from commodity_specs where commodity_id = #{commodityID}
     </select>
 </mapper>
