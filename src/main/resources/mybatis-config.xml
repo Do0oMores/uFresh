@@ -2,7 +2,6 @@
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-config.dtd">
-<!--configuration核心配置文件-->
 <configuration>
     <environments default="development">
         <environment id="development">
@@ -20,7 +19,6 @@
         <mapper resource="top/mores/ufresh/Mappers/OrdersMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/OrderItemsMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/CommodityMapper.xml"></mapper>
-        <mapper resource="top/mores/ufresh/Mappers/CartMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/CartItemsMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/AfterSalesMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/CommoditySpecsMapper.xml"></mapper>

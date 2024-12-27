@@ -3,7 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.mores.ufresh.DAO.CartItemsDao">
-    <select id="getUserList" resultType="top.mores.ufresh.POJO.Cart_items">
-        select * from ufresh.user
+
+    <resultMap id="CartItemsResultMap" type="top.mores.ufresh.POJO.Cart_items">
+        <id column="cart_item_id" property="cart_item_id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="commodity_id" property="commodity_id"/>
+        <result column="amount" property="amount"/>
+        <result column="added_price" property="added_price"/>
+        <result column="spec_id" property="spec_id"/>
+        <result column="added_time" property="added_time"/>
+    </resultMap>
+
+    <select id="getCommodityIDFromUserCart">
+        select commodity_id,spec_id from cart_items where user_id =#{user_id} and commodity_id=#{commodity_id}
     </select>
+
+    <insert id="addCommodityToCart">
+        insert into cart_items(user_id,commodity_id,amount,added_price,spec_id,added_time)
+        values (#{user_id},#{commodity_id},#{amount},#{added_price},#{spec_id},#{added_time})
+    </insert>
+
+    <update id="addCommodityAmount">
+        update cart_items
+        set amount = amount + #{amount}
+        where user_id = #{user_id} and commodity_id = #{commodity_id} and spec_id = #{spec_id}
+    </update>
 </mapper>
