@@ -13,6 +13,12 @@ import java.util.List;
 @Service
 public class ShopCartService {
 
+    /**
+     * 将商品添加到购物车
+     *
+     * @param cart_items 商品
+     * @return 添加结果
+     */
     public APIResponse<Void> addCommodityToCart(Cart_items cart_items) {
         try (SqlSession session = MybatisUtils.getSqlSession()) {
             CartItemsDao cartItemsDao = session.getMapper(CartItemsDao.class);
@@ -55,11 +61,19 @@ public class ShopCartService {
                     "添加到购物车失败"
             );
         } catch (Exception e) {
-            e.printStackTrace();
             return new APIResponse<>(500, "系统错误");
         }
     }
 
+    /**
+     * 添加到购物车处理
+     *
+     * @param session         sql
+     * @param operationResult 处理结果
+     * @param successMessage  成功
+     * @param failureMessage  失败
+     * @return 添加结果
+     */
     private APIResponse<Void> handleCartOperation(SqlSession session, int operationResult,
                                                   String successMessage, String failureMessage) {
         if (operationResult == 1) {
@@ -71,13 +85,19 @@ public class ShopCartService {
         }
     }
 
+    /**
+     * 获取用户购物车
+     *
+     * @param user_id 用户ID
+     * @return 购物车内商品信息
+     */
     public APIResponse<List<Cart_items>> getUserCart(int user_id) {
         try (SqlSession session = MybatisUtils.getSqlSession()) {
             CartItemsDao cartItemsDao = session.getMapper(CartItemsDao.class);
             List<Cart_items> cart_items = cartItemsDao.getUserCart(user_id);
             return new APIResponse<>(200, cart_items);
-        }catch (Exception e) {
-            return new APIResponse<>(500, "发生意料之外的错误："+e.getMessage());
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
         }
     }
 }
