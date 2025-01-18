@@ -96,18 +96,38 @@ public class CommodityManageService {
 
     /**
      * 更新商品图片
+     *
      * @param commodity 商品信息
      * @return 是否更新成功
      */
-    public boolean updateCommodity(Commodity commodity) {
+    public boolean editCommodityImage(Commodity commodity) {
         try (SqlSession session = MybatisUtils.getSqlSession()) {
             CommodityDao commodityDao = session.getMapper(CommodityDao.class);
-            if (commodityDao.editCommodityImage(commodity.getImage(),commodity.getCommodity_id())==1){
+            if (commodityDao.editCommodityImage(commodity.getImage(), commodity.getCommodity_id()) == 1) {
                 session.commit();
                 return true;
-            }else {
+            } else {
                 session.rollback();
                 return false;
+            }
+        }
+    }
+
+    /**
+     * 更新商品信息
+     *
+     * @param commodity 新的商品数据
+     * @return 更新结果
+     */
+    public APIResponse<Void> updateCommodityData(Commodity commodity) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            CommodityDao commodityDao = session.getMapper(CommodityDao.class);
+            if (commodityDao.editCommodity(commodity) == 1) {
+                session.commit();
+                return new APIResponse<>(200, "数据更新成功");
+            } else {
+                session.rollback();
+                return new APIResponse<>(500, "数据更新发生错误");
             }
         }
     }

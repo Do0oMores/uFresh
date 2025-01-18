@@ -97,9 +97,10 @@ public class CommodityManageController {
         return ResponseEntity.ok(response);
     }
 
-//    @PostMapping("/edit-commodity")
-//    @ResponseBody
-//    public ResponseEntity<?> editCommodity(@RequestBody Commodity commodity) {
-//
-//    }
+    @PostMapping("/edit-commodity")
+    @ResponseBody
+    public ResponseEntity<?> editCommodity(@RequestBody Commodity commodity) {
+        APIResponse<Void> response=commodityService.updateCommodityData(commodity);
+        return ResponseEntity.ok(response);
+    }
 }

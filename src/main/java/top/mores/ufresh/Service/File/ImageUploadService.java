@@ -166,7 +166,7 @@ public class ImageUploadService {
             String imageUrl = saveFile(file, uploadPath);
 
             commodity.setImage(imageUrl);
-            if (commodityService.updateCommodity(commodity)) {
+            if (commodityService.editCommodityImage(commodity)) {
                 log.info("商品 [{}] 图片更新成功，新图片路径 [{}]", commodityID, imageUrl);
                 return new APIResponse<>(200, "图片更新成功", imageUrl);
             } else {

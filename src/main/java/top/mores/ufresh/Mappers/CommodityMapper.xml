@@ -66,10 +66,23 @@
     </select>
 
     <update id="editCommodity">
-
+        update commodity
+        <set>
+            <if test="commodity_name != null">commodity_name=#{commodity_name},</if>
+            <if test="type != null">type=#{type},</if>
+            <if test="price != null">price=#{price},</if>
+            <if test="inventory != null">inventory=#{inventory},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="support != null">support=#{support},</if>
+            <if test="mfd != null">mfd=#{mfd},</if>
+            <if test="exp != null">exp=#{exp},</if>
+            <if test="status != null">status=#{status},</if>
+            <if test="tag != null">tag=#{tag},</if>
+        </set>
+        where commodity_id=#{commodity_id}
     </update>
 
     <update id="editCommodityImage">
-        update commodity set image = #{image} where commodity_id = #{commodity_id}
+
     </update>
 </mapper>
