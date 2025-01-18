@@ -148,4 +148,39 @@ public class ImageUploadService {
 
         return "/uploads" + datePath + "/" + realFileName;
     }
+
+    /**
+     * 更新商品图片
+     *
+     * @param file        图片文件
+     * @param commodityID 商品数据
+     * @return 更新结果
+     */
+    @Transactional
+    public APIResponse<String> updateCommodityImage(MultipartFile file, Integer commodityID) {
+        try {
+            Commodity commodity = commodityService.getCommodityById(commodityID);
+            if (commodity == null) {
+                return new APIResponse<>(400, "更新失败：商品不存在");
+            }
+            String imageUrl = saveFile(file, uploadPath);
+
+            commodity.setImage(imageUrl);
+            if (commodityService.updateCommodity(commodity)) {
+                log.info("商品 [{}] 图片更新成功，新图片路径 [{}]", commodityID, imageUrl);
+                return new APIResponse<>(200, "图片更新成功", imageUrl);
+            } else {
+                return new APIResponse<>(500, "图片更新失败：数据库操作失败");
+            }
+        } catch (IllegalArgumentException e) {
+            log.warn("更新商品图片失败：{}", e.getMessage());
+            return new APIResponse<>(400, "更新失败：" + e.getMessage());
+        } catch (IOException | SecurityException e) {
+            log.error("更新商品图片失败", e);
+            return new APIResponse<>(500, "更新失败：" + e.getMessage());
+        } catch (Exception e) {
+            log.error("未知错误", e);
+            return new APIResponse<>(500, "更新失败：未知错误");
+        }
+    }
 }

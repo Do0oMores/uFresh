@@ -30,7 +30,7 @@
     </insert>
 
     <select id="fetchCommodity" resultMap="commodityResultMap">
-        select commodity_id,commodity_name,type,price,inventory,description,support,mfd,exp,status,tag from commodity
+        select commodity_id,commodity_name,type,price,inventory,description,support,mfd,exp,status,tag,image from commodity
     </select>
 
     <select id="fetchUserIndexCommodity" resultMap="commodityResultMap">
@@ -38,7 +38,7 @@
     </select>
 
     <select id="selectCommodity" resultMap="commodityResultMap">
-        select commodity_name, type, price, inventory, description, image, support, mfd, exp, status, tag
+        select commodity_name, type, price, inventory, description, image, support, mfd, exp, status, tag,commodity_id
         from commodity
         <where>
             <trim prefixOverrides="and">
@@ -64,4 +64,12 @@
     <select id="getCommodityByID" resultMap="commodityResultMap">
         select commodity_name,type,price,description,image,tag from commodity where commodity_id = #{id}
     </select>
+
+    <update id="editCommodity">
+
+    </update>
+
+    <update id="editCommodityImage">
+        update commodity set image = #{image} where commodity_id = #{commodity_id}
+    </update>
 </mapper>

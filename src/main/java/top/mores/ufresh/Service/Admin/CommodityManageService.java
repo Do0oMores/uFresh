@@ -26,6 +26,13 @@ public class CommodityManageService {
         }
     }
 
+    public Commodity getCommodityById(int id) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            CommodityDao commodityDao = session.getMapper(CommodityDao.class);
+            return commodityDao.getCommodityByID(id);
+        }
+    }
+
     /**
      * 添加商品
      *
@@ -84,6 +91,24 @@ public class CommodityManageService {
             return new APIResponse<>(500, "数据库查询错误：" + e.getMessage());
         } catch (Exception e) {
             return new APIResponse<>(500, "发生未知错误：" + e.getMessage());
+        }
+    }
+
+    /**
+     * 更新商品图片
+     * @param commodity 商品信息
+     * @return 是否更新成功
+     */
+    public boolean updateCommodity(Commodity commodity) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            CommodityDao commodityDao = session.getMapper(CommodityDao.class);
+            if (commodityDao.editCommodityImage(commodity.getImage(),commodity.getCommodity_id())==1){
+                session.commit();
+                return true;
+            }else {
+                session.rollback();
+                return false;
+            }
         }
     }
 }

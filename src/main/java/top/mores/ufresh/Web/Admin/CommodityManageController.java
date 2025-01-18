@@ -88,4 +88,18 @@ public class CommodityManageController {
         APIResponse<List<Commodity>> response = commodityService.selectCommodities(commodity);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/upload-commodity-image")
+    @ResponseBody
+    public ResponseEntity<?> uploadCommodityImage(@RequestParam("file") MultipartFile file,
+                                                  @RequestParam("commodity_id") Integer commodity_id) {
+        APIResponse<String> response=imageUploadService.updateCommodityImage(file,commodity_id);
+        return ResponseEntity.ok(response);
+    }
+
+//    @PostMapping("/edit-commodity")
+//    @ResponseBody
+//    public ResponseEntity<?> editCommodity(@RequestBody Commodity commodity) {
+//
+//    }
 }

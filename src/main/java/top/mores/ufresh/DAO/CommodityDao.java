@@ -16,4 +16,8 @@ public interface CommodityDao {
     List<Commodity> selectCommodity(Commodity commodity);
 
     Commodity getCommodityByID(int id);
+
+    int editCommodity(Commodity commodity);
+
+    int editCommodityImage(String image,Integer commodity_id);
 }
