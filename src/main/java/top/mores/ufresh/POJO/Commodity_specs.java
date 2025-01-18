@@ -3,8 +3,7 @@ package top.mores.ufresh.POJO;
 public class Commodity_specs {
     private int id;
     private int commodity_id;
-    private String spec_name;
-    private String spec_value;
+    private String spec;
 
     public int getId() {
         return id;
@@ -22,20 +21,12 @@ public class Commodity_specs {
         this.commodity_id = commodity_id;
     }
 
-    public String getSpec_name() {
-        return spec_name;
+    public String getSpec() {
+        return spec;
     }
 
-    public void setSpec_name(String spec_name) {
-        this.spec_name = spec_name;
-    }
-
-    public String getSpec_value() {
-        return spec_value;
-    }
-
-    public void setSpec_value(String spec_value) {
-        this.spec_value = spec_value;
+    public void setSpec(String spec) {
+        this.spec = spec;
     }
 
     @Override
@@ -43,8 +34,7 @@ public class Commodity_specs {
         return "Commodity_specs{" +
                 "id=" + id +
                 ", commodity_id=" + commodity_id +
-                ", spec_name='" + spec_name + '\'' +
-                ", spec_value='" + spec_value + '\'' +
+                ", spec='" + spec + '\'' +
                 '}';
     }
 }
