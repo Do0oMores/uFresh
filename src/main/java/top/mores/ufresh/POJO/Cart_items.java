@@ -10,8 +10,7 @@ public class Cart_items {
     private double added_price;
     private int spec_id;
     private LocalDateTime added_time;
-    private String spec_name;
-    private String spec_value;
+    private String spec;
     private String tag;
     private String image;
     private String name;
@@ -32,20 +31,12 @@ public class Cart_items {
         this.image = image;
     }
 
-    public String getSpec_name() {
-        return spec_name;
+    public String getSpec() {
+        return spec;
     }
 
-    public void setSpec_name(String spec_name) {
-        this.spec_name = spec_name;
-    }
-
-    public String getSpec_value() {
-        return spec_value;
-    }
-
-    public void setSpec_value(String spec_value) {
-        this.spec_value = spec_value;
+    public void setSpec(String spec) {
+        this.spec = spec;
     }
 
     public String getTag() {
@@ -122,8 +113,7 @@ public class Cart_items {
                 ", added_price=" + added_price +
                 ", spec_id=" + spec_id +
                 ", added_time=" + added_time +
-                ", spec_name='" + spec_name + '\'' +
-                ", spec_value='" + spec_value + '\'' +
+                ", spec='" + spec + '\'' +
                 ", tag='" + tag + '\'' +
                 ", image='" + image + '\'' +
                 ", name='" + name + '\'' +

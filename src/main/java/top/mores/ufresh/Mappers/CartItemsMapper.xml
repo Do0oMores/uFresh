@@ -38,8 +38,7 @@
         co.price AS added_price,
         co.tag AS tag,
         c.spec_id,
-        cs.spec_name AS spec_name,
-        cs.spec_value AS spec_value,
+        cs.spec AS spec,
         c.amount,
         c.added_price,
         c.added_time
