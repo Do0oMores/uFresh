@@ -8,7 +8,6 @@
         <id column="commodity_id" property="commodity_id"/>
         <result column="commodity_name" property="commodity_name"/>
         <result column="type" property="type"/>
-        <result column="price" property="price"/>
         <result column="inventory" property="inventory"/>
         <result column="image" property="image"/>
         <result column="support" property="support"/>
@@ -24,21 +23,21 @@
 
     <insert id="addCommodity" parameterType="top.mores.ufresh.POJO.Commodity" useGeneratedKeys="true" keyProperty="commodity_id">
         INSERT INTO commodity
-        (commodity_name, type, price, inventory, description, image, support, mfd, exp)
+        (commodity_name, type, inventory, description, image, support, mfd, exp)
         VALUES
         (#{commodity_name}, #{type}, #{price}, #{inventory}, #{description}, #{image}, #{support}, #{mfd}, #{exp});
     </insert>
 
     <select id="fetchCommodity" resultMap="commodityResultMap">
-        select commodity_id,commodity_name,type,price,inventory,description,support,mfd,exp,status,tag,image from commodity
+        select commodity_id,commodity_name,type,inventory,description,support,mfd,exp,status,tag,image from commodity
     </select>
 
     <select id="fetchUserIndexCommodity" resultMap="commodityResultMap">
-        select commodity_name,price,image,tag,commodity_id from commodity where status=#{status}
+        select commodity_name,image,tag,commodity_id from commodity where status=#{status}
     </select>
 
     <select id="selectCommodity" resultMap="commodityResultMap">
-        select commodity_name, type, price, inventory, description, image, support, mfd, exp, status, tag,commodity_id
+        select commodity_name, type, inventory, description, image, support, mfd, exp, status, tag,commodity_id
         from commodity
         <where>
             <trim prefixOverrides="and">
@@ -62,7 +61,7 @@
     </select>
     
     <select id="getCommodityByID" resultMap="commodityResultMap">
-        select commodity_name,type,price,description,image,tag from commodity where commodity_id = #{id}
+        select commodity_name,type,description,image,tag from commodity where commodity_id = #{id}
     </select>
 
     <update id="editCommodity">
@@ -70,7 +69,6 @@
         <set>
             <if test="commodity_name != null">commodity_name=#{commodity_name},</if>
             <if test="type != null">type=#{type},</if>
-            <if test="price != null">price=#{price},</if>
             <if test="inventory != null">inventory=#{inventory},</if>
             <if test="description != null">description=#{description},</if>
             <if test="support != null">support=#{support},</if>

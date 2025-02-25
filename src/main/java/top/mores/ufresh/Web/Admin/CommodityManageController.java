@@ -30,7 +30,6 @@ public class CommodityManageController {
      * @param file          商品图片文件
      * @param commodityName 商品名
      * @param type          商品类型
-     * @param price         商品价格
      * @param inventory     商品库存
      * @param description   商品介绍
      * @param support       商品供应商
@@ -43,7 +42,6 @@ public class CommodityManageController {
     public ResponseEntity<?> addCommodity(@RequestParam("file") MultipartFile file,
                                           @RequestParam("commodity_name") String commodityName,
                                           @RequestParam("type") String type,
-                                          @RequestParam("price") Double price,
                                           @RequestParam("inventory") Integer inventory,
                                           @RequestParam("description") String description,
                                           @RequestParam("support") String support,
@@ -52,7 +50,6 @@ public class CommodityManageController {
         Commodity commodity = new Commodity();
         commodity.setCommodity_name(commodityName);
         commodity.setType(type);
-        commodity.setPrice(price);
         commodity.setInventory(inventory);
         commodity.setDescription(description);
         commodity.setSupport(support);

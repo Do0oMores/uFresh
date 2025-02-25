@@ -8,7 +8,6 @@ public class Commodity {
     private int commodity_id;
     private String commodity_name;
     private String type;
-    private double price;
     private int inventory;
     private String description;
     private String image;
@@ -100,14 +99,6 @@ public class Commodity {
         this.type = type;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public int getInventory() {
         return inventory;
     }
@@ -122,7 +113,6 @@ public class Commodity {
                 "commodity_id=" + commodity_id +
                 ", commodity_name='" + commodity_name + '\'' +
                 ", type='" + type + '\'' +
-                ", price=" + price +
                 ", inventory=" + inventory +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +

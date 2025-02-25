@@ -100,4 +100,10 @@ public class ShopCartService {
             return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
         }
     }
+
+//    public APIResponse<Void> builtOrder(int commodity_id,String spec){
+//        try (SqlSession session = MybatisUtils.getSqlSession()) {
+//
+//        }
+//    }
 }

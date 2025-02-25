@@ -7,10 +7,11 @@
     <resultMap id="CommoditySpecsResultMap" type="top.mores.ufresh.POJO.Commodity_specs">
         <id column="id" property="id"/>
         <result column="commodity_id" property="commodity_id"/>
+        <result column="price" property="price"/>
         <result column="spec" property="spec"/>
     </resultMap>
 
     <select id="getSpecByCommodityID" resultMap="CommoditySpecsResultMap">
-        select id,spec from commodity_specs where commodity_id = #{commodityID}
+        select id,spec,price from commodity_specs where commodity_id = #{commodityID}
     </select>
 </mapper>

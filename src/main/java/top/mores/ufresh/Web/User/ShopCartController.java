@@ -31,4 +31,11 @@ public class ShopCartController {
         APIResponse<List<Cart_items>> response=shopCartService.getUserCart(cart_items.getUser_id());
         return ResponseEntity.ok(response);
     }
+
+//    @PostMapping("/checkout")
+//    @ResponseBody
+//    public ResponseEntity<?> checkout(@RequestBody Cart_items cart_items) {
+//
+//
+//    }
 }
