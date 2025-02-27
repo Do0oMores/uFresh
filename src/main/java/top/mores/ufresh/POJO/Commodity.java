@@ -18,6 +18,7 @@ public class Commodity {
     private LocalDate exp;
     private String status;
     private String tag;
+    private double price;
 
     public String getTag() {
         return tag;
@@ -107,6 +108,14 @@ public class Commodity {
         this.inventory = inventory;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Commodity{" +
@@ -121,6 +130,7 @@ public class Commodity {
                 ", exp=" + exp +
                 ", status='" + status + '\'' +
                 ", tag='" + tag + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

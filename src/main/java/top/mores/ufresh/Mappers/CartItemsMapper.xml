@@ -35,7 +35,7 @@
         c.commodity_id,
         co.commodity_name AS name,
         co.image AS image,
-        co.price AS added_price,
+        cs.price AS added_price,
         co.tag AS tag,
         c.spec_id,
         cs.spec AS spec,

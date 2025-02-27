@@ -25,15 +25,47 @@
         INSERT INTO commodity
         (commodity_name, type, inventory, description, image, support, mfd, exp)
         VALUES
-        (#{commodity_name}, #{type}, #{price}, #{inventory}, #{description}, #{image}, #{support}, #{mfd}, #{exp});
+        (#{commodity_name}, #{type}, #{price}, #{invetory}, #{description}, #{image}, #{support}, #{mfd}, #{exp});
     </insert>
 
     <select id="fetchCommodity" resultMap="commodityResultMap">
-        select commodity_id,commodity_name,type,inventory,description,support,mfd,exp,status,tag,image from commodity
+        SELECT
+        c.commodity_id,
+        c.commodity_name,
+        c.type,
+        c.inventory,
+        c.description,
+        c.support,
+        c.mfd,
+        c.exp,
+        c.status,
+        c.tag,
+        c.image,
+        MIN(cs.price) AS price
+        FROM
+        commodity c
+        LEFT JOIN
+        commodity_specs cs ON c.commodity_id = cs.commodity_id
+        GROUP BY
+        c.commodity_id, c.commodity_name, c.type, c.inventory, c.description,
+        c.support, c.mfd, c.exp, c.status, c.tag, c.image
     </select>
 
     <select id="fetchUserIndexCommodity" resultMap="commodityResultMap">
-        select commodity_name,image,tag,commodity_id from commodity where status=#{status}
+        SELECT
+        c.commodity_name,
+        c.image,
+        c.tag,
+        c.commodity_id,
+        MIN(cs.price) AS price
+        FROM
+        commodity c
+        LEFT JOIN
+        commodity_specs cs ON c.commodity_id = cs.commodity_id
+        WHERE
+        c.status = #{status}
+        GROUP BY
+        c.commodity_name, c.image, c.tag, c.commodity_id
     </select>
 
     <select id="selectCommodity" resultMap="commodityResultMap">
@@ -59,9 +91,23 @@
             </trim>
         </where>
     </select>
-    
+
     <select id="getCommodityByID" resultMap="commodityResultMap">
-        select commodity_name,type,description,image,tag from commodity where commodity_id = #{id}
+        SELECT
+        c.commodity_name,
+        c.type,
+        c.description,
+        c.image,
+        c.tag,
+        MIN(cs.price) AS price
+        FROM
+        commodity c
+        LEFT JOIN
+        commodity_specs cs ON c.commodity_id = cs.commodity_id
+        WHERE
+        c.commodity_id = #{id}
+        GROUP BY
+        c.commodity_name, c.type, c.description, c.image, c.tag
     </select>
 
     <update id="editCommodity">
