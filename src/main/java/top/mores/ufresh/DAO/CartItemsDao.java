@@ -5,7 +5,7 @@ import top.mores.ufresh.POJO.Cart_items;
 import java.util.List;
 
 public interface CartItemsDao {
-    Cart_items getCommodityIDFromUserCart(int user_id, int commodity_id);
+    List<Cart_items> getCommodityIDFromUserCart(int user_id, int commodity_id);
 
     int addCommodityToCart(Cart_items cart_items);
 
