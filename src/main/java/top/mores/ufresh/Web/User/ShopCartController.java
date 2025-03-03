@@ -11,30 +11,44 @@ import top.mores.ufresh.POJO.Cart_items;
 import top.mores.ufresh.Service.User.ShopCartService;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ShopCartController {
     @Autowired
     private ShopCartService shopCartService;
 
+    /**
+     * 将商品加入购物车
+     *
+     * @param cart_items 加入购物车的商品
+     * @return 加入结果
+     */
     @PostMapping("/add-to-cart")
     @ResponseBody
     public ResponseEntity<?> addCommodityToCart(@RequestBody Cart_items cart_items) {
-        APIResponse<Void> response=shopCartService.addCommodityToCart(cart_items);
+        APIResponse<Void> response = shopCartService.addCommodityToCart(cart_items);
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 拉取购物车信息
+     *
+     * @param cart_items 用户ID
+     * @return 购物车物品信息
+     */
     @PostMapping("/fetch-cart")
     @ResponseBody
     public ResponseEntity<?> fetchCart(@RequestBody Cart_items cart_items) {
-        APIResponse<List<Cart_items>> response=shopCartService.getUserCart(cart_items.getUser_id());
+        APIResponse<List<Cart_items>> response = shopCartService.getUserCart(cart_items.getUser_id());
         return ResponseEntity.ok(response);
     }
 
-//    @PostMapping("/checkout")
-//    @ResponseBody
-//    public ResponseEntity<?> checkout(@RequestBody Cart_items cart_items) {
-//
-//
-//    }
+    @PostMapping("/checkout")
+    @ResponseBody
+    public ResponseEntity<?> checkout(@RequestBody Map<String, List<Cart_items>> requestBody) {
+        List<Cart_items> cartItems = requestBody.get("items");
+        APIResponse<Void> response = shopCartService.builtOrder(cartItems);
+        return ResponseEntity.ok(response);
+    }
 }

@@ -53,4 +53,13 @@
             </if>
         </where>
     </select>
+
+    <select id="getUserOrdersByStatus">
+        select order_id from orders where user_id = #{user_id} and status = #{status}
+    </select>
+
+    <insert id="addOrder">
+        insert into orders (user_id,total_price,status,created_time,order_uuid) values
+        (#{user_id},#{total_price},#{status},#{created_time},#{order_uuid})
+    </insert>
 </mapper>

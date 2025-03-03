@@ -5,7 +5,8 @@ public class Order_items {
     private int order_id;
     private int commodity_id;
     private int quantity;
-    private double price;
+    private String spec;
+    private String order_uuid;
 
     public int getOrder_item_id() {
         return order_item_id;
@@ -39,12 +40,20 @@ public class Order_items {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
-        return price;
+    public String getSpec() {
+        return spec;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setSpec(String spec) {
+        this.spec = spec;
+    }
+
+    public String getOrder_uuid() {
+        return order_uuid;
+    }
+
+    public void setOrder_uuid(String order_uuid) {
+        this.order_uuid = order_uuid;
     }
 
     @Override
@@ -54,7 +63,8 @@ public class Order_items {
                 ", order_id=" + order_id +
                 ", commodity_id=" + commodity_id +
                 ", quantity=" + quantity +
-                ", price=" + price +
+                ", spec='" + spec + '\'' +
+                ", order_uuid='" + order_uuid + '\'' +
                 '}';
     }
 }

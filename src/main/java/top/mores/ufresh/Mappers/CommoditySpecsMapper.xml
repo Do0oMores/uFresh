@@ -14,4 +14,8 @@
     <select id="getSpecByCommodityID" resultMap="CommoditySpecsResultMap">
         select id,spec,price from commodity_specs where commodity_id = #{commodityID}
     </select>
+
+    <select id="getPrice">
+        select price from commodity_specs where commodity_id=#{commodity_id} and spec = #{spec}
+    </select>
 </mapper>

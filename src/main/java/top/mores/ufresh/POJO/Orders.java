@@ -12,6 +12,7 @@ public class Orders {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime created_time;
     private String user_name;
+    private String order_uuid;
 
     public String getUser_name() {
         return user_name;
@@ -61,6 +62,14 @@ public class Orders {
         this.created_time = created_time;
     }
 
+    public String getOrder_uuid() {
+        return order_uuid;
+    }
+
+    public void setOrder_uuid(String order_uuid) {
+        this.order_uuid = order_uuid;
+    }
+
     @Override
     public String toString() {
         return "Orders{" +
@@ -70,6 +79,7 @@ public class Orders {
                 ", status='" + status + '\'' +
                 ", created_time=" + created_time +
                 ", user_name='" + user_name + '\'' +
+                ", order_uuid='" + order_uuid + '\'' +
                 '}';
     }
 }

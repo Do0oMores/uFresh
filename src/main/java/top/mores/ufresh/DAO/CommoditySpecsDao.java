@@ -7,4 +7,6 @@ import java.util.List;
 public interface CommoditySpecsDao {
 
     List<Commodity_specs> getSpecByCommodityID(int commodityID);
+
+    double getPrice(int commodity_id,String spec);
 }

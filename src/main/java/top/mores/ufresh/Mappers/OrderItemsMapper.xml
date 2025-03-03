@@ -3,7 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.mores.ufresh.DAO.OrderItemsDao">
+
+    <resultMap id="orderItemsResultMap" type="top.mores.ufresh.POJO.Order_items">
+        <id column="order_item_id" property="order_item_id"/>
+        <result column="order_id" property="order_id"/>
+        <result column="commodity_id" property="commodity_id"/>
+        <result column="quantity" property="quantity"/>
+        <result column="price" property="price"/>
+    </resultMap>
+
     <select id="getUserList" resultType="top.mores.ufresh.POJO.Order_items">
         select * from ufresh.user
     </select>
+
+    <select id="getOrderItemsByUUID" resultMap="orderItemsResultMap">
+        select commodity_id,quantity,price from order_items where order_uuid = #{order_uuid}
+    </select>
+
+    <insert id="addOrderItem">
+        insert into order_items (order_uuid,commodity_id,quantity,spec) values
+        (#{order_uuid},#{commodity_id},#{quantity},#{spec})
+    </insert>
 </mapper>
