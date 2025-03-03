@@ -32,6 +32,7 @@
     <select id="getUserCart">
         SELECT
         c.user_id,
+        c.cart_item_id,
         c.commodity_id,
         co.commodity_name AS name,
         co.image AS image,
@@ -51,4 +52,11 @@
         WHERE
         c.user_id = #{user_id}
     </select>
+
+    <delete id="removeCommoditiesFromCart">
+        DELETE FROM cart_items WHERE cart_item_id IN
+        <foreach collection="cartItemIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

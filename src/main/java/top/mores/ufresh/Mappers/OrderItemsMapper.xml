@@ -24,4 +24,12 @@
         insert into order_items (order_uuid,commodity_id,quantity,spec) values
         (#{order_uuid},#{commodity_id},#{quantity},#{spec})
     </insert>
+
+    <insert id="batchAddOrderItems">
+        INSERT INTO order_items (order_uuid, spec, quantity, commodity_id)
+        VALUES
+        <foreach collection="orderItems" item="item" separator=",">
+            (#{item.order_uuid}, #{item.spec}, #{item.quantity}, #{item.commodity_id})
+        </foreach>
+    </insert>
 </mapper>
