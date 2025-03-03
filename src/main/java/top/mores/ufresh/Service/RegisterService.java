@@ -86,8 +86,18 @@ public class RegisterService {
 
         try {
             String verificationCode = emailService.randomMailCode();
-            String content = "<h1>您的验证码是：" + verificationCode + "，五分钟内有效" + "</h1>";
-            boolean isSent = emailService.sendEmail(mail, "【优鲜uFresh】", content);
+            String content = "<div style='font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f9f9f9;'>"
+                    + "<div style='max-width: 500px; margin: auto; padding: 20px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);'>"
+                    + "<h2 style='color: #2c3e50;'>您的验证码</h2>"
+                    + "<p style='font-size: 18px; color: #333;'>"
+                    + "您好，您的验证码是：<strong style='color: #e74c3c; font-size: 22px;'>" + verificationCode + "</strong>"
+                    + "</p>"
+                    + "<p style='color: #666; font-size: 14px;'>该验证码有效期为 <strong>5 分钟</strong>，请尽快使用。</p>"
+                    + "<hr style='border: none; border-top: 1px solid #ddd;'>"
+                    + "<p style='font-size: 12px; color: #999;'>如果这不是您的操作，请忽略此邮件。</p>"
+                    + "</div></div>";
+
+            boolean isSent = emailService.sendEmail(mail, "【优鲜uFresh】验证码", content);
 
             if (isSent) {
                 return new APIResponse<>(200, "验证码已发送");

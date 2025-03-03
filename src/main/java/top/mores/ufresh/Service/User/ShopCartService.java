@@ -64,8 +64,7 @@ public class ShopCartService {
                     "添加到购物车失败"
             );
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return new APIResponse<>(500, "系统错误");
+            return new APIResponse<>(500, "系统错误"+e.getMessage());
         }
     }
 

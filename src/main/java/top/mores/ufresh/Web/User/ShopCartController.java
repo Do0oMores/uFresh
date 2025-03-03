@@ -20,7 +20,6 @@ public class ShopCartController {
     @PostMapping("/add-to-cart")
     @ResponseBody
     public ResponseEntity<?> addCommodityToCart(@RequestBody Cart_items cart_items) {
-        System.out.println(cart_items);
         APIResponse<Void> response=shopCartService.addCommodityToCart(cart_items);
         return ResponseEntity.ok(response);
     }
