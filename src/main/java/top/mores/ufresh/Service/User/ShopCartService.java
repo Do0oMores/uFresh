@@ -126,7 +126,7 @@ public class ShopCartService {
                 UUID order_uuid = UUID.randomUUID();
                 Order_items order_items = new Order_items();
                 for (Cart_items item : cart_items) {
-                    total_price += commoditySpecsDao.getPrice(item.getCommodity_id(), item.getSpec());
+                    total_price += commoditySpecsDao.getPrice(item.getCommodity_id(), item.getSpec()) * item.getAmount();
                     //写入订单物品表
                     order_items.setOrder_uuid(order_uuid.toString());
                     order_items.setSpec(item.getSpec());
