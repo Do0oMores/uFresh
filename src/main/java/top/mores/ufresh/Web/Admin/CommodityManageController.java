@@ -86,18 +86,31 @@ public class CommodityManageController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 上传商品图片接口
+     *
+     * @param file         图片文件
+     * @param commodity_id 商品ID
+     * @return 上传结果
+     */
     @PostMapping("/upload-commodity-image")
     @ResponseBody
     public ResponseEntity<?> uploadCommodityImage(@RequestParam("file") MultipartFile file,
                                                   @RequestParam("commodity_id") Integer commodity_id) {
-        APIResponse<String> response=imageUploadService.updateCommodityImage(file,commodity_id);
+        APIResponse<String> response = imageUploadService.updateCommodityImage(file, commodity_id);
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 编辑商品信息接口
+     *
+     * @param commodity 商品
+     * @return 修改结果
+     */
     @PostMapping("/edit-commodity")
     @ResponseBody
     public ResponseEntity<?> editCommodity(@RequestBody Commodity commodity) {
-        APIResponse<Void> response=commodityService.updateCommodityData(commodity);
+        APIResponse<Void> response = commodityService.updateCommodityData(commodity);
         return ResponseEntity.ok(response);
     }
 }

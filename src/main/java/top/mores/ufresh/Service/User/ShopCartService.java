@@ -189,7 +189,6 @@ public class ShopCartService {
             return new APIResponse<>(200, "订单生成成功：" + order_uuid);
 
         } catch (Exception e) {
-            e.printStackTrace();
             return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
         }
     }

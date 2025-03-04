@@ -26,6 +26,12 @@ public class CommodityManageService {
         }
     }
 
+    /**
+     * 通过商品ID获取商品
+     *
+     * @param id 商品ID
+     * @return 商品信息
+     */
     public Commodity getCommodityById(int id) {
         try (SqlSession session = MybatisUtils.getSqlSession()) {
             CommodityDao commodityDao = session.getMapper(CommodityDao.class);

@@ -44,6 +44,12 @@ public class ShopCartController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 购物车结算接口
+     *
+     * @param requestBody 结算的购物车商品信息
+     * @return 结算订单生成结果
+     */
     @PostMapping("/checkout")
     @ResponseBody
     public ResponseEntity<?> checkout(@RequestBody Map<String, List<Cart_items>> requestBody) {

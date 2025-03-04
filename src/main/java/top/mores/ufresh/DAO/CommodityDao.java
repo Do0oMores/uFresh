@@ -1,9 +1,11 @@
 package top.mores.ufresh.DAO;
 
+import org.springframework.stereotype.Repository;
 import top.mores.ufresh.POJO.Commodity;
 
 import java.util.List;
 
+@Repository
 public interface CommodityDao {
     Commodity getCommodityByName(String name);
 

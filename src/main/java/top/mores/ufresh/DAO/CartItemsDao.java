@@ -1,10 +1,12 @@
 package top.mores.ufresh.DAO;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 import top.mores.ufresh.POJO.Cart_items;
 
 import java.util.List;
 
+@Repository
 public interface CartItemsDao {
     List<Cart_items> getCommodityIDFromUserCart(int user_id, int commodity_id);
 

@@ -22,5 +22,6 @@
         <mapper resource="top/mores/ufresh/Mappers/CartItemsMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/AfterSalesMapper.xml"></mapper>
         <mapper resource="top/mores/ufresh/Mappers/CommoditySpecsMapper.xml"></mapper>
+        <mapper resource="top/mores/ufresh/Mappers/CommentMapper.xml"></mapper>
     </mappers>
 </configuration>
