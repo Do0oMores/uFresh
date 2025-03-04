@@ -55,7 +55,7 @@
     </select>
 
     <select id="getUserOrdersByStatus">
-        select order_id from orders where user_id = #{user_id} and status = #{status}
+        select order_id,total_price,order_uuid from orders where user_id = #{user_id} and status = #{status}
     </select>
 
     <insert id="addOrder">

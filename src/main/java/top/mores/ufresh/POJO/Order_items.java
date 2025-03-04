@@ -7,6 +7,9 @@ public class Order_items {
     private int quantity;
     private String spec;
     private String order_uuid;
+    private String commodity_name;
+    private String image;
+    private double price;
 
     public int getOrder_item_id() {
         return order_item_id;
@@ -56,6 +59,30 @@ public class Order_items {
         this.order_uuid = order_uuid;
     }
 
+    public String getCommodity_name() {
+        return commodity_name;
+    }
+
+    public void setCommodity_name(String commodity_name) {
+        this.commodity_name = commodity_name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Order_items{" +
@@ -65,6 +92,9 @@ public class Order_items {
                 ", quantity=" + quantity +
                 ", spec='" + spec + '\'' +
                 ", order_uuid='" + order_uuid + '\'' +
+                ", commodity_name='" + commodity_name + '\'' +
+                ", image='" + image + '\'' +
+                ", price=" + price +
                 '}';
     }
 }

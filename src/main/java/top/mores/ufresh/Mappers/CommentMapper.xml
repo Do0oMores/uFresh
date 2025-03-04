@@ -2,30 +2,13 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.mores.ufresh.DAO.AfterSalesDao">
+<mapper namespace="top.mores.ufresh.DAO.CommentDao">
 
-    <resultMap id="aftersalesResultMap" type="top.mores.ufresh.POJO.After_sales">
-        <id column="after_sales_id" property="after_sales_id"/>
-        <result column="order_id" property="order_id"/>
-        <result column="service_type" property="service_type"/>
-        <result column="reasons" property="reasons"/>
-        <result column="image" property="image"/>
-        <result column="progress" property="progress"/>
+    <resultMap id="aftersalesResultMap" type="top.mores.ufresh.POJO.Comment">
+        <id column="id" property="id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="commodity_id" property="commodity_id"/>
+        <result column="content" property="content"/>
+        <result column="judge" property="judge"/>
     </resultMap>
-
-    <select id="getAfterSalesList" resultMap="aftersalesResultMap">
-        SELECT
-        a.after_sales_id,
-        a.order_id,
-        a.service_type,
-        a.reasons,
-        a.image,
-        a.progress
-        FROM
-        after_sales a
-        JOIN
-        orders o
-        ON
-        a.order_id = o.order_id
-    </select>
 </mapper>

@@ -17,7 +17,21 @@
     </select>
 
     <select id="getOrderItemsByUUID" resultMap="orderItemsResultMap">
-        select commodity_id,quantity,price from order_items where order_uuid = #{order_uuid}
+        SELECT
+        oi.commodity_id,
+        oi.quantity,
+        oi.spec,
+        c.commodity_name,
+        c.image,
+        cs.price
+        FROM
+        order_items oi
+        JOIN
+        commodity c ON oi.commodity_id = c.commodity_id
+        JOIN
+        commodity_specs cs ON oi.commodity_id = cs.commodity_id AND oi.spec = cs.spec
+        WHERE
+        oi.order_uuid = #{order_uuid}
     </select>
 
     <insert id="addOrderItem">

@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface OrderItemsDao {
 
-    List<Order_items> getOrderItemsByUUID(int order_uuid);
+    List<Order_items> getOrderItemsByUUID(String order_uuid);
 
     int addOrderItem(Order_items order_items);
 }
