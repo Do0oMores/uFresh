@@ -11,4 +11,12 @@
         <result column="content" property="content"/>
         <result column="judge" property="judge"/>
     </resultMap>
+
+    <select id="getCommentByCommodityID" resultType="map">
+        SELECT c.user_id, c.content, c.judge,
+        u.avatar_url, u.user_name
+        FROM comment c
+        JOIN user u ON c.user_id = u.user_id
+        WHERE c.commodity_id = #{commodity_id}
+    </select>
 </mapper>

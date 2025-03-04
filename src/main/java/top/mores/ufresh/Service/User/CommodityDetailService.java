@@ -2,10 +2,12 @@ package top.mores.ufresh.Service.User;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
+import top.mores.ufresh.DAO.CommentDao;
 import top.mores.ufresh.DAO.CommodityDao;
 import top.mores.ufresh.DAO.CommoditySpecsDao;
 import top.mores.ufresh.DAO.MybatisUtils;
 import top.mores.ufresh.POJO.APIResponse;
+import top.mores.ufresh.POJO.Comment;
 import top.mores.ufresh.POJO.Commodity;
 import top.mores.ufresh.POJO.Commodity_specs;
 
@@ -43,6 +45,16 @@ public class CommodityDetailService {
             return new APIResponse<>(200, specsList);
         } catch (Exception e) {
             return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
+        }
+    }
+
+    public APIResponse<List<Comment>> getComments(int id) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            CommentDao commentDao = session.getMapper(CommentDao.class);
+            List<Comment> commentList = commentDao.getCommentByCommodityID(id);
+            return new APIResponse<>(200, commentList);
+        } catch (Exception e) {
+            return new APIResponse<>(500,"发生意料之外的错误：" + e.getMessage());
         }
     }
 }

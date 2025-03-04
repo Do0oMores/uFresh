@@ -6,6 +6,8 @@ public class Comment {
     private int commodity_id;
     private String content;
     private int judge;
+    private String avatar_url;
+    private String user_name;
 
     public int getId() {
         return id;
@@ -47,6 +49,22 @@ public class Comment {
         this.judge = judge;
     }
 
+    public String getAvatar_url() {
+        return avatar_url;
+    }
+
+    public void setAvatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -55,6 +73,8 @@ public class Comment {
                 ", commodity_id=" + commodity_id +
                 ", content='" + content + '\'' +
                 ", judge=" + judge +
+                ", avatar_url='" + avatar_url + '\'' +
+                ", user_name='" + user_name + '\'' +
                 '}';
     }
 }

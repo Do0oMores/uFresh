@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.mores.ufresh.POJO.APIResponse;
+import top.mores.ufresh.POJO.Comment;
 import top.mores.ufresh.POJO.Commodity;
 import top.mores.ufresh.POJO.Commodity_specs;
 import top.mores.ufresh.Service.User.CommodityDetailService;
@@ -35,10 +36,17 @@ public class CommodityDetailController {
      * @param commodity 传入商品ID
      * @return 商品规格
      */
-    @PostMapping("fetch-commodity-spec")
+    @PostMapping("/fetch-commodity-spec")
     @ResponseBody
     public ResponseEntity<?> getCommoditySpec(@RequestBody Commodity commodity) {
         APIResponse<List<Commodity_specs>> response = commodityDetailService.getCommoditySpecs(commodity.getCommodity_id());
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/fetch-comments")
+    @ResponseBody
+    public ResponseEntity<?> getComments(@RequestBody Comment comment) {
+        APIResponse<List<Comment>> response = commodityDetailService.getComments(comment.getCommodity_id());
         return ResponseEntity.ok(response);
     }
 }

@@ -17,10 +17,16 @@ public class MyOrdersController {
     @Autowired
     private MyOrdersService myOrdersService;
 
+    /**
+     * 获取用户订单信息
+     *
+     * @param orders 用户ID
+     * @return 订单信息
+     */
     @PostMapping("/getOrders")
     @ResponseBody
     public ResponseEntity<?> getOrders(@RequestBody Orders orders) {
-        APIResponse<Map<String,Object>> response=myOrdersService.getOrderItems(orders.getUser_id());
+        APIResponse<Map<String, Object>> response = myOrdersService.getOrderItems(orders.getUser_id());
         return ResponseEntity.ok(response);
     }
 }
