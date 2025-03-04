@@ -19,6 +19,24 @@ public class Commodity {
     private String status;
     private String tag;
     private double price;
+    private String spec;
+    private int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getSpec() {
+        return spec;
+    }
+
+    public void setSpec(String spec) {
+        this.spec = spec;
+    }
 
     public String getTag() {
         return tag;
@@ -131,6 +149,8 @@ public class Commodity {
                 ", status='" + status + '\'' +
                 ", tag='" + tag + '\'' +
                 ", price=" + price +
+                ", spec='" + spec + '\'' +
+                ", quantity=" + quantity +
                 '}';
     }
 }
