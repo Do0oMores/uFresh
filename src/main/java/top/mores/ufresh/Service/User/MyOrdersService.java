@@ -45,20 +45,25 @@ public class MyOrdersService {
         }
     }
 
+    /**
+     * 根据订单号更新订单信息
+     *
+     * @param order 订单信息
+     * @return 更新结果
+     */
     public APIResponse<Void> updateOrderStatusByOrderUUID(Orders order) {
         if (order.getOrder_uuid() == null || order.getOrder_uuid().isEmpty()) {
-            return new APIResponse<>(404, "订单内没有待结算的商品");
+            return new APIResponse<>(404, "空订单无法执行此操作");
         } else {
             try (SqlSession session = MybatisUtils.getSqlSession()) {
                 OrdersDao ordersDao = session.getMapper(OrdersDao.class);
-                order.setStatus("已提交");
                 int result = ordersDao.updateOrderStatus(order);
                 if (result == 1) {
                     session.commit();
                     return new APIResponse<>(200, "订单已提交");
                 } else {
                     session.rollback();
-                    return new APIResponse<>(500, "11");
+                    return new APIResponse<>(500, "订单提交失败");
                 }
             } catch (Exception e) {
                 return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());

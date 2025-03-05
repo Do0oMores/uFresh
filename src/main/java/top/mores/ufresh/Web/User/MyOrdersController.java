@@ -30,9 +30,30 @@ public class MyOrdersController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 提交订单
+     *
+     * @param orders 订单信息
+     * @return 提交结果
+     */
     @PostMapping("/submit-order")
     @ResponseBody
     public ResponseEntity<?> submitOrder(@RequestBody Orders orders) {
+        orders.setStatus("已提交");
+        APIResponse<Void> response = myOrdersService.updateOrderStatusByOrderUUID(orders);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 取消订单接口
+     *
+     * @param orders 取消的订单号
+     * @return 取消结果
+     */
+    @PostMapping("/cancel-order")
+    @ResponseBody
+    public ResponseEntity<?> cancelOrder(@RequestBody Orders orders) {
+        orders.setStatus("已取消");
         APIResponse<Void> response = myOrdersService.updateOrderStatusByOrderUUID(orders);
         return ResponseEntity.ok(response);
     }
