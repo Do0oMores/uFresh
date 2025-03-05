@@ -13,6 +13,8 @@ public class Orders {
     private LocalDateTime created_time;
     private String user_name;
     private String order_uuid;
+    private String pickup_method;
+    private String order_note;
 
     public String getUser_name() {
         return user_name;
@@ -70,6 +72,22 @@ public class Orders {
         this.order_uuid = order_uuid;
     }
 
+    public String getPickup_method() {
+        return pickup_method;
+    }
+
+    public void setPickup_method(String pickup_method) {
+        this.pickup_method = pickup_method;
+    }
+
+    public String getOrder_note() {
+        return order_note;
+    }
+
+    public void setOrder_note(String order_note) {
+        this.order_note = order_note;
+    }
+
     @Override
     public String toString() {
         return "Orders{" +
@@ -80,6 +98,8 @@ public class Orders {
                 ", created_time=" + created_time +
                 ", user_name='" + user_name + '\'' +
                 ", order_uuid='" + order_uuid + '\'' +
+                ", pickup_method='" + pickup_method + '\'' +
+                ", order_note='" + order_note + '\'' +
                 '}';
     }
 }

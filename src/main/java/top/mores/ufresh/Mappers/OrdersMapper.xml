@@ -62,4 +62,14 @@
         insert into orders (user_id,total_price,status,created_time,order_uuid) values
         (#{user_id},#{total_price},#{status},#{created_time},#{order_uuid})
     </insert>
+
+    <update id="updateOrderStatus">
+        update orders
+        <set>
+            <if test="status != null">status = #{status},</if>
+            <if test="pickup_method != null">pickup_method = #{pickup_method},</if>
+            <if test="order_note != null">order_note = #{order_note},</if>
+        </set>
+        where order_uuid=#{order_uuid}
+    </update>
 </mapper>

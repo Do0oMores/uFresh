@@ -15,4 +15,6 @@ public interface OrdersDao {
     List<Orders> getUserOrdersByStatus(int user_id,String status);
 
     int addOrder(Orders orders);
+
+    int updateOrderStatus(Orders orders);
 }

@@ -18,6 +18,12 @@ public class OldOrderController {
     @Autowired
     private OldOrdersService oldOrdersService;
 
+    /**
+     * 拉取用户历史订单
+     *
+     * @param order 用户ID
+     * @return 历史订单信息
+     */
     @PostMapping("/fetch-old-orders")
     @ResponseBody
     public ResponseEntity<?> getOldOrders(@RequestBody Orders order) {

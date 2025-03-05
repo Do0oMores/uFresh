@@ -29,4 +29,11 @@ public class MyOrdersController {
         APIResponse<Map<String, Object>> response = myOrdersService.getOrderItems(orders.getUser_id());
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/submit-order")
+    @ResponseBody
+    public ResponseEntity<?> submitOrder(@RequestBody Orders orders) {
+        APIResponse<Void> response = myOrdersService.updateOrderStatusByOrderUUID(orders);
+        return ResponseEntity.ok(response);
+    }
 }

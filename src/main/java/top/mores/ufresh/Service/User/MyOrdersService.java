@@ -35,12 +35,34 @@ public class MyOrdersService {
                 OrderItemsDao orderItemsDao = session.getMapper(OrderItemsDao.class);
                 List<Order_items> orderItems = orderItemsDao.getOrderItemsByUUID(order_uuid);
                 resultMap.put("order_items", orderItems);
+                resultMap.put("order_uuid", order_uuid);
                 return new APIResponse<>(200, resultMap);
             } else {
                 return new APIResponse<>(200, "暂无未结算订单");
             }
         } catch (Exception e) {
             return new APIResponse<>(500, "发生了预料之外的错误：" + e.getMessage());
+        }
+    }
+
+    public APIResponse<Void> updateOrderStatusByOrderUUID(Orders order) {
+        if (order.getOrder_uuid() == null || order.getOrder_uuid().isEmpty()) {
+            return new APIResponse<>(404, "订单内没有待结算的商品");
+        } else {
+            try (SqlSession session = MybatisUtils.getSqlSession()) {
+                OrdersDao ordersDao = session.getMapper(OrdersDao.class);
+                order.setStatus("已提交");
+                int result = ordersDao.updateOrderStatus(order);
+                if (result == 1) {
+                    session.commit();
+                    return new APIResponse<>(200, "订单已提交");
+                } else {
+                    session.rollback();
+                    return new APIResponse<>(500, "11");
+                }
+            } catch (Exception e) {
+                return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
+            }
         }
     }
 }
