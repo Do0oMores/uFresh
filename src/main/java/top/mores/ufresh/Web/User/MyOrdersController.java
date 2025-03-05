@@ -10,6 +10,7 @@ import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Orders;
 import top.mores.ufresh.Service.User.MyOrdersService;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Controller
@@ -40,6 +41,8 @@ public class MyOrdersController {
     @ResponseBody
     public ResponseEntity<?> submitOrder(@RequestBody Orders orders) {
         orders.setStatus("已提交");
+        LocalDateTime now = LocalDateTime.now();
+        orders.setCreated_time(now);
         APIResponse<Void> response = myOrdersService.updateOrderStatusByOrderUUID(orders);
         return ResponseEntity.ok(response);
     }

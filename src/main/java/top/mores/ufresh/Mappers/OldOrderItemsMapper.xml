@@ -8,6 +8,9 @@
         <id column="order_uuid" property="order_uuid"/>
         <result column="status" property="status"/>
         <result column="total_price" property="total_price"/>
+        <result column="created_time" property="created_time"/>
+        <result column="pickup_method" property="pickup_method"/>
+        <result column="order_note" property="order_note"/>
         <collection property="commodity_list" resultMap="commodityMap"/>
     </resultMap>
 
@@ -35,6 +38,27 @@
         LEFT JOIN order_items oi ON o.order_uuid = oi.order_uuid
         LEFT JOIN commodity c ON oi.commodity_id = c.commodity_id
         LEFT JOIN commodity_specs cs ON oi.commodity_id = cs.commodity_id AND oi.spec = cs.spec
-        WHERE o.user_id = #{user_id}
+        where o.user_id=#{user_id}
+    </select>
+
+    <select id="getOldOrderItemsByOrderUUID" resultMap="oldOrderItemsResultMap">
+        SELECT
+        o.order_uuid,
+        o.status,
+        o.total_price,
+        o.created_time,
+        o.pickup_method,
+        o.order_note,
+        c.commodity_id,
+        c.commodity_name,
+        c.image,
+        oi.quantity,
+        oi.spec,
+        cs.price
+        FROM orders o
+        LEFT JOIN order_items oi ON o.order_uuid = oi.order_uuid
+        LEFT JOIN commodity c ON oi.commodity_id = c.commodity_id
+        LEFT JOIN commodity_specs cs ON oi.commodity_id = cs.commodity_id AND oi.spec = cs.spec
+        where o.order_uuid=#{order_uuid}
     </select>
 </mapper>

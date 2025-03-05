@@ -27,7 +27,20 @@ public class OldOrderController {
     @PostMapping("/fetch-old-orders")
     @ResponseBody
     public ResponseEntity<?> getOldOrders(@RequestBody Orders order) {
-        APIResponse<List<Old_order_items>> response = oldOrdersService.getOldOrderItemsByUserId(order.getUser_id());
+        APIResponse<List<Old_order_items>> response = oldOrdersService.getOldOrderItemsByUserId(order);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 拉取用户历史订单详情
+     *
+     * @param order 订单号
+     * @return 历史订单详情信息
+     */
+    @PostMapping("/fetch-order-details")
+    @ResponseBody
+    public ResponseEntity<?> getOrderDetails(@RequestBody Orders order) {
+        APIResponse<List<Old_order_items>> response = oldOrdersService.getOldOrderItemsByOrderId(order);
         return ResponseEntity.ok(response);
     }
 }
