@@ -48,13 +48,19 @@ public class CommodityDetailService {
         }
     }
 
+    /**
+     * 通过商品ID获取评价
+     *
+     * @param id 商品ID
+     * @return 商品评价
+     */
     public APIResponse<List<Comment>> getComments(int id) {
         try (SqlSession session = MybatisUtils.getSqlSession()) {
             CommentDao commentDao = session.getMapper(CommentDao.class);
             List<Comment> commentList = commentDao.getCommentByCommodityID(id);
             return new APIResponse<>(200, commentList);
         } catch (Exception e) {
-            return new APIResponse<>(500,"发生意料之外的错误：" + e.getMessage());
+            return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
         }
     }
 }

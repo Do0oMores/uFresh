@@ -43,6 +43,12 @@ public class CommodityDetailController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 拉取评论信息接口
+     *
+     * @param comment 商品ID
+     * @return 评论信息
+     */
     @PostMapping("/fetch-comments")
     @ResponseBody
     public ResponseEntity<?> getComments(@RequestBody Comment comment) {

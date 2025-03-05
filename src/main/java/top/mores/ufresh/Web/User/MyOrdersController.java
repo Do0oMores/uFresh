@@ -40,7 +40,7 @@ public class MyOrdersController {
     @PostMapping("/submit-order")
     @ResponseBody
     public ResponseEntity<?> submitOrder(@RequestBody Orders orders) {
-        orders.setStatus("已提交");
+        orders.setStatus("待处理");
         LocalDateTime now = LocalDateTime.now();
         orders.setCreated_time(now);
         APIResponse<Void> response = myOrdersService.updateOrderStatusByOrderUUID(orders);
