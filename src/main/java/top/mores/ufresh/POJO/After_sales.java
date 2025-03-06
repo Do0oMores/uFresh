@@ -2,7 +2,7 @@ package top.mores.ufresh.POJO;
 
 public class After_sales {
     private int after_sales_id;
-    private int order_id;
+    private int order_uuid;
     private String service_type;
     private String reasons;
     private String image;
@@ -16,12 +16,12 @@ public class After_sales {
         this.after_sales_id = after_sales_id;
     }
 
-    public int getOrder_id() {
-        return order_id;
+    public int getOrder_uuid() {
+        return order_uuid;
     }
 
-    public void setOrder_id(int order_id) {
-        this.order_id = order_id;
+    public void setOrder_uuid(int order_uuid) {
+        this.order_uuid = order_uuid;
     }
 
     public String getService_type() {
@@ -60,7 +60,7 @@ public class After_sales {
     public String toString() {
         return "After_sales{" +
                 "after_sales_id=" + after_sales_id +
-                ", order_id=" + order_id +
+                ", order_uuid=" + order_uuid +
                 ", service_type='" + service_type + '\'' +
                 ", reasons='" + reasons + '\'' +
                 ", image='" + image + '\'' +

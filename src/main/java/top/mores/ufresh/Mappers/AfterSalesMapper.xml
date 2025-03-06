@@ -28,4 +28,18 @@
         ON
         a.order_id = o.order_id
     </select>
+
+    <select id="getAfterSalesCommodity">
+        SELECT
+        oi.quantity,
+        oi.spec,
+        oi.commodity_id,
+        cs.price,
+        c.commodity_name,
+        c.image
+        FROM order_items oi
+        LEFT JOIN commodity_specs cs ON oi.spec = cs.spec
+        LEFT JOIN commodity c ON oi.commodity_id = c.commodity_id
+        WHERE oi.order_uuid = #{order_uuid}
+    </select>
 </mapper>
