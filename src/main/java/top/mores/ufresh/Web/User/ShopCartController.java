@@ -57,4 +57,17 @@ public class ShopCartController {
         APIResponse<Void> response = shopCartService.builtOrder(cartItems);
         return ResponseEntity.ok(response);
     }
+
+    /**
+     * 根据商品名查询购物车内商品
+     *
+     * @param cart_items 商品名与用户ID
+     * @return 查询结果
+     */
+    @PostMapping("/select-items")
+    @ResponseBody
+    public ResponseEntity<?> selectItems(@RequestBody Cart_items cart_items) {
+        APIResponse<List<Cart_items>> response = shopCartService.selectCartItems(cart_items);
+        return ResponseEntity.ok(response);
+    }
 }

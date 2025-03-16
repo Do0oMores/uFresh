@@ -192,4 +192,24 @@ public class ShopCartService {
             return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
         }
     }
+
+    /**
+     * 根据商品名查询用户购物车内商品信息
+     *
+     * @param cart_items 商品名
+     * @return 商品信息
+     */
+    public APIResponse<List<Cart_items>> selectCartItems(Cart_items cart_items) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            CartItemsDao cartItemsDao = session.getMapper(CartItemsDao.class);
+            List<Cart_items> items = cartItemsDao.selectCartItemsByName(cart_items.getName(), cart_items.getUser_id());
+            if (items.isEmpty()) {
+                return new APIResponse<>(404, "没有查询到物品信息");
+            } else {
+                return new APIResponse<>(200, items);
+            }
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
+        }
+    }
 }

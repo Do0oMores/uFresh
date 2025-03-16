@@ -30,7 +30,6 @@ public class AfterSalesService {
                 return new APIResponse<>(404, "未找到数据信息");
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
         }
     }

@@ -17,4 +17,6 @@ public interface CartItemsDao {
     List<Cart_items> getUserCart(int user_id);
 
     int removeCommoditiesFromCart(@Param("cartItemIds") List<Integer> cartItemIds);
+
+    List<Cart_items> selectCartItemsByName(String name, int user_id);
 }
