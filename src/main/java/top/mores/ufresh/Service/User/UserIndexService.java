@@ -42,4 +42,25 @@ public class UserIndexService {
             return new APIResponse<>(500, "发生错误：" + e.getMessage());
         }
     }
+
+    /**
+     * 根据商品名与商品类型查询商品
+     *
+     * @param commodity 商品名与商品类型
+     * @return 查询的商品结果
+     */
+    public APIResponse<List<Commodity>> searchCommodities(Commodity commodity) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            CommodityDao commodityDao = session.getMapper(CommodityDao.class);
+            commodity.setStatus("已上架");
+            List<Commodity> commodities = commodityDao.searchCommodity(commodity);
+            if (commodities.isEmpty()) {
+                return new APIResponse<>(404, "没有查询到对应的商品");
+            } else {
+                return new APIResponse<>(200, commodities);
+            }
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
+        }
+    }
 }

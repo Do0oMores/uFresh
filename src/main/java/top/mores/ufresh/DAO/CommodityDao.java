@@ -22,4 +22,6 @@ public interface CommodityDao {
     int editCommodity(Commodity commodity);
 
     int editCommodityImage(String image,Integer commodity_id);
+
+    List<Commodity> searchCommodity(Commodity commodity);
 }

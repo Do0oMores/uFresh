@@ -125,8 +125,32 @@
         </set>
         where commodity_id=#{commodity_id}
     </update>
-
-    <update id="editCommodityImage">
-
-    </update>
+    
+    <select id="searchCommodity">
+        SELECT
+        c.commodity_name,
+        c.image,
+        c.tag,
+        c.commodity_id,
+        MIN(cs.price) AS price
+        FROM
+        commodity c
+        LEFT JOIN
+        commodity_specs cs ON c.commodity_id = cs.commodity_id
+        <where>
+            <trim prefixOverrides="and">
+                <if test="commodity_name != null and commodity_name != ''">
+                    c.commodity_name like CONCAT('%', #{commodity_name}, '%')
+                </if>
+                <if test="status != null and status != ''">
+                    and c.status = #{status}
+                </if>
+                <if test="type != null and type != ''">
+                    and c.type = #{type}
+                </if>
+            </trim>
+        </where>
+        GROUP BY
+        c.commodity_name, c.image, c.tag, c.commodity_id
+    </select>
 </mapper>
