@@ -153,4 +153,9 @@
         GROUP BY
         c.commodity_name, c.image, c.tag, c.commodity_id
     </select>
+
+    <select id="selectCommodityOrigin">
+        select commodity_name,support,mfd,exp,type from commodity
+        where commodity_name like CONCAT('%', #{commodity_name}, '%')
+    </select>
 </mapper>
