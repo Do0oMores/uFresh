@@ -35,4 +35,19 @@
         insert into after_sales (order_uuid,service_type,reasons,image,progress)
         values (#{order_uuid},#{service_type},#{reasons},#{image},#{progress})
     </insert>
+
+    <select id="selectAfterSalesByAdmin">
+        select order_uuid,service_type,reasons,image,progress from after_sales
+        <where>
+            <if test="order_uuid!=null and order_uuid!=''">
+                order_uuid=#{order_uuid}
+            </if>
+            <if test="service_type!=null and service_type!=''">
+                and service_type = #{service_type}
+            </if>
+            <if test="progress!=null and progress!=''">
+                and progress = #{progress}
+            </if>
+        </where>
+    </select>
 </mapper>

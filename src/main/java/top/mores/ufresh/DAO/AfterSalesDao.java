@@ -14,4 +14,6 @@ public interface AfterSalesDao {
     List<Order_items> getAfterSalesCommodity(String order_uuid);
 
     int insertAfterSalesImage(After_sales after_sales);
+
+    List<After_sales> selectAfterSalesByAdmin(After_sales after_sales);
 }
