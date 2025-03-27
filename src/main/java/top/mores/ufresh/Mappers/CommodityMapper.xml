@@ -155,7 +155,7 @@
     </select>
 
     <select id="selectCommodityOrigin">
-        select commodity_name,support,mfd,exp,type from commodity
+        select commodity_name,support,mfd,exp,type,description from commodity
         where commodity_name like CONCAT('%', #{commodity_name}, '%')
     </select>
 </mapper>
