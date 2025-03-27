@@ -16,4 +16,6 @@ public interface AfterSalesDao {
     int insertAfterSalesImage(After_sales after_sales);
 
     List<After_sales> selectAfterSalesByAdmin(After_sales after_sales);
+
+    int updateAfterSalesStatus(After_sales after_sales);
 }

@@ -46,4 +46,26 @@ public class AfterSalesManageService {
             return new APIResponse<>(500, "发生意料之外的错误" + e.getMessage());
         }
     }
+
+    /**
+     * 管理员更改售后订单状态
+     *
+     * @param afterSales 售后订单状态
+     * @return 更新结果
+     */
+    public APIResponse<Void> updateAfterSalesStatus(After_sales afterSales) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            AfterSalesDao afterSalesDao = session.getMapper(AfterSalesDao.class);
+            int result = afterSalesDao.updateAfterSalesStatus(afterSales);
+            if (result > 0) {
+                session.commit();
+                return new APIResponse<>(200, "售后订单状态已更新");
+            } else {
+                session.rollback();
+                return new APIResponse<>(500, "更新订单状态时出现错误");
+            }
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
+        }
+    }
 }

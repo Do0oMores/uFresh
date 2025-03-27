@@ -50,4 +50,8 @@
             </if>
         </where>
     </select>
+
+    <update id="updateAfterSalesStatus">
+        update after_sales set progress = #{progress} where order_uuid = #{order_uuid}
+    </update>
 </mapper>
