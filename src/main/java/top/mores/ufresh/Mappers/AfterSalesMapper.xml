@@ -42,4 +42,9 @@
         LEFT JOIN commodity c ON oi.commodity_id = c.commodity_id
         WHERE oi.order_uuid = #{order_uuid}
     </select>
+
+    <insert id="insertAfterSalesImage">
+        insert into after_sales (order_uuid,service_type,reasons,image,progress)
+        values (#{order_uuid},#{service_type},#{reasons},#{image},#{progress})
+    </insert>
 </mapper>

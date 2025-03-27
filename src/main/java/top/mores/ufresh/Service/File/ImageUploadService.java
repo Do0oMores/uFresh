@@ -109,7 +109,7 @@ public class ImageUploadService {
      * @return 保存的路径
      * @throws IOException 抛出异常
      */
-    private String saveFile(MultipartFile file, String basePath) throws IOException {
+    public String saveFile(MultipartFile file, String basePath) throws IOException {
         if (file == null || file.isEmpty()) {
             throw new IllegalArgumentException("文件为空");
         }
@@ -124,9 +124,9 @@ public class ImageUploadService {
             throw new IllegalArgumentException("不支持的文件类型");
         }
 
-        if (!fileName.matches("^[a-zA-Z0-9._-]+$")) {
-            throw new IllegalArgumentException("文件名包含非法字符");
-        }
+//        if (!fileName.matches("^[a-zA-Z0-9._-]+$")) {
+//            throw new IllegalArgumentException("文件名包含非法字符");
+//        }
 
         String datePath = new SimpleDateFormat("/yyyy/MM/dd").format(new Date());
         String localDir = basePath + "/uploads" + datePath + "/";
@@ -139,9 +139,9 @@ public class ImageUploadService {
         String realFileName = uuidFileName + fileType;
 
         Path normalizedPath = Paths.get(localDir, realFileName).normalize();
-        if (!normalizedPath.startsWith(uploadPath)) {
-            throw new SecurityException("非法文件路径");
-        }
+//        if (!normalizedPath.startsWith(uploadPath)) {
+//            throw new SecurityException("非法文件路径");
+//        }
 
         File dest = normalizedPath.toFile();
         file.transferTo(dest);

@@ -2,7 +2,7 @@ package top.mores.ufresh.POJO;
 
 public class After_sales {
     private int after_sales_id;
-    private int order_uuid;
+    private String order_uuid;
     private String service_type;
     private String reasons;
     private String image;
@@ -16,11 +16,11 @@ public class After_sales {
         this.after_sales_id = after_sales_id;
     }
 
-    public int getOrder_uuid() {
+    public String getOrder_uuid() {
         return order_uuid;
     }
 
-    public void setOrder_uuid(int order_uuid) {
+    public void setOrder_uuid(String order_uuid) {
         this.order_uuid = order_uuid;
     }
 
