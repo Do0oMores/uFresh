@@ -14,19 +14,7 @@
     </resultMap>
 
     <select id="getAfterSalesList" resultMap="aftersalesResultMap">
-        SELECT
-        a.after_sales_id,
-        a.order_id,
-        a.service_type,
-        a.reasons,
-        a.image,
-        a.progress
-        FROM
-        after_sales a
-        JOIN
-        orders o
-        ON
-        a.order_id = o.order_id
+        SELECT order_uuid,service_type,reasons,image,progress from after_sales
     </select>
 
     <select id="getAfterSalesCommodity">
