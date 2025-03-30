@@ -65,8 +65,7 @@ public class MyOrdersService {
                     int inventory = getCommodityAmount(item.getCommodity_id());
                     if (item.getQuantity() > inventory) {
                         session.rollback();
-                        return new APIResponse<>(500, "商品 " + item.getCommodity_id()
-                                + " 库存不足，库存数量：" + inventory);
+                        return new APIResponse<>(500, "商品库存不足，库存数量：" + inventory);
                     }
                 }
 
@@ -89,7 +88,7 @@ public class MyOrdersService {
                 }
                 // 如果所有操作均成功则提交事务
                 session.commit();
-                return new APIResponse<>(200, "订单已提交且库存已更新");
+                return new APIResponse<>(200, "订单已提交");
             } catch (Exception e) {
                 return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
             }
@@ -107,8 +106,97 @@ public class MyOrdersService {
             CommodityDao commodityDao = session.getMapper(CommodityDao.class);
             return commodityDao.getCommodityQuantity(commodity_id);
         } catch (Exception e) {
-            e.printStackTrace();
             return -1;
+        }
+    }
+
+    /**
+     * 减少订单商品数量
+     *
+     * @param order_items 指定的订单商品
+     * @return 减少结果
+     */
+    public APIResponse<Void> decreaseOrderQuantity(Order_items order_items) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            OrderItemsDao orderItemsDao = session.getMapper(OrderItemsDao.class);
+            int result = orderItemsDao.decreaseQuantity(order_items);
+            if (result == 1) {
+                session.commit();
+                return new APIResponse<>(200, "");
+            } else {
+                session.rollback();
+                return new APIResponse<>(404, "减少订单内商品时发生错误，可能未找到匹配记录");
+            }
+        } catch (Exception e) {
+            return new APIResponse<>(500, "减少订单内商品时发生意料之外的错误" + e.getMessage());
+        }
+    }
+
+    /**
+     * 移除订单内商品
+     *
+     * @param order_items 指定的订单商品
+     * @return 移除结果
+     */
+    public APIResponse<Void> deleteOrderItem(Order_items order_items) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            OrderItemsDao orderItemsDao = session.getMapper(OrderItemsDao.class);
+            int result = orderItemsDao.deleteOrderItem(order_items);
+            if (result == 1) {
+                session.commit();
+                return new APIResponse<>(200, "已移除该商品");
+            } else {
+                session.rollback();
+                return new APIResponse<>(404, "移除商品时发生错误，可能是未找到对应的商品");
+            }
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
+        }
+    }
+
+    /**
+     * 增加订单内商品数量
+     *
+     * @param order_items 订单内商品
+     * @return 增加结果
+     */
+    public APIResponse<Void> increaseQuantity(Order_items order_items) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            OrderItemsDao orderItemsDao = session.getMapper(OrderItemsDao.class);
+            int result = orderItemsDao.increaseQuantity(order_items);
+            if (result == 1) {
+                session.commit();
+                return new APIResponse<>(200, "");
+            } else {
+                session.rollback();
+                return new APIResponse<>(404, "增加商品数量时发生错误，可能是未找到指定的商品");
+            }
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
+        }
+    }
+
+    /**
+     * 清空订单与订单内商品
+     *
+     * @param order 订单号
+     * @return 清空结果
+     */
+    public APIResponse<Void> clearOrder(Orders order) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            OrdersDao ordersDao = session.getMapper(OrdersDao.class);
+            OrderItemsDao orderItemsDao = session.getMapper(OrderItemsDao.class);
+            int result = ordersDao.deleteOrder(order);
+            int result1 = orderItemsDao.clearOrderItem(order.getOrder_uuid());
+            if (result == 1 && result1 >= 1) {
+                session.commit();
+                return new APIResponse<>(200, "订单已清空");
+            } else {
+                session.rollback();
+                return new APIResponse<>(404, "清空订单时发生错误，可能是未找到指定订单");
+            }
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生意料之外的错误" + e.getMessage());
         }
     }
 }

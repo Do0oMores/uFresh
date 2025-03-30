@@ -72,4 +72,9 @@
         </set>
         where order_uuid=#{order_uuid}
     </update>
+
+    <delete id="deleteOrder">
+        delete from orders
+        where order_uuid = #{order_uuid}
+    </delete>
 </mapper>

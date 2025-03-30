@@ -52,4 +52,33 @@
         FROM order_items
         WHERE order_uuid = #{order_uuid}
     </select>
+
+    <update id="decreaseQuantity">
+        update order_items
+        set quantity = quantity - 1
+        where order_uuid=#{order_uuid}
+        and commodity_id=#{commodity_id}
+        and spec=#{spec}
+        and quantity > 0
+    </update>
+
+    <delete id="deleteOrderItem">
+        delete from order_items
+        where order_uuid = #{order_uuid}
+        and commodity_id = #{commodity_id}
+        and spec = #{spec}
+    </delete>
+
+    <update id="increaseQuantity">
+        update order_items
+        set quantity = quantity + 1
+        where order_uuid=#{order_uuid}
+        and commodity_id=#{commodity_id}
+        and spec=#{spec}
+    </update>
+
+    <delete id="clearOrderItem">
+        delete from order_items
+        where order_uuid=#{order_uuid}
+    </delete>
 </mapper>
