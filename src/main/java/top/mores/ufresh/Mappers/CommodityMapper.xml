@@ -158,4 +158,14 @@
         select commodity_name,support,mfd,exp,type,description from commodity
         where commodity_name like CONCAT('%', #{commodity_name}, '%')
     </select>
+
+    <select id="getCommodityQuantity">
+        select inventory from commodity where commodity_id=#{commodity_id}
+    </select>
+
+    <update id="reduceCommodityQuantity">
+        UPDATE commodity
+        SET inventory = inventory - #{orderQuantity}
+        WHERE commodity_id = #{commodityId}
+    </update>
 </mapper>

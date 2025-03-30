@@ -11,4 +11,6 @@ public interface OrderItemsDao {
     List<Order_items> getOrderItemsByUUID(String order_uuid);
 
     int addOrderItem(Order_items order_items);
+
+    List<Order_items> getOrderItemsByOrderUUID(String order_uuid);
 }

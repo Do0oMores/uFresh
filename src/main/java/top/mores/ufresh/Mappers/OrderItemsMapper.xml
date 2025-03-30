@@ -46,4 +46,10 @@
             (#{item.order_uuid}, #{item.spec}, #{item.quantity}, #{item.commodity_id})
         </foreach>
     </insert>
+
+    <select id="getOrderItemsByOrderUUID">
+        SELECT commodity_id, quantity
+        FROM order_items
+        WHERE order_uuid = #{order_uuid}
+    </select>
 </mapper>

@@ -26,4 +26,8 @@ public interface CommodityDao {
     List<Commodity> searchCommodity(Commodity commodity);
 
     List<Commodity> selectCommodityOrigin(Commodity commodity);
+
+    int getCommodityQuantity(int Commodity_id);
+
+    int reduceCommodityQuantity(int commodityId, int orderQuantity);
 }
