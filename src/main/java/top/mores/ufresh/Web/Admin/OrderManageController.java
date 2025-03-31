@@ -41,4 +41,11 @@ public class OrderManageController {
         APIResponse<List<Orders>> response = orderManageService.getOrdersByConditions(orders);
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/admin-edit-order-status")
+    @ResponseBody
+    public ResponseEntity<?> adminEditOrderStatus(@RequestBody Orders orders) {
+        APIResponse<Void> response=orderManageService.editOrder(orders);
+        return ResponseEntity.ok(response);
+    }
 }

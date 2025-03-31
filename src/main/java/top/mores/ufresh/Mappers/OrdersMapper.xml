@@ -78,4 +78,13 @@
         delete from orders
         where order_uuid = #{order_uuid}
     </delete>
+
+    <update id="editOrder">
+        update orders
+        <set>
+            <if test="status !=null">status=#{status},</if>
+            <if test="completion_time">completion_time=#{completion_time}</if>
+        </set>
+        where order_uuid=#{order_uuid}
+    </update>
 </mapper>

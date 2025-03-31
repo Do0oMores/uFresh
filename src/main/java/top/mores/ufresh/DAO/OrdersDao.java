@@ -19,4 +19,6 @@ public interface OrdersDao {
     int updateOrderStatus(Orders orders);
 
     int deleteOrder(Orders orders);
+
+    int editOrder(Orders orders);
 }

@@ -7,6 +7,7 @@ import top.mores.ufresh.DAO.OrdersDao;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Orders;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -44,6 +45,27 @@ public class OrderManageService {
             }
         } catch (Exception e) {
             return new APIResponse<>(500, "查询出现错误：" + e.getMessage());
+        }
+    }
+
+    public APIResponse<Void> editOrder(Orders orders) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            OrdersDao ordersDao = session.getMapper(OrdersDao.class);
+            LocalDateTime now;
+            if (orders.getStatus().equals("已完成")){
+                now = LocalDateTime.now();
+                orders.setCompletion_time(now);
+            }
+            int result= ordersDao.editOrder(orders);
+            if (result == 1){
+                session.commit();
+                return new APIResponse<>(200,"已修改订单状态");
+            }else {
+                session.rollback();
+                return new APIResponse<>(404,"修改订单状态时出现错误，可能是未找到该订单");
+            }
+        }catch (Exception e){
+            return new APIResponse<>(500,"发生了意料之外的错误：" + e.getMessage());
         }
     }
 }

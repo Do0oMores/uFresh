@@ -15,6 +15,8 @@ public class Orders {
     private String order_uuid;
     private String pickup_method;
     private String order_note;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime completion_time;
 
     public String getUser_name() {
         return user_name;
@@ -88,6 +90,14 @@ public class Orders {
         this.order_note = order_note;
     }
 
+    public LocalDateTime getCompletion_time() {
+        return completion_time;
+    }
+
+    public void setCompletion_time(LocalDateTime completion_time) {
+        this.completion_time = completion_time;
+    }
+
     @Override
     public String toString() {
         return "Orders{" +
@@ -100,6 +110,7 @@ public class Orders {
                 ", order_uuid='" + order_uuid + '\'' +
                 ", pickup_method='" + pickup_method + '\'' +
                 ", order_note='" + order_note + '\'' +
+                ", completion_time=" + completion_time +
                 '}';
     }
 }
