@@ -15,7 +15,7 @@
 
     <select id="getOrdersList" resultMap="orderResultMap">
         SELECT
-        o.order_id,
+        o.order_uuid,
         o.user_id,
         o.total_price,
         o.status,
@@ -31,10 +31,11 @@
 
     <select id="getOrdersByConditions" resultMap="orderResultMap">
         SELECT
-        o.order_id,
+        o.order_uuid,
         u.user_name AS user_name,
         o.status,
-        o.created_time
+        o.created_time,
+        o.total_price
         FROM
         orders o
         JOIN

@@ -102,7 +102,7 @@ public class MyOrdersController {
     }
 
     /**
-     * 移除订单
+     * 移除(取消)订单
      *
      * @param orders 订单号
      * @return 移除结果

@@ -28,6 +28,7 @@ public class MyOrdersService {
             //获取用户订单
             OrdersDao ordersDao = session.getMapper(OrdersDao.class);
             List<Orders> userNoFinishOrder = ordersDao.getUserOrdersByStatus(userId, "未结算");
+
             if (userNoFinishOrder != null && !userNoFinishOrder.isEmpty()) {
                 Map<String, Object> resultMap = new HashMap<>();
                 String order_uuid = userNoFinishOrder.get(0).getOrder_uuid();
@@ -68,7 +69,6 @@ public class MyOrdersService {
                         return new APIResponse<>(500, "商品库存不足，库存数量：" + inventory);
                     }
                 }
-
                 // 库存充足则执行订单状态更新
                 OrdersDao ordersDao = session.getMapper(OrdersDao.class);
                 int result = ordersDao.updateOrderStatus(order);
@@ -190,7 +190,7 @@ public class MyOrdersService {
             int result1 = orderItemsDao.clearOrderItem(order.getOrder_uuid());
             if (result == 1 && result1 >= 1) {
                 session.commit();
-                return new APIResponse<>(200, "订单已清空");
+                return new APIResponse<>(200, "订单已取消");
             } else {
                 session.rollback();
                 return new APIResponse<>(404, "清空订单时发生错误，可能是未找到指定订单");
