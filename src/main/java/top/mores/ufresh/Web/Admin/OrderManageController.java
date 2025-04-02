@@ -42,10 +42,16 @@ public class OrderManageController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 管理员编辑订单状态接口
+     *
+     * @param orders 订单信息
+     * @return 编辑结果
+     */
     @PostMapping("/admin-edit-order-status")
     @ResponseBody
     public ResponseEntity<?> adminEditOrderStatus(@RequestBody Orders orders) {
-        APIResponse<Void> response=orderManageService.editOrder(orders);
+        APIResponse<Void> response = orderManageService.editOrder(orders);
         return ResponseEntity.ok(response);
     }
 }
