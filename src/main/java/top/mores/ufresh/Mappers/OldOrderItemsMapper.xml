@@ -11,6 +11,7 @@
         <result column="created_time" property="created_time"/>
         <result column="pickup_method" property="pickup_method"/>
         <result column="order_note" property="order_note"/>
+        <result column="completion_time" property="completion_time"/>
         <collection property="commodity_list" resultMap="commodityMap"/>
     </resultMap>
 
@@ -49,6 +50,7 @@
         o.created_time,
         o.pickup_method,
         o.order_note,
+        o.completion_time,
         c.commodity_id,
         c.commodity_name,
         c.image,

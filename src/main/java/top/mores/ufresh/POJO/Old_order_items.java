@@ -11,6 +11,8 @@ public class Old_order_items {
     private double total_price;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime created_time;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime completion_time;
     private String pickup_method;
     private String order_note;
     private List<Commodity> commodity_list;
@@ -71,6 +73,14 @@ public class Old_order_items {
         this.order_note = order_note;
     }
 
+    public LocalDateTime getCompletion_time() {
+        return completion_time;
+    }
+
+    public void setCompletion_time(LocalDateTime completion_time) {
+        this.completion_time = completion_time;
+    }
+
     @Override
     public String toString() {
         return "Old_order_items{" +
@@ -78,6 +88,7 @@ public class Old_order_items {
                 ", order_uuid='" + order_uuid + '\'' +
                 ", total_price=" + total_price +
                 ", created_time=" + created_time +
+                ", completion_time=" + completion_time +
                 ", pickup_method='" + pickup_method + '\'' +
                 ", order_note='" + order_note + '\'' +
                 ", commodity_list=" + commodity_list +
