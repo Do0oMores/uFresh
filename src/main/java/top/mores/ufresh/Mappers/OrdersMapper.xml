@@ -87,4 +87,13 @@
         </set>
         where order_uuid=#{order_uuid}
     </update>
+
+    <select id="getOrdersByDate">
+        SELECT
+        DATE_FORMAT(completion_time, '%m/%d') AS date
+        FROM orders
+        WHERE completion_time >= DATE_SUB(NOW(), INTERVAL #{days} DAY)
+        GROUP BY DATE(completion_time)
+        ORDER BY completion_time;
+    </select>
 </mapper>

@@ -30,4 +30,6 @@ public interface CommodityDao {
     int getCommodityQuantity(int Commodity_id);
 
     int reduceCommodityQuantity(int commodityId, int orderQuantity);
+
+    List<Commodity> getAllCommoditiesInventory();
 }

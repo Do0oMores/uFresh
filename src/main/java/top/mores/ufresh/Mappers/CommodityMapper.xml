@@ -168,4 +168,8 @@
         SET inventory = inventory - #{orderQuantity}
         WHERE commodity_id = #{commodityId}
     </update>
+
+    <select id="getAllCommoditiesInventory">
+        select inventory,commodity_name from commodity
+    </select>
 </mapper>
