@@ -3,6 +3,7 @@ package top.mores.ufresh.Service.Admin;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import top.mores.ufresh.DAO.MybatisUtils;
+import top.mores.ufresh.DAO.NotificationDao;
 import top.mores.ufresh.DAO.OrdersDao;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Orders;
@@ -57,13 +58,16 @@ public class OrderManageService {
     public APIResponse<Void> editOrder(Orders orders) {
         try (SqlSession session = MybatisUtils.getSqlSession()) {
             OrdersDao ordersDao = session.getMapper(OrdersDao.class);
+            NotificationDao notificationDao = session.getMapper(NotificationDao.class);
             LocalDateTime now;
+            int notiResult = 0;
             if (orders.getStatus().equals("已完成")) {
                 now = LocalDateTime.now();
                 orders.setCompletion_time(now);
+                notiResult = notificationDao.addNewNotification(orders.getUser_id(), 1);
             }
             int result = ordersDao.editOrder(orders);
-            if (result == 1) {
+            if (result == 1 && notiResult == 1) {
                 session.commit();
                 return new APIResponse<>(200, "已修改订单状态");
             } else {
