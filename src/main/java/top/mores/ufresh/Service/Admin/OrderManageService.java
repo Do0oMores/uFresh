@@ -6,13 +6,17 @@ import top.mores.ufresh.DAO.MybatisUtils;
 import top.mores.ufresh.DAO.NotificationDao;
 import top.mores.ufresh.DAO.OrdersDao;
 import top.mores.ufresh.POJO.APIResponse;
+import top.mores.ufresh.POJO.Notification;
 import top.mores.ufresh.POJO.Orders;
+import top.mores.ufresh.Utils.YamlLoader;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Properties;
 
 @Service
 public class OrderManageService {
+    private final Properties properties = YamlLoader.loadYaml();
 
     /**
      * 推送所有订单信息
@@ -64,7 +68,13 @@ public class OrderManageService {
             if (orders.getStatus().equals("已完成")) {
                 now = LocalDateTime.now();
                 orders.setCompletion_time(now);
-                notiResult = notificationDao.addNewNotification(orders.getUser_id(), 1);
+                Notification notification = new Notification();
+                notification.setUser_id(orders.getUser_id());
+                notification.setNotification_title(properties.getProperty("orderFinish.title"));
+                notification.setNotification_content(properties.getProperty("orderFinish.content"));
+                notification.setType(properties.getProperty("orderFinish.type"));
+                notification.setTime(now);
+                notiResult = notificationDao.addNewNotification(notification);
             }
             int result = ordersDao.editOrder(orders);
             if (result == 1 && notiResult == 1) {

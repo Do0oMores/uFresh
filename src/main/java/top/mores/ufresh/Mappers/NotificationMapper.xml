@@ -7,8 +7,11 @@
     <resultMap id="notificationMap" type="top.mores.ufresh.POJO.Notification">
         <id column="id" property="id"/>
         <result column="user_id" property="user_id"/>
-        <result column="notification_code" property="notification_code"/>
+        <result column="notification_title" property="notification_title"/>
+        <result column="notification_content" property="notification_content"/>
+        <result column="type" property="type"/>
         <result column="enable_read" property="enable_read"/>
+        <result column="time" property="time"/>
     </resultMap>
 
     <select id="fetchUserRead">
@@ -17,7 +20,7 @@
     </select>
 
     <insert id="addNewNotification">
-        insert into notification (user_id,notification_code)
-        values (#{user_id},#{notification_code})
+        insert into notification (user_id,notification_title,notification_content,type,time)
+        values (#{user_id},#{notification_title},#{notification_content},#{type},#{time})
     </insert>
 </mapper>

@@ -9,5 +9,5 @@ import java.util.List;
 public interface NotificationDao {
     List<Notification> fetchUserRead(Notification notification);
 
-    int addNewNotification(int user_id,int notification_code);
+    int addNewNotification(Notification notification);
 }

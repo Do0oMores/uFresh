@@ -1,11 +1,19 @@
 package top.mores.ufresh.POJO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDateTime;
+
 public class Notification {
 
     private int id;
     private int user_id;
-    private int notification_code;
+    private String  notification_title;
     private boolean enable_read;
+    private String type;
+    private String notification_content;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime time;
 
     public int getId() {
         return id;
@@ -23,14 +31,6 @@ public class Notification {
         this.user_id = user_id;
     }
 
-    public int getNotification_code() {
-        return notification_code;
-    }
-
-    public void setNotification_code(int notification_code) {
-        this.notification_code = notification_code;
-    }
-
     public boolean isEnable_read() {
         return enable_read;
     }
@@ -39,13 +39,48 @@ public class Notification {
         this.enable_read = enable_read;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getNotification_title() {
+        return notification_title;
+    }
+
+    public void setNotification_title(String notification_title) {
+        this.notification_title = notification_title;
+    }
+
+    public String getNotification_content() {
+        return notification_content;
+    }
+
+    public void setNotification_content(String notification_content) {
+        this.notification_content = notification_content;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+
     @Override
     public String toString() {
         return "Notification{" +
                 "id=" + id +
                 ", user_id=" + user_id +
-                ", notification_code=" + notification_code +
+                ", notification_title='" + notification_title + '\'' +
                 ", enable_read=" + enable_read +
+                ", type='" + type + '\'' +
+                ", notification_content='" + notification_content + '\'' +
+                ", time=" + time +
                 '}';
     }
 }
