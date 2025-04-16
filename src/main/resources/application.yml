@@ -1,0 +1,5 @@
+message:
+  orderFinish:
+    type: 订单
+    title: 您的订单已完成
+    content: 您的订单已完成，如有问题可在三日内申请售后

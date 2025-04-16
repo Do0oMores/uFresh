@@ -10,4 +10,6 @@ public interface NotificationDao {
     List<Notification> fetchUserRead(Notification notification);
 
     int addNewNotification(Notification notification);
+
+    List<Notification> fetchUserNotification(int user_id);
 }

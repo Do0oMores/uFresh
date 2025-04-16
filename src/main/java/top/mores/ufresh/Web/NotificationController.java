@@ -10,6 +10,8 @@ import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Notification;
 import top.mores.ufresh.Service.NotificationService;
 
+import java.util.List;
+
 @Controller
 public class NotificationController {
     @Autowired
@@ -25,6 +27,13 @@ public class NotificationController {
     @ResponseBody
     public ResponseEntity<?> getNotificationCount(@RequestBody Notification notification) {
         APIResponse<Integer> response = notificationService.getNotificationCount(notification);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/fetch-notificationList")
+    @ResponseBody
+    public ResponseEntity<?> fetchNotificationList(@RequestBody Notification notification) {
+        APIResponse<List<Notification>> response=notificationService.getUserNotificationList(notification);
         return ResponseEntity.ok(response);
     }
 }

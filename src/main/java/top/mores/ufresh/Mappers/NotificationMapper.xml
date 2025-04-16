@@ -23,4 +23,9 @@
         insert into notification (user_id,notification_title,notification_content,type,time)
         values (#{user_id},#{notification_title},#{notification_content},#{type},#{time})
     </insert>
+
+    <select id="fetchUserNotification">
+        select id,notification_title,enabled_read,type,time,notification_content
+        from notification where user_id=#{user_id}
+    </select>
 </mapper>

@@ -1,6 +1,7 @@
 package top.mores.ufresh.Service.Admin;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.mores.ufresh.DAO.MybatisUtils;
 import top.mores.ufresh.DAO.NotificationDao;
@@ -8,15 +9,19 @@ import top.mores.ufresh.DAO.OrdersDao;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Notification;
 import top.mores.ufresh.POJO.Orders;
-import top.mores.ufresh.Utils.YamlLoader;
+import top.mores.ufresh.Utils.NotificationMessage;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Properties;
 
 @Service
 public class OrderManageService {
-    private final Properties properties = YamlLoader.loadYaml();
+    private final NotificationMessage notificationMessage;
+
+    @Autowired
+    public OrderManageService(NotificationMessage notificationMessage) {
+        this.notificationMessage = notificationMessage;
+    }
 
     /**
      * 推送所有订单信息
@@ -70,9 +75,9 @@ public class OrderManageService {
                 orders.setCompletion_time(now);
                 Notification notification = new Notification();
                 notification.setUser_id(orders.getUser_id());
-                notification.setNotification_title(properties.getProperty("orderFinish.title"));
-                notification.setNotification_content(properties.getProperty("orderFinish.content"));
-                notification.setType(properties.getProperty("orderFinish.type"));
+                notification.setNotification_title(notificationMessage.getOrderFinish().getTitle());
+                notification.setNotification_content(notificationMessage.getOrderFinish().getContent());
+                notification.setType(notificationMessage.getOrderFinish().getType());
                 notification.setTime(now);
                 notiResult = notificationDao.addNewNotification(notification);
             }

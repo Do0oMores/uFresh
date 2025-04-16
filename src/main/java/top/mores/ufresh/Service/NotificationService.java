@@ -32,4 +32,14 @@ public class NotificationService {
             return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
         }
     }
+
+    public APIResponse<List<Notification>> getUserNotificationList(Notification notification) {
+        try(SqlSession session = MybatisUtils.getSqlSession()) {
+            NotificationDao notificationDao = session.getMapper(NotificationDao.class);
+            List<Notification> data = notificationDao.fetchUserNotification(notification.getUser_id());
+            return new APIResponse<>(200, data);
+        }catch (Exception e) {
+            return new APIResponse<>(500,"发生意料之外的错误：" + e.getMessage());
+        }
+    }
 }
