@@ -76,7 +76,7 @@ public class OrderManageService {
                 Notification notification = new Notification();
                 notification.setUser_id(orders.getUser_id());
                 notification.setNotification_title(notificationMessage.getOrderFinish().getTitle());
-                notification.setNotification_content(notificationMessage.getOrderFinish().getContent());
+                notification.setNotification_content(notificationMessage.getOrderFinish().getContent().replace("{order_uuid}", orders.getOrder_uuid()));
                 notification.setType(notificationMessage.getOrderFinish().getType());
                 notification.setTime(now);
                 notiResult = notificationDao.addNewNotification(notification);

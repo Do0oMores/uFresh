@@ -2,8 +2,8 @@ message:
   orderFinish:
     type: 订单
     title: 您的订单已完成
-    content: 您的订单已完成，如有问题可在三日内申请售后
+    content: 您的订单 {order_uuid} 已完成，如有问题可在三日内申请售后
   afterSalesFinish:
     type: 售后
     title: 您的售后订单已完成
-    content: 您的售后订单已完成，感谢您的反馈！
+    content: 您的售后订单 {order_uuid} 已完成，感谢您的反馈！

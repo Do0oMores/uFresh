@@ -70,7 +70,7 @@ public class AfterSalesManageService {
             Notification notification = new Notification();
             int result = afterSalesDao.updateAfterSalesStatus(afterSales);
             notification.setNotification_title(notificationMessage.getAfterSalesFinish().getTitle());
-            notification.setNotification_content(notificationMessage.getAfterSalesFinish().getContent());
+            notification.setNotification_content(notificationMessage.getAfterSalesFinish().getContent().replace("{order_uuid}", afterSales.getOrder_uuid()));
             notification.setType(notificationMessage.getAfterSalesFinish().getType());
             notification.setTime(LocalDateTime.now());
             notification.setOrder_uuid(afterSales.getOrder_uuid());
