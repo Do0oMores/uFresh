@@ -14,4 +14,6 @@ public interface NotificationDao {
     List<Notification> fetchUserNotification(int user_id);
 
     int renewRead(Notification notification);
+
+    int addAfterSaleNotification(Notification notification);
 }

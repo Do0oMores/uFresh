@@ -34,4 +34,14 @@
         set enable_read = #{enable_read}
         where user_id = #{user_id} and id =#{id}
     </update>
+
+    <insert id="addAfterSaleNotification">
+        INSERT INTO notification (user_id, notification_title, notification_content, type, time)
+        VALUES (
+        (SELECT user_id FROM orders WHERE order_uuid = #{order_uuid}),
+        #{notification_title},
+        #{notification_content},
+        #{type},
+        #{time})
+    </insert>
 </mapper>

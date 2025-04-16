@@ -14,6 +14,15 @@ public class Notification {
     private String notification_content;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
+    private String order_uuid;
+
+    public String getOrder_uuid() {
+        return order_uuid;
+    }
+
+    public void setOrder_uuid(String order_uuid) {
+        this.order_uuid = order_uuid;
+    }
 
     public int getId() {
         return id;
@@ -81,6 +90,7 @@ public class Notification {
                 ", type='" + type + '\'' +
                 ", notification_content='" + notification_content + '\'' +
                 ", time=" + time +
+                ", order_uuid='" + order_uuid + '\'' +
                 '}';
     }
 }
