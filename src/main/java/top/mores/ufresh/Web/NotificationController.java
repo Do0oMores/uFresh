@@ -30,10 +30,29 @@ public class NotificationController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * 拉取消息列表
+     *
+     * @param notification 用户ID
+     * @return 消息列表
+     */
     @PostMapping("/fetch-notificationList")
     @ResponseBody
     public ResponseEntity<?> fetchNotificationList(@RequestBody Notification notification) {
-        APIResponse<List<Notification>> response=notificationService.getUserNotificationList(notification);
+        APIResponse<List<Notification>> response = notificationService.getUserNotificationList(notification);
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 更新消息已读状态
+     *
+     * @param notification 用户消息
+     * @return 更新已读状态结果
+     */
+    @PostMapping("/mark-as-read")
+    @ResponseBody
+    public ResponseEntity<?> markAsRead(@RequestBody Notification notification) {
+        APIResponse<Void> response = notificationService.updateReadStatus(notification);
         return ResponseEntity.ok(response);
     }
 }

@@ -40,7 +40,7 @@ public class AfterSalesController {
      * @param order_uuid 订单号
      * @param reason     售后原因
      * @param type       售后类型
-     * @return
+     * @return 提交执行结果
      */
     @PostMapping("/uploadAfterSales")
     @ResponseBody
