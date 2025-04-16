@@ -25,7 +25,7 @@
     </insert>
 
     <select id="fetchUserNotification">
-        select id,notification_title,enabled_read,type,time,notification_content
+        select id,notification_title,enable_read,type,time,notification_content
         from notification where user_id=#{user_id}
     </select>
 </mapper>
