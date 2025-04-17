@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.mores.ufresh.DAO.WasteDao">
+
+    <resultMap id="wasteResultMap" type="top.mores.ufresh.POJO.Waste">
+        <id column="id" property="id"/>
+        <result column="commodity_id" property="commodity_id"/>
+        <result column="waste_amount" property="waste_amount"/>
+        <result column="waste_type" property="waste_type"/>
+        <result column="remarks" property="remarks"/>
+        <result column="time" property="time"/>
+    </resultMap>
+</mapper>
