@@ -55,6 +55,9 @@ public class CommodityManageService {
                 session.rollback();
                 return false;
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -133,8 +136,31 @@ public class CommodityManageService {
                 return new APIResponse<>(200, "数据更新成功");
             } else {
                 session.rollback();
-                return new APIResponse<>(500, "数据更新发生错误");
+                return new APIResponse<>(404, "数据更新发生错误");
             }
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
+        }
+    }
+
+    /**
+     * 删除商品
+     *
+     * @param commodity 删除的商品
+     * @return 删除结果
+     */
+    public APIResponse<Void> deleteCommodity(Commodity commodity) {
+        try (SqlSession session = MybatisUtils.getSqlSession()) {
+            CommodityDao commodityDao = session.getMapper(CommodityDao.class);
+            if (commodityDao.deleteCommodity(commodity.getCommodity_id()) == 1) {
+                session.commit();
+                return new APIResponse<>(200, "该商品已删除");
+            } else {
+                session.rollback();
+                return new APIResponse<>(404, "删除商品时发生错误，可能是没有找到该商品");
+            }
+        } catch (Exception e) {
+            return new APIResponse<>(500, "发生意料之外的错误：" + e.getMessage());
         }
     }
 }

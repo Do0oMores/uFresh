@@ -34,4 +34,6 @@ public interface CommodityDao {
     List<Commodity> getAllCommoditiesInventory();
 
     int wasteCommodity(int wasteInventory, int commodity_id);
+
+    int deleteCommodity(int commodity_id);
 }

@@ -21,11 +21,12 @@
         select * from commodity where commodity_name = #{commodity_name}
     </select>
 
-    <insert id="addCommodity" parameterType="top.mores.ufresh.POJO.Commodity" useGeneratedKeys="true" keyProperty="commodity_id">
+    <insert id="addCommodity" parameterType="top.mores.ufresh.POJO.Commodity" useGeneratedKeys="true"
+            keyProperty="commodity_id">
         INSERT INTO commodity
         (commodity_name, type, inventory, description, image, support, mfd, exp)
         VALUES
-        (#{commodity_name}, #{type}, #{price}, #{invetory}, #{description}, #{image}, #{support}, #{mfd}, #{exp});
+        (#{commodity_name}, #{type}, #{inventory}, #{description}, #{image}, #{support}, #{mfd}, #{exp});
     </insert>
 
     <select id="fetchCommodity" resultMap="commodityResultMap">
@@ -125,7 +126,7 @@
         </set>
         where commodity_id=#{commodity_id}
     </update>
-    
+
     <select id="searchCommodity">
         SELECT
         c.commodity_name,
@@ -178,4 +179,8 @@
         set inventory = inventory - #{wasteInventory}
         where commodity_id=#{commodity_id}
     </update>
+
+    <delete id="deleteCommodity">
+        delete from commodity where commodity_id=#{commodity_id}
+    </delete>
 </mapper>

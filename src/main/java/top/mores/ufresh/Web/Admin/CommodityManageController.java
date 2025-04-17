@@ -113,4 +113,17 @@ public class CommodityManageController {
         APIResponse<Void> response = commodityService.updateCommodityData(commodity);
         return ResponseEntity.ok(response);
     }
+
+    /**
+     * 删除商品接口
+     *
+     * @param commodity 需要删除的商品ID
+     * @return 删除结果
+     */
+    @PostMapping("/delete-commodity")
+    @ResponseBody
+    public ResponseEntity<?> deleteCommodity(@RequestBody Commodity commodity) {
+        APIResponse<Void> response = commodityService.deleteCommodity(commodity);
+        return ResponseEntity.ok(response);
+    }
 }

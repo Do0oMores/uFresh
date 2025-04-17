@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
 public class Notification {
-
     private int id;
     private int user_id;
     private String  notification_title;
