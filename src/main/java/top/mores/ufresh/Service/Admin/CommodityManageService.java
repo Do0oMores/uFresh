@@ -54,15 +54,14 @@ public class CommodityManageService {
             CommodityDao commodityDao = session.getMapper(CommodityDao.class);
             CommoditySpecsDao commoditySpecsDao = session.getMapper(CommoditySpecsDao.class);
 
-            // 1. 先插入商品基本信息
             int result = commodityDao.addCommodity(commodity);
             if (result != 1) {
                 session.rollback();
                 return false;
             }
-            // 2. 获取刚插入的商品ID
+            // 获取刚插入的商品ID
             int commodityId = commodity.getCommodity_id();
-            // 3. 处理规格数据
+            // 处理规格数据
             List<Commodity_specs> specs = commodity.getSpecs();
             if (specs != null && !specs.isEmpty()) {
                 for (Commodity_specs spec : specs) {
@@ -74,7 +73,6 @@ public class CommodityManageService {
                     }
                 }
             }
-            // 4. 提交事务
             session.commit();
             return true;
         } catch (Exception e) {

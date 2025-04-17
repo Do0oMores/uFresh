@@ -2,20 +2,25 @@ package top.mores.ufresh.Service.User;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
-import top.mores.ufresh.DAO.CommodityDao;
-import top.mores.ufresh.DAO.MybatisUtils;
-import top.mores.ufresh.DAO.OrderItemsDao;
-import top.mores.ufresh.DAO.OrdersDao;
+import top.mores.ufresh.DAO.*;
 import top.mores.ufresh.POJO.APIResponse;
+import top.mores.ufresh.POJO.Notification;
 import top.mores.ufresh.POJO.Order_items;
 import top.mores.ufresh.POJO.Orders;
+import top.mores.ufresh.Utils.NotificationMessage;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class MyOrdersService {
+    private final NotificationMessage notificationMessage;
+
+    public MyOrdersService(NotificationMessage notificationMessage) {
+        this.notificationMessage = notificationMessage;
+    }
 
     /**
      * 获取未结算订单物品
@@ -85,6 +90,18 @@ public class MyOrdersService {
                         session.rollback();
                         return new APIResponse<>(500, "商品 " + item.getCommodity_id() + " 库存扣减失败");
                     }
+                }
+                NotificationDao notificationDao = session.getMapper(NotificationDao.class);
+                Notification notification = new Notification();
+                notification.setUser_id(1);
+                notification.setOrder_uuid(order.getOrder_uuid());
+                notification.setNotification_title(notificationMessage.getOrderSubmit().getTitle());
+                notification.setNotification_content(notificationMessage.getOrderSubmit().getContent().replace("{order_uuid}", order.getOrder_uuid()));
+                notification.setType(notificationMessage.getOrderSubmit().getType());
+                notification.setTime(LocalDateTime.now());
+                if (notificationDao.addNewNotification(notification) != 1) {
+                    session.rollback();
+                    return new APIResponse<>(500, "消息队列生成失败");
                 }
                 // 如果所有操作均成功则提交事务
                 session.commit();

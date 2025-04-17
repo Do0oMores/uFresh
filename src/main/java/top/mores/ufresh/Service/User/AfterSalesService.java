@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.mores.ufresh.DAO.AfterSalesDao;
 import top.mores.ufresh.DAO.MybatisUtils;
+import top.mores.ufresh.DAO.NotificationDao;
 import top.mores.ufresh.DAO.OrdersDao;
-import top.mores.ufresh.POJO.APIResponse;
-import top.mores.ufresh.POJO.After_sales;
-import top.mores.ufresh.POJO.Order_items;
-import top.mores.ufresh.POJO.Orders;
+import top.mores.ufresh.POJO.*;
 import top.mores.ufresh.Service.File.ImageUploadService;
+import top.mores.ufresh.Utils.NotificationMessage;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,6 +20,11 @@ public class AfterSalesService {
     private final ImageUploadService imageUploadService = new ImageUploadService();
     @Value("${upload.path}")
     private String uploadPath;
+    private NotificationMessage notificationMessage;
+
+    public AfterSalesService(NotificationMessage notificationMessage) {
+        this.notificationMessage = notificationMessage;
+    }
 
     /**
      * 获取申请售后商品信息
@@ -62,6 +67,7 @@ public class AfterSalesService {
         try (SqlSession session = MybatisUtils.getSqlSession()) {
             AfterSalesDao afterSalesDao = session.getMapper(AfterSalesDao.class);
             OrdersDao ordersDao = session.getMapper(OrdersDao.class);
+            NotificationDao notificationDao = session.getMapper(NotificationDao.class);
             int result = afterSalesDao.insertAfterSalesImage(after_sales);
             if (result > 0) {
                 session.commit();
@@ -69,7 +75,16 @@ public class AfterSalesService {
                 orders.setStatus("申请售后");
                 orders.setOrder_uuid(after_sales.getOrder_uuid());
                 int status = ordersDao.updateOrderStatus(orders);
-                if (status > 0) {
+
+                Notification notification = new Notification();
+                notification.setUser_id(1);
+                notification.setOrder_uuid(after_sales.getOrder_uuid());
+                notification.setNotification_title(notificationMessage.getAfterSalesSubmit().getTitle());
+                notification.setNotification_content(notificationMessage.getAfterSalesSubmit().getContent().replace("{order_uuid}", after_sales.getOrder_uuid()));
+                notification.setType(notificationMessage.getAfterSalesSubmit().getType());
+                notification.setTime(LocalDateTime.now());
+                int result1=notificationDao.addNewNotification(notification);
+                if (status > 0&&result1 > 0) {
                     session.commit();
                 } else {
                     session.rollback();

@@ -7,3 +7,11 @@ message:
     type: 售后
     title: 您的售后订单已完成
     content: 您的售后订单 {order_uuid} 已完成，感谢您的反馈！
+  orderSubmit:
+    type: 系统
+    title: 您有一个新提交的订单待处理
+    content: 您有一个新提交的订单 {order_uuid} ，请及时处理！
+  afterSalesSubmit:
+    type: 系统
+    title: 您有一个新的售后订单待处理
+    content: 您有一个新的售后订单 {order_uuid} ，请及时处理！
