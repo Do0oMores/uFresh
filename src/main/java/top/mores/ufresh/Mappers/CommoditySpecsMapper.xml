@@ -18,4 +18,9 @@
     <select id="getPrice">
         select price from commodity_specs where commodity_id=#{commodity_id} and spec = #{spec}
     </select>
+
+    <insert id="addCommoditySpecs">
+        insert into commodity_specs(commodity_id,spec,price)
+        values(#{commodity_id},#{spec},#{price})
+    </insert>
 </mapper>

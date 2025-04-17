@@ -3,6 +3,7 @@ package top.mores.ufresh.POJO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Commodity {
     private int commodity_id;
@@ -21,6 +22,7 @@ public class Commodity {
     private double price;
     private String spec;
     private int quantity;
+    private List<Commodity_specs> specs;
 
     public int getQuantity() {
         return quantity;
@@ -134,6 +136,14 @@ public class Commodity {
         this.price = price;
     }
 
+    public List<Commodity_specs> getSpecs() {
+        return specs;
+    }
+
+    public void setSpecs(List<Commodity_specs> specs) {
+        this.specs = specs;
+    }
+
     @Override
     public String toString() {
         return "Commodity{" +
@@ -151,6 +161,7 @@ public class Commodity {
                 ", price=" + price +
                 ", spec='" + spec + '\'' +
                 ", quantity=" + quantity +
+                ", specs=" + specs +
                 '}';
     }
 }

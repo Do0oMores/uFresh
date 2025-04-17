@@ -4,9 +4,11 @@ import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import top.mores.ufresh.DAO.CommodityDao;
+import top.mores.ufresh.DAO.CommoditySpecsDao;
 import top.mores.ufresh.DAO.MybatisUtils;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Commodity;
+import top.mores.ufresh.POJO.Commodity_specs;
 
 import java.util.List;
 
@@ -46,18 +48,45 @@ public class CommodityManageService {
      * @return 添加结果（是否添加成功）
      */
     public boolean addCommodity(Commodity commodity) {
-        try (SqlSession session = MybatisUtils.getSqlSession()) {
+        SqlSession session = null;
+        try {
+            session = MybatisUtils.getSqlSession();
             CommodityDao commodityDao = session.getMapper(CommodityDao.class);
-            if (commodityDao.addCommodity(commodity) == 1) {
-                session.commit();
-                return true;
-            } else {
+            CommoditySpecsDao commoditySpecsDao = session.getMapper(CommoditySpecsDao.class);
+
+            // 1. 先插入商品基本信息
+            int result = commodityDao.addCommodity(commodity);
+            if (result != 1) {
                 session.rollback();
                 return false;
             }
+            // 2. 获取刚插入的商品ID
+            int commodityId = commodity.getCommodity_id();
+            // 3. 处理规格数据
+            List<Commodity_specs> specs = commodity.getSpecs();
+            if (specs != null && !specs.isEmpty()) {
+                for (Commodity_specs spec : specs) {
+                    spec.setCommodity_id(commodityId); // 设置商品ID
+                    int specResult = commoditySpecsDao.addCommoditySpecs(spec);
+                    if (specResult != 1) {
+                        session.rollback();
+                        return false;
+                    }
+                }
+            }
+            // 4. 提交事务
+            session.commit();
+            return true;
         } catch (Exception e) {
+            if (session != null) {
+                session.rollback();
+            }
             e.printStackTrace();
             return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 

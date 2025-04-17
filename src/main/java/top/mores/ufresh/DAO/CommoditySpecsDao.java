@@ -11,4 +11,6 @@ public interface CommoditySpecsDao {
     List<Commodity_specs> getSpecByCommodityID(int commodityID);
 
     double getPrice(int commodity_id, String spec);
+
+    int addCommoditySpecs(Commodity_specs spec);
 }

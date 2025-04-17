@@ -1,5 +1,7 @@
 package top.mores.ufresh.Web.Admin;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Commodity;
+import top.mores.ufresh.POJO.Commodity_specs;
 import top.mores.ufresh.Service.Admin.CommodityManageService;
 import top.mores.ufresh.Service.File.ImageUploadService;
 
@@ -46,16 +49,23 @@ public class CommodityManageController {
                                           @RequestParam("description") String description,
                                           @RequestParam("support") String support,
                                           @RequestParam("mfg") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate mfg,
-                                          @RequestParam("exp") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate exp) {
+                                          @RequestParam("exp") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate exp,
+                                          @RequestParam("specs") String specsJson) {
         Commodity commodity = new Commodity();
-        commodity.setCommodity_name(commodityName);
-        commodity.setType(type);
-        commodity.setInventory(inventory);
-        commodity.setDescription(description);
-        commodity.setSupport(support);
-        commodity.setExp(exp);
-        commodity.setMfd(mfg);
-
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            List<Commodity_specs> specs = objectMapper.readValue(specsJson, new TypeReference<>() {});
+            commodity.setCommodity_name(commodityName);
+            commodity.setType(type);
+            commodity.setInventory(inventory);
+            commodity.setDescription(description);
+            commodity.setSupport(support);
+            commodity.setExp(exp);
+            commodity.setMfd(mfg);
+            commodity.setSpecs(specs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         APIResponse<String> response = imageUploadService.addCommodityWithImage(file,
                 commodity);
         return ResponseEntity.ok(response);
