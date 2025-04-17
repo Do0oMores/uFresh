@@ -21,7 +21,7 @@ public interface CommodityDao {
 
     int editCommodity(Commodity commodity);
 
-    int editCommodityImage(String image,Integer commodity_id);
+    int editCommodityImage(String image, Integer commodity_id);
 
     List<Commodity> searchCommodity(Commodity commodity);
 
@@ -32,4 +32,6 @@ public interface CommodityDao {
     int reduceCommodityQuantity(int commodityId, int orderQuantity);
 
     List<Commodity> getAllCommoditiesInventory();
+
+    int wasteCommodity(int wasteInventory, int commodity_id);
 }

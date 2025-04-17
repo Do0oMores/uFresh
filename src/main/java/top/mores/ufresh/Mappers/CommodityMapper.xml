@@ -172,4 +172,10 @@
     <select id="getAllCommoditiesInventory">
         select inventory,commodity_name from commodity
     </select>
+
+    <update id="wasteCommodity">
+        update commodity
+        set inventory = inventory - #{wasteInventory}
+        where commodity_id=#{commodity_id}
+    </update>
 </mapper>

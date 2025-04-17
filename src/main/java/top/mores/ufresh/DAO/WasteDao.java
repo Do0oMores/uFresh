@@ -9,4 +9,6 @@ public interface WasteDao {
     List<Commodity> getWasteCommodities();
 
     List<Waste> getAllWasteLog();
+
+    int addWasteLog(Waste waste);
 }

@@ -20,4 +20,9 @@
     <select id="getAllWasteLog">
         select * from waste
     </select>
+
+    <insert id="addWasteLog">
+        insert into waste (commodity_id,waste_amount,waste_type,remarks,time)
+        values(#{commodity_id},#{waste_amount},#{waste_type},#{remarks},#{time})
+    </insert>
 </mapper>

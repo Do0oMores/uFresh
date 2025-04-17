@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Commodity;
@@ -38,6 +39,19 @@ public class WasteController {
     @ResponseBody
     public ResponseEntity<?> fetchLossRecords() {
         APIResponse<List<Waste>> response = wasteService.fetchWastes();
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 添加损耗记录
+     *
+     * @param waste 损耗信息
+     * @return 添加结果
+     */
+    @PostMapping("/addLossRecord")
+    @ResponseBody
+    public ResponseEntity<?> addLossRecord(@RequestBody Waste waste) {
+        APIResponse<Void> response = wasteService.addWaste(waste);
         return ResponseEntity.ok(response);
     }
 }
