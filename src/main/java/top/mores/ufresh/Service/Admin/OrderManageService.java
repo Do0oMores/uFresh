@@ -78,6 +78,7 @@ public class OrderManageService {
                 notification.setNotification_title(notificationMessage.getOrderFinish().getTitle());
                 notification.setNotification_content(notificationMessage.getOrderFinish().getContent().replace("{order_uuid}", orders.getOrder_uuid()));
                 notification.setType(notificationMessage.getOrderFinish().getType());
+                notification.setLink("/user/comment/" + orders.getOrder_uuid());
                 notification.setTime(now);
                 notiResult = notificationDao.addNewNotification(notification);
             }

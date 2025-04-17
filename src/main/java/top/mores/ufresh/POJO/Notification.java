@@ -14,6 +14,7 @@ public class Notification {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
     private String order_uuid;
+    private String link;
 
     public String getOrder_uuid() {
         return order_uuid;
@@ -79,6 +80,14 @@ public class Notification {
         this.time = time;
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     @Override
     public String toString() {
         return "Notification{" +
@@ -90,6 +99,7 @@ public class Notification {
                 ", notification_content='" + notification_content + '\'' +
                 ", time=" + time +
                 ", order_uuid='" + order_uuid + '\'' +
+                ", link='" + link + '\'' +
                 '}';
     }
 }

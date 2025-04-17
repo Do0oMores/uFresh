@@ -9,4 +9,6 @@ import java.util.List;
 public interface CommentDao {
 
     List<Comment> getCommentByCommodityID(int commodity_id);
+
+    int addComment(Comment comment);
 }

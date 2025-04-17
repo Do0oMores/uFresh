@@ -20,12 +20,22 @@
     </select>
 
     <insert id="addNewNotification">
-        insert into notification (user_id,notification_title,notification_content,type,time)
-        values (#{user_id},#{notification_title},#{notification_content},#{type},#{time})
+        insert into notification
+        (user_id, notification_title, notification_content, type, time
+        <if test="link != null and link != ''">
+            , link
+        </if>
+        )
+        values
+        (#{user_id}, #{notification_title}, #{notification_content}, #{type}, #{time}
+        <if test="link != null and link != ''">
+            , #{link}
+        </if>
+        )
     </insert>
 
     <select id="fetchUserNotification">
-        select id,notification_title,enable_read,type,time,notification_content
+        select id,notification_title,enable_read,type,time,notification_content,link
         from notification where user_id=#{user_id}
     </select>
 

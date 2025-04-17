@@ -19,4 +19,9 @@
         JOIN user u ON c.user_id = u.user_id
         WHERE c.commodity_id = #{commodity_id}
     </select>
+
+    <insert id="addComment">
+        insert into comment (user_id,commodity_id,content,judge)
+        values(#{user_id},#{commodity_id},#{content},#{judge})
+    </insert>
 </mapper>
