@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import top.mores.ufresh.POJO.APIResponse;
 import top.mores.ufresh.POJO.Commodity;
+import top.mores.ufresh.POJO.Waste;
 import top.mores.ufresh.Service.Admin.WasteService;
 
 import java.util.List;
@@ -25,6 +26,18 @@ public class WasteController {
     @ResponseBody
     public ResponseEntity<?> fetchWasteCommodities() {
         APIResponse<List<Commodity>> response = wasteService.fetchWasteCommodities();
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * 拉取损耗记录
+     *
+     * @return 损耗记录
+     */
+    @PostMapping("/fetchLossRecords")
+    @ResponseBody
+    public ResponseEntity<?> fetchLossRecords() {
+        APIResponse<List<Waste>> response = wasteService.fetchWastes();
         return ResponseEntity.ok(response);
     }
 }

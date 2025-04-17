@@ -16,4 +16,8 @@
     <select id="getWasteCommodities">
         select commodity_id,commodity_name,inventory from commodity
     </select>
+
+    <select id="getAllWasteLog">
+        select * from waste
+    </select>
 </mapper>
